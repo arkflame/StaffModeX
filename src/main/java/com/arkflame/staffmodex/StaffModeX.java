@@ -10,8 +10,8 @@ import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.tasks.ExampleTask;
 
 public class StaffModeX extends JavaPlugin {
-    private ConfigWrapper config = new ConfigWrapper("config.yml");
-    private ConfigWrapper messages = new ConfigWrapper("messages.yml");
+    private ConfigWrapper config;
+    private ConfigWrapper messages;
 
     public ConfigWrapper getCfg() {
         return config;
@@ -27,8 +27,8 @@ public class StaffModeX extends JavaPlugin {
         setInstance(this);
 
         // Save default config
-        config.saveDefault().load();
-        messages.saveDefault().load();
+        config = new ConfigWrapper("config.yml").saveDefault().load();
+        messages = new ConfigWrapper("messages.yml").saveDefault().load();
 
         // Register the example listener
         PluginManager pluginManager = this.getServer().getPluginManager();
