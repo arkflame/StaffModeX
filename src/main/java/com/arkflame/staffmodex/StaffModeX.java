@@ -37,10 +37,10 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new PlayerListeners(), this);
 
         // Register the example task
-        new ExampleTask().register();
+        //new ExampleTask().register();
 
         // Register example commands
-        new ExampleCommand().register();
+        //new ExampleCommand().register();
     }
 
     private static StaffModeX instance;
