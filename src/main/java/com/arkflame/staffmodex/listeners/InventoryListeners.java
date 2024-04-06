@@ -1,4 +1,4 @@
-package com.arkflame.example.listeners;
+package com.arkflame.staffmodex.listeners;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;

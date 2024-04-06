@@ -1,4 +1,4 @@
-package com.arkflame.modernlib.utils;
+package com.arkflame.staffmodex.modernlib.utils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

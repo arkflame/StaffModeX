@@ -1,4 +1,4 @@
-package com.arkflame.modernlib.config;
+package com.arkflame.staffmodex.modernlib.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import com.arkflame.example.ExamplePlugin;
-import com.arkflame.modernlib.utils.ChatColors;
+import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.modernlib.utils.ChatColors;
+
 import java.nio.file.Files;
 
 public class ConfigWrapper {
@@ -36,7 +37,7 @@ public class ConfigWrapper {
     }
 
     public void setFile(String fileName) {
-        this.path = new File(ExamplePlugin.getInstance().getDataFolder(), fileName).getPath();
+        this.path = new File(StaffModeX.getInstance().getDataFolder(), fileName).getPath();
     }
 
     public ConfigWrapper saveDefault() {
@@ -125,7 +126,7 @@ public class ConfigWrapper {
     }
 
     public static boolean saveDefaultConfig(String fileName) {
-        Plugin plugin = ExamplePlugin.getInstance();
+        Plugin plugin = StaffModeX.getInstance();
         File configFile = new File(plugin.getDataFolder(), fileName);
         if (!configFile.exists()) {
             try (InputStream inputStream = plugin.getResource(fileName)) {

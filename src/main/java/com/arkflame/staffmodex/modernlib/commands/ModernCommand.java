@@ -1,4 +1,4 @@
-package com.arkflame.modernlib.commands;
+package com.arkflame.staffmodex.modernlib.commands;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +9,7 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import com.arkflame.example.ExamplePlugin;
+import com.arkflame.staffmodex.StaffModeX;
 
 public abstract class ModernCommand extends Command {
     public ModernCommand(String name) {
@@ -26,7 +26,7 @@ public abstract class ModernCommand extends Command {
             // Register the command
             registerMethod.invoke(commandMap, getName(), this);
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException |IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            ExamplePlugin.getInstance().getLogger().severe("Exception while handling command register");
+            StaffModeX.getInstance().getLogger().severe("Exception while handling command register");
             e.printStackTrace();
         }
     }

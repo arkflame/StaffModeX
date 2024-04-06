@@ -1,15 +1,15 @@
-package com.arkflame.example;
+package com.arkflame.staffmodex;
 
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.arkflame.example.commands.ExampleCommand;
-import com.arkflame.example.listeners.InventoryListeners;
-import com.arkflame.example.listeners.PlayerListeners;
-import com.arkflame.example.tasks.ExampleTask;
-import com.arkflame.modernlib.config.ConfigWrapper;
+import com.arkflame.staffmodex.commands.ExampleCommand;
+import com.arkflame.staffmodex.listeners.InventoryListeners;
+import com.arkflame.staffmodex.listeners.PlayerListeners;
+import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
+import com.arkflame.staffmodex.tasks.ExampleTask;
 
-public class ExamplePlugin extends JavaPlugin {
+public class StaffModeX extends JavaPlugin {
     private ConfigWrapper config = new ConfigWrapper("config.yml");
     private ConfigWrapper messages = new ConfigWrapper("messages.yml");
 
@@ -43,13 +43,13 @@ public class ExamplePlugin extends JavaPlugin {
         new ExampleCommand().register();
     }
 
-    private static ExamplePlugin instance;
+    private static StaffModeX instance;
 
-    public static void setInstance(ExamplePlugin instance) {
-        ExamplePlugin.instance = instance;
+    public static void setInstance(StaffModeX instance) {
+        StaffModeX.instance = instance;
     }
 
-    public static ExamplePlugin getInstance() {
-        return ExamplePlugin.instance;
+    public static StaffModeX getInstance() {
+        return StaffModeX.instance;
     }
 }

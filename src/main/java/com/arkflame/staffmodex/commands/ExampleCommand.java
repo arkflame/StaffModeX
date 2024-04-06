@@ -1,10 +1,10 @@
-package com.arkflame.example.commands;
+package com.arkflame.staffmodex.commands;
 
 import org.bukkit.command.CommandSender;
 
-import com.arkflame.example.ExamplePlugin;
-import com.arkflame.modernlib.commands.ModernArguments;
-import com.arkflame.modernlib.commands.ModernCommand;
+import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.modernlib.commands.ModernArguments;
+import com.arkflame.staffmodex.modernlib.commands.ModernCommand;
 
 public class ExampleCommand extends ModernCommand {
     public ExampleCommand() {
@@ -30,6 +30,6 @@ public class ExampleCommand extends ModernCommand {
             sender.sendMessage("Usage: /" + label + " [text] [number]");
         }
 
-        sender.sendMessage(ExamplePlugin.getInstance().getMsg().getText("messages.from-command"));
+        sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.from-command"));
     }
 }
