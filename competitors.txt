@@ -1,0 +1,6 @@
+StaffMode https://www.spigotmc.org/resources/%E2%AD%90-staffmode-%E2%AD%90.110187/
+QStaffMode https://www.spigotmc.org/resources/qstaffmode-1-8-1-19-ultimate-staff-moderation-plugin.73301/reviews
+Staff+ https://www.spigotmc.org/resources/staff-the-ultimate-moderation-plugin-1-7-1-18.41500/
+ElementalStaff https://builtbybit.com/resources/elementalstaff-modular-staff-plugin.18798/
+UltraStaff https://www.spigotmc.org/resources/ultrastaff-1-8-1-20-staff-moderation-plugin.108913/
+QStaffMode https://www.spigotmc.org/resources/qstaffmode-1-8-1-19-ultimate-staff-moderation-plugin.73301/
