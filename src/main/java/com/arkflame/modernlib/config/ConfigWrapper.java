@@ -27,24 +27,41 @@ public class ConfigWrapper {
         this.config = config;
     }
 
+    public ConfigWrapper(String fileName) {
+        setFile(fileName);
+    }
+
     public ConfigWrapper() {
         // Empty constructor
     }
 
-    public void load(String fileName) {
+    public void setFile(String fileName) {
         this.path = new File(ExamplePlugin.getInstance().getDataFolder(), fileName).getPath();
-        load();
     }
 
-    public void load() {
-        if (path == null)
-            return;
-        try {
-            colorTextMap.clear();
-            this.config = YamlConfiguration.loadConfiguration(new File(path));
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+    public ConfigWrapper saveDefault() {
+        if (path != null) {
+            ConfigWrapper.saveDefaultConfig(path);
         }
+
+        return this;
+    }
+
+    public ConfigWrapper load(String fileName) {
+        setFile(fileName);
+        return load();
+    }
+
+    public ConfigWrapper load() {
+        if (path != null) {
+            try {
+                colorTextMap.clear();
+                this.config = YamlConfiguration.loadConfiguration(new File(path));
+            } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return this;
     }
 
     public void save() {
@@ -107,20 +124,23 @@ public class ConfigWrapper {
         return config.getKeys(false);
     }
 
-    public static void saveDefaultConfig(String fileName) {
+    public static boolean saveDefaultConfig(String fileName) {
         Plugin plugin = ExamplePlugin.getInstance();
         File configFile = new File(plugin.getDataFolder(), fileName);
-        if (configFile.exists()) return;
-        try (InputStream inputStream = plugin.getResource(fileName)) {
-            if (inputStream != null) {
-                createParentFolder(configFile);
-                Files.copy(inputStream, configFile.toPath());
-            } else {
-                configFile.createNewFile();
+        if (!configFile.exists()) {
+            try (InputStream inputStream = plugin.getResource(fileName)) {
+                if (inputStream != null) {
+                    createParentFolder(configFile);
+                    Files.copy(inputStream, configFile.toPath());
+                } else {
+                    return configFile.createNewFile();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
+        return false;
     }
 
     private static void createParentFolder(File file) {

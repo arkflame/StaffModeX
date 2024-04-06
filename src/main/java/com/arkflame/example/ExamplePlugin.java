@@ -1,15 +1,17 @@
 package com.arkflame.example;
 
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.arkflame.example.commands.ExampleCommand;
-import com.arkflame.example.listeners.PlayerJoinListener;
+import com.arkflame.example.listeners.InventoryListeners;
+import com.arkflame.example.listeners.PlayerListeners;
 import com.arkflame.example.tasks.ExampleTask;
 import com.arkflame.modernlib.config.ConfigWrapper;
 
 public class ExamplePlugin extends JavaPlugin {
-    private ConfigWrapper config = new ConfigWrapper();
-    private ConfigWrapper messages = new ConfigWrapper();
+    private ConfigWrapper config = new ConfigWrapper("config.yml");
+    private ConfigWrapper messages = new ConfigWrapper("messages.yml");
 
     public ConfigWrapper getCfg() {
         return config;
@@ -25,13 +27,14 @@ public class ExamplePlugin extends JavaPlugin {
         setInstance(this);
 
         // Save default config
-        ConfigWrapper.saveDefaultConfig("config.yml");
-        ConfigWrapper.saveDefaultConfig("messages.yml");
-        config.load("config.yml");
-        messages.load("messages.yml");
+        config.saveDefault().load();
+        messages.saveDefault().load();
 
         // Register the example listener
-        this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        PluginManager pluginManager = this.getServer().getPluginManager();
+
+        pluginManager.registerEvents(new InventoryListeners(), this);
+        pluginManager.registerEvents(new PlayerListeners(), this);
 
         // Register the example task
         new ExampleTask().register();
