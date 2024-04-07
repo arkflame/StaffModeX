@@ -3,13 +3,15 @@ package com.arkflame.staffmodex;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.arkflame.staffmodex.commands.ExampleCommand;
+import com.arkflame.staffmodex.commands.StaffModeCommand;
+import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
-import com.arkflame.staffmodex.tasks.ExampleTask;
 
 public class StaffModeX extends JavaPlugin {
+    private HotbarManager hotbarManager = new HotbarManager();
+
     private ConfigWrapper config;
     private ConfigWrapper messages;
 
@@ -19,6 +21,10 @@ public class StaffModeX extends JavaPlugin {
 
     public ConfigWrapper getMsg() {
         return messages;
+    }
+
+    public HotbarManager getHotbarManager() {
+        return hotbarManager;
     }
 
     @Override
@@ -40,7 +46,7 @@ public class StaffModeX extends JavaPlugin {
         //new ExampleTask().register();
 
         // Register example commands
-        //new ExampleCommand().register();
+        new StaffModeCommand().register();
     }
 
     private static StaffModeX instance;

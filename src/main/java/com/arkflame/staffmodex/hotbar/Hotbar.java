@@ -1,5 +1,6 @@
 package com.arkflame.staffmodex.hotbar;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class Hotbar {
     // Slot, HotbarItem
     public Map<Integer, HotbarItem> items = new HashMap<>();
 
-    public void addItem(int slot, HotbarItem item) {
+    public void setItem(int slot, HotbarItem item) {
         items.put(slot, item);
     }
 
@@ -29,5 +30,9 @@ public class Hotbar {
             HotbarItem item = entry.getValue();
             inventory.setItem(entry.getKey(), item.getStack());
         }
+    }
+
+    public Collection<Integer> getSlots() {
+        return items.keySet();
     }
 }

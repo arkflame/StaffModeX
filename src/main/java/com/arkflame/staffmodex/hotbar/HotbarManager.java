@@ -22,6 +22,25 @@ public class HotbarManager {
     }
 
     public void removeHotbar(Player player) {
+        Hotbar hotbar = getHotbar(player);
+        if (hotbar!= null) {
+            
+        for (int slot : hotbar.getSlots()) {
+            player.getInventory().setItem(slot, null);
+        }
+        }
         players.remove(player);
+    }
+
+    public boolean isHotbarItem(Player player, int slot) {
+        Hotbar hotbar = getHotbar(player);
+        if (hotbar != null) {
+            HotbarItem hotbarItem = hotbar.getItem(slot);
+            if (hotbarItem != null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

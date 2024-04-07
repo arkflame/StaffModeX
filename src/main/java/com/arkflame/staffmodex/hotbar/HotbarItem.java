@@ -7,18 +7,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.arkflame.staffmodex.modernlib.utils.ChatColors;
+
 public abstract class HotbarItem {
-    public abstract void onClick(Player player);
+    public abstract void onInteract(Player player);
 
     private ItemStack stack = new ItemStack(Material.AIR);
 
     public HotbarItem(Material material, String name, int amount, short damage, List<String> lore) {
-        this.stack = new ItemStack(material, amount, damage);
+        stack = new ItemStack(material, amount, damage);
         
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(name);
-            meta.setLore(lore);
+            meta.setDisplayName(ChatColors.color(name));
+            meta.setLore(ChatColors.color(lore));
+            stack.setItemMeta(meta);
         }
     }
 

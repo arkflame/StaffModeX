@@ -20,6 +20,7 @@ import java.nio.file.Files;
 public class ConfigWrapper {
     private ConfigurationSection config = null;
     private String path = null;
+    private String fileName = null;
 
     // This will store all text that contains color
     private Map<String, String> colorTextMap = new HashMap<>();
@@ -37,12 +38,30 @@ public class ConfigWrapper {
     }
 
     public void setFile(String fileName) {
-        this.path = new File(StaffModeX.getInstance().getDataFolder(), fileName).getPath();
+        if (fileName != null) {
+            this.path = new File(StaffModeX.getInstance().getDataFolder(), fileName).getPath();
+        } else {
+            this.path = null;
+        }
+        this.fileName = fileName;
     }
 
     public ConfigWrapper saveDefault() {
         if (path != null) {
-            ConfigWrapper.saveDefaultConfig(path);
+            StaffModeX.getInstance().getLogger().info("Save default config for " + fileName + " on " + path);
+            File configFile = new File(path);
+            if (!configFile.exists()) {
+                try (InputStream inputStream = StaffModeX.getInstance().getResource(fileName)) {
+                        createParentFolder(configFile);
+                    if (inputStream != null) {
+                        Files.copy(inputStream, configFile.toPath());
+                    } else {
+                        configFile.createNewFile();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return this;
@@ -123,25 +142,6 @@ public class ConfigWrapper {
         if (!isLoaded())
             return Collections.emptySet();
         return config.getKeys(false);
-    }
-
-    public static boolean saveDefaultConfig(String fileName) {
-        Plugin plugin = StaffModeX.getInstance();
-        File configFile = new File(plugin.getDataFolder(), fileName);
-        if (!configFile.exists()) {
-            try (InputStream inputStream = plugin.getResource(fileName)) {
-                if (inputStream != null) {
-                    createParentFolder(configFile);
-                    Files.copy(inputStream, configFile.toPath());
-                } else {
-                    return configFile.createNewFile();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return false;
     }
 
     private static void createParentFolder(File file) {

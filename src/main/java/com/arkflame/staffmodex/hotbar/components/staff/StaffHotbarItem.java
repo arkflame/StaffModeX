@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 
@@ -14,7 +15,8 @@ public class StaffHotbarItem extends HotbarItem {
     }
 
     @Override
-    public void onClick(Player player) {
+    public void onInteract(Player player) {
         player.sendMessage("Clicked staff hotbar item");
+        StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
     }
 }

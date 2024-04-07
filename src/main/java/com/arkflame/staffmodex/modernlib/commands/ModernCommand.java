@@ -3,6 +3,8 @@ package com.arkflame.staffmodex.modernlib.commands;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -17,6 +19,7 @@ public abstract class ModernCommand extends Command {
     }
 
     public void register() {
+        unregisterBukkitCommand();
         try {
             // Get the command map to register the command
             Object commandMap = getCommandMap();
@@ -35,13 +38,37 @@ public abstract class ModernCommand extends Command {
         return commandMap.getClass().getMethod("register", String.class, Command.class);
     }
 
+    private Object getPrivateField(Object object, String field) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Class<?> clazz = object.getClass();
+        Field objectField = clazz.getDeclaredField(field); // Line 283
+        boolean accessible = objectField.isAccessible();
+        if (!accessible) objectField.setAccessible(true);
+        Object result = objectField.get(object);
+        if (!accessible) objectField.setAccessible(false);
+        return result;
+    }
+
     private Object getCommandMap()  throws IllegalAccessException, NoSuchFieldException {
         Server server = Bukkit.getServer();
-        Field bukkitCommandMap = server.getClass().getDeclaredField("commandMap");
 
-        bukkitCommandMap.setAccessible(true);
+        return getPrivateField(server, "commandMap");
+    }
 
-        return bukkitCommandMap.get(server);
+    public void unregisterBukkitCommand() {
+        try {
+            Object commandMap = getCommandMap();
+            Object map = getPrivateField(commandMap, "knownCommands");
+            @SuppressWarnings("unchecked")
+            Map<String, Command> knownCommands = (HashMap<String, Command>) map;
+            knownCommands.remove(getName());
+            for (String alias : getAliases()){
+               if(knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())){
+                    knownCommands.remove(alias);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
