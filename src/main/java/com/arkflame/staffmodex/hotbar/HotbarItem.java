@@ -9,8 +9,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 
-public abstract class HotbarItem {
-    public abstract void onInteract(Player player);
+public class HotbarItem {
+    public void onInteract(Player player) {
+        // Override to implement logic
+    };
 
     private ItemStack stack = new ItemStack(Material.AIR);
 

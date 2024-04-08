@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.arkflame.staffmodex.commands.StaffModeCommand;
 import com.arkflame.staffmodex.hotbar.HotbarManager;
+import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
@@ -39,6 +40,7 @@ public class StaffModeX extends JavaPlugin {
         // Register the example listener
         PluginManager pluginManager = this.getServer().getPluginManager();
 
+        pluginManager.registerEvents(new EntityListeners(), this);
         pluginManager.registerEvents(new InventoryListeners(), this);
         pluginManager.registerEvents(new PlayerListeners(), this);
 

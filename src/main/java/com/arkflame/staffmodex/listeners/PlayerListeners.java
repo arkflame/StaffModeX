@@ -14,13 +14,13 @@ import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 
 public class PlayerListeners implements Listener {
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
         player.sendMessage("Joined Server");
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerDropItem(final PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();

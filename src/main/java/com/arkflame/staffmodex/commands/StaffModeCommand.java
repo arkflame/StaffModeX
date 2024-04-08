@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.Hotbar;
+import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.modernlib.commands.ModernArguments;
 import com.arkflame.staffmodex.modernlib.commands.ModernCommand;
 
@@ -17,13 +18,19 @@ public class StaffModeCommand extends ModernCommand {
     public void onCommand(CommandSender sender, ModernArguments args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (StaffModeX.getInstance().getHotbarManager().getHotbar(player) != null) {
-                StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
+            HotbarManager hotbarManager = StaffModeX.getInstance().getHotbarManager();
+    
+            if (hotbarManager.getHotbar(player) != null) {
+                hotbarManager.setHotbar(player, null);
+                player.setAllowFlight(false);
+                player.setFlying(false);
                 player.sendMessage("Deactivated staff mode");
             } else {
-                StaffModeX.getInstance().getHotbarManager().setHotbar(player, Hotbar.STAFF_HOTBAR);
+                hotbarManager.setHotbar(player, Hotbar.STAFF_HOTBAR);
+                player.setAllowFlight(true);
+                player.setFlying(true);
                 player.sendMessage("Activated staff mode");
             }
         }
-    }
+    }    
 }
