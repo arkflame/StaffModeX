@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -39,7 +40,13 @@ public class FreezeManager {
     // This method should be called in a PlayerMoveEvent listener to actually prevent movement
     public void preventMovement(PlayerMoveEvent event) {
         if (isFrozen(event.getPlayer())) {
-            event.setTo(event.getFrom());
+            Location to = event.getTo();
+            Location newTo = event.getFrom();
+            float pitch = to.getPitch();
+            float yaw = to.getYaw();
+            newTo.setPitch(pitch);
+            newTo.setYaw(yaw);
+            event.setTo(newTo);
         }
     }
 }

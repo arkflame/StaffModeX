@@ -159,10 +159,24 @@ public class StaffHotbar extends Hotbar {
         });
 
         String followName = "&9Follow";
-        String followLore = "&7Automatically move towards a player; maintain surveillance or provide assistance.";
+        String followLore = "&7Mount the player to observe their behavior.";
         setItem(8, new HotbarItem(Materials.get("LEAD", "LEASH"), followName, 1, (short) 0, Arrays.asList(followLore)) {
             @Override
-            public void onInteract(Player player) {
+            public void onInteract(Player player, Entity target) {
+                if (!(target instanceof Player)) {
+                    player.sendMessage(ChatColors.color("&cInvalid target for following."));
+                    return;
+                }
+
+                Player targetPlayer = (Player) target;
+
+                if (player.isInsideVehicle()) {
+                    player.leaveVehicle();
+                }
+
+                targetPlayer.setPassenger(player);
+
+                player.sendMessage(ChatColors.color("&aYou are now following " + targetPlayer.getDisplayName() + "."));
             }
         });
 

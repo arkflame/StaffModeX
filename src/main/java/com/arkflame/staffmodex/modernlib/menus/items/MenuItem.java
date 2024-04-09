@@ -6,9 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 
 public class MenuItem extends ItemStack {
+    private Menu menu;
+    private int slot;
+
     public MenuItem(Material material, int amount, short damage, String displayName, String... lore) {
         super(material, amount);
         ItemMeta meta = this.getItemMeta();
@@ -47,5 +51,35 @@ public class MenuItem extends ItemStack {
 
     public void onClick() {
         // Override to implement logic
+    }
+
+    public void onClick(int slot) {
+        // Override to implement logic
+    }
+
+    public void setMenu(Menu menu, int slot) {
+        this.menu = menu;
+        this.slot = slot;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public int getSlot() {
+        return slot;
+    }
+
+    public void setLore(String... lore) {
+        ItemMeta meta = this.getItemMeta();
+        if (meta != null) {
+            meta.setLore(ChatColors.color(Arrays.asList(lore)));
+            setItemMeta(meta);
+        }
+        update();
+    }
+
+    public void update() {
+        getMenu().setItem(getSlot(), this);
     }
 }

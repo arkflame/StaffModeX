@@ -11,6 +11,7 @@ import com.arkflame.staffmodex.listeners.PlayerListeners;
 import com.arkflame.staffmodex.managers.FreezeManager;
 import com.arkflame.staffmodex.managers.VanishManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
+import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
 
 public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
@@ -55,6 +56,8 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new EntityListeners(), this);
         pluginManager.registerEvents(new InventoryListeners(), this);
         pluginManager.registerEvents(new PlayerListeners(), this);
+        
+        pluginManager.registerEvents(new MenuListener(), this);
 
         // Register the example task
         //new ExampleTask().register();

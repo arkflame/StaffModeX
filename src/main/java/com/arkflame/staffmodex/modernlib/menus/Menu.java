@@ -30,6 +30,7 @@ public class Menu implements InventoryHolder {
     }
 
     public void setItem(int slot, MenuItem item) {
+        item.setMenu(this, slot);
         inventory.setItem(slot, item);
         items.put(slot, item);
     }
