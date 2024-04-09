@@ -1,6 +1,9 @@
 package com.arkflame.staffmodex.hotbar.components;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,6 +13,7 @@ import org.bukkit.util.Vector;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
+import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Effects;
 import com.arkflame.staffmodex.modernlib.utils.Sounds;
 
@@ -46,6 +50,20 @@ public class StaffHotbar extends Hotbar {
                 Arrays.asList(randomTeleportLore)) {
             @Override
             public void onInteract(Player player) {
+                List<Player> otherPlayers = player.getWorld().getPlayers().stream()
+                        .filter(p -> !p.equals(player))
+                        .collect(Collectors.toList());
+                if (otherPlayers.isEmpty()) {
+                    player.sendMessage(ChatColors.color("&cThere are no other players to teleport to."));
+                    return;
+                }
+
+                Player targetPlayer = otherPlayers.get(new Random().nextInt(otherPlayers.size()));
+                player.teleport(targetPlayer.getLocation());
+                player.sendMessage(
+                        ChatColors.color("&aYou have been teleported to " + targetPlayer.getDisplayName() + "."));
+
+                Sounds.play(player, 1.0f, 1.0f, "ENTITY_ENDERMAN_TELEPORT", "ENDERMAN_TELEPORT");
             }
         });
 
