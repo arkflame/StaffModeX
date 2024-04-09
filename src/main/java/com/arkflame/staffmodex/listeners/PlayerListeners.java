@@ -5,8 +5,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.arkflame.staffmodex.StaffModeX;
@@ -30,7 +32,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler
-    public void onInteract(final PlayerInteractEvent event) {
+    public void onPlayerInteract(final PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = event.getPlayer();
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
@@ -44,5 +46,25 @@ public class PlayerListeners implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerInteractEntity(final PlayerInteractEntityEvent event) {
+            Player player = event.getPlayer();
+            Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
+            if (hotbar != null) {
+                PlayerInventory inventory = player.getInventory();
+                int slot = inventory.getHeldItemSlot();
+                HotbarItem hotbarItem = hotbar.getItem(slot);
+                if (hotbarItem != null) {
+                    hotbarItem.onInteract(player, event.getRightClicked());
+                    event.setCancelled(true);
+                }
+            }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerMove(PlayerMoveEvent event) {
+        StaffModeX.getInstance().getFreezeManager().preventMovement(event);
     }
 }

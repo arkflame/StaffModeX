@@ -8,10 +8,14 @@ import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
+import com.arkflame.staffmodex.managers.FreezeManager;
+import com.arkflame.staffmodex.managers.VanishManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
+    private FreezeManager freezeManager = new FreezeManager();
+    private VanishManager vanishManager = new VanishManager();
 
     private ConfigWrapper config;
     private ConfigWrapper messages;
@@ -26,6 +30,14 @@ public class StaffModeX extends JavaPlugin {
 
     public HotbarManager getHotbarManager() {
         return hotbarManager;
+    }
+
+    public FreezeManager getFreezeManager() {
+        return freezeManager;
+    }
+
+    public VanishManager getVanishManager() {
+        return vanishManager;
     }
 
     @Override

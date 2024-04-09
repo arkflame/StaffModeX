@@ -5,14 +5,21 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.managers.CpsTestingManager;
+import com.arkflame.staffmodex.menus.ExaminePlayerMenu;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
+import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Effects;
 import com.arkflame.staffmodex.modernlib.utils.Sounds;
@@ -73,6 +80,7 @@ public class StaffHotbar extends Hotbar {
                 Arrays.asList(vanishLore)) {
             @Override
             public void onInteract(Player player) {
+                StaffModeX.getInstance().getVanishManager().toggleVanish(player);
             }
         });
 
@@ -97,7 +105,12 @@ public class StaffHotbar extends Hotbar {
         String freezeLore = "&7Immobilize a player; halt player movement for investigation or to address violations.";
         setItem(5, new HotbarItem(Material.BLAZE_ROD, freezeName, 1, (short) 0, Arrays.asList(freezeLore)) {
             @Override
-            public void onInteract(Player player) {
+            public void onInteract(Player player, Entity target) {
+                if (target instanceof Player) {
+                    StaffModeX.getInstance().getFreezeManager().toggleFreeze((Player) target);
+                } else {
+                    player.sendMessage(ChatColor.RED + "No valid target found.");
+                }
             }
         });
 
@@ -105,7 +118,29 @@ public class StaffHotbar extends Hotbar {
         String cpsLore = "&7Monitor clicks per second; identify potential use of auto-clickers or macros.";
         setItem(6, new HotbarItem(Materials.get("CLOCK", "WATCH"), cpsName, 1, (short) 0, Arrays.asList(cpsLore)) {
             @Override
-            public void onInteract(Player player) {
+            public void onInteract(Player player, Entity target) {
+                if (!(target instanceof Player)) {
+                    player.sendMessage(ChatColors.color("&cInvalid target for CPS testing."));
+                    return;
+                }
+
+                Player testedPlayer = (Player) target;
+
+                // Put the tested player in testing mode for 10 seconds
+                // You can implement this functionality using a separate class or method
+                // For demonstration purposes, let's assume a method called startCpsTesting in a
+                // CpsTestingManager class
+                CpsTestingManager.startCpsTesting(testedPlayer);
+
+                // Wait for 10 seconds
+                Bukkit.getScheduler().runTaskLater(StaffModeX.getInstance(), () -> {
+                    // Get the average CPS of the tested player
+                    double averageCps = CpsTestingManager.getAverageCps(testedPlayer);
+
+                    // Return the average CPS to the staff member who tested the player
+                    player.sendMessage(
+                            ChatColors.color("&eAverage CPS of " + testedPlayer.getName() + ": " + averageCps));
+                }, 200L); // 10 seconds = 200 ticks
             }
         });
 
@@ -113,7 +148,13 @@ public class StaffHotbar extends Hotbar {
         String examineLore = "&7Inspect player inventory and stats; crucial for checking compliance with server rules.";
         setItem(7, new HotbarItem(Material.CHEST, examineName, 1, (short) 0, Arrays.asList(examineLore)) {
             @Override
-            public void onInteract(Player player) {
+            public void onInteract(Player player, Entity target) {
+                if (target instanceof Player) {
+                    Player targetPlayer = (Player) target;
+                    Menu menu = new ExaminePlayerMenu(player, targetPlayer);
+
+                    menu.openInventory(player);
+                }
             }
         });
 

@@ -8,10 +8,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.modernlib.menus.Menu;
+import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 
 public class InventoryListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
@@ -19,8 +23,22 @@ public class InventoryListeners implements Listener {
         HumanEntity human = event.getWhoClicked();
         if (human instanceof Player) {
             Player player = (Player) human;
-            if (StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getSlot()) || StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getHotbarButton())) {
+            if (StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getSlot())
+                    || StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getHotbarButton())) {
                 event.setCancelled(true);
+            }
+        }
+        Inventory inventory = event.getInventory();
+        InventoryHolder holder = inventory.getHolder();
+
+        if (holder instanceof Menu) {
+            Menu menu = (Menu) holder;
+            event.setCancelled(true);
+
+            MenuItem menuItem = menu.getItem(event.getSlot());
+
+            if (menuItem != null) {
+                menuItem.onClick();
             }
         }
     }
