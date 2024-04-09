@@ -19,7 +19,7 @@ public class VanishManager {
         }
     }
 
-    private void makeInvisible(Player player) {
+    public void makeInvisible(Player player) {
         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
             otherPlayer.hidePlayer(player);
         }
@@ -27,7 +27,7 @@ public class VanishManager {
         player.sendMessage(ChatColor.GREEN + "You are now invisible to other players.");
     }
 
-    private void makeVisible(Player player) {
+    public void makeVisible(Player player) {
         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
             otherPlayer.showPlayer(player);
         }

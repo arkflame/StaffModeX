@@ -1,5 +1,6 @@
 package com.arkflame.staffmodex;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -63,11 +64,11 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new EntityListeners(), this);
         pluginManager.registerEvents(new InventoryListeners(), this);
         pluginManager.registerEvents(new PlayerListeners(), this);
-        
+
         pluginManager.registerEvents(new MenuListener(), this);
 
         // Register the example task
-        //new ExampleTask().register();
+        // new ExampleTask().register();
 
         // Register example commands
         new StaffModeCommand().register();
@@ -76,6 +77,16 @@ public class StaffModeX extends JavaPlugin {
     @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
+
+        for (Player player : this.getServer().getOnlinePlayers()) {
+            if (hotbarManager.getHotbar(player) != null) {
+                hotbarManager.setHotbar(player, null);
+                StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
+                StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
+                player.setAllowFlight(false);
+                player.setFlying(false);
+            }
+        }
     }
 
     private static StaffModeX instance;

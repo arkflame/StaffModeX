@@ -37,17 +37,11 @@ public class StaffHotbar extends Hotbar {
                 Vector playerDirection = playerLocation.getDirection();
 
                 // Calculate velocity based on player's direction
-                double velocityMultiplier = 2.0; // Adjust this value as needed for desired launch strength
+                double velocityMultiplier = 4.0; // Adjust this value as needed for desired launch strength
                 Vector velocity = playerDirection.multiply(velocityMultiplier);
 
                 // Apply velocity to player
                 player.setVelocity(velocity);
-
-                // Play particle effects
-                Effects.play(player, "EXPLOSION_LARGE");
-
-                // Play sound effect
-                Sounds.play(player, 1.0f, 1.0f, "ENTITY_FIREWORK_ROCKET_LAUNCH", "FIREWORK_LAUNCH");
             }
         });
 
@@ -76,11 +70,23 @@ public class StaffHotbar extends Hotbar {
 
         String vanishName = "&bVanish";
         String vanishLore = "&7Toggle invisibility on/off; observe players without influencing their behavior.";
-        setItem(2, new HotbarItem(Materials.get("LIME_DYE", "INK_SACK"), vanishName, 1, (short) 7,
+        setItem(2, new HotbarItem(Materials.get("LIME_DYE", "INK_SACK"), vanishName, 1, (short) 10,
                 Arrays.asList(vanishLore)) {
             @Override
             public void onInteract(Player player) {
                 StaffModeX.getInstance().getVanishManager().toggleVanish(player);
+                if (StaffModeX.getInstance().getVanishManager().isVanished(player)) {
+                    setType(Materials.get("LIME_DYE", "INK_SACK"));
+                    setDurability((short) 10);
+                    player.sendMessage(ChatColors.color("&aYou are now vanished."));
+                    Effects.play(player, "FIREWORK_ROCKET_BLAST");
+                } else {
+                    setType(Materials.get("GRAY_DYE", "INK_SACK"));
+                    setDurability((short) 8);
+                    player.sendMessage(ChatColors.color("&aYou are no longer vanished."));
+                    Effects.play(player, "FIREWORK_ROCKET_BLAST_FAR");
+                }
+                player.getInventory().setItem(2, this);
             }
         });
 

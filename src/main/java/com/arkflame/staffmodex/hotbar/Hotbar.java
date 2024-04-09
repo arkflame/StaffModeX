@@ -21,14 +21,12 @@ public class Hotbar {
         return items.getOrDefault(slot, null);
     }
 
-    public static final Hotbar STAFF_HOTBAR = new StaffHotbar();
-
     public void give(Player player) {
         PlayerInventory inventory = player.getInventory();
 
         for (Map.Entry<Integer, HotbarItem> entry : items.entrySet()) {
             HotbarItem item = entry.getValue();
-            inventory.setItem(entry.getKey(), item.getStack());
+            inventory.setItem(entry.getKey(), item);
         }
     }
 

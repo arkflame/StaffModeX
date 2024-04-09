@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.Hotbar;
+import com.arkflame.staffmodex.hotbar.components.StaffHotbar;
 
 public class EntityListeners implements Listener {
 
@@ -18,7 +19,7 @@ public class EntityListeners implements Listener {
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
 
             // Check your condition here
-            if (hotbar == Hotbar.STAFF_HOTBAR) {
+            if (hotbar instanceof StaffHotbar) {
                 // Prevent damage if the condition is met
                 event.setCancelled(true);
             }
