@@ -22,10 +22,14 @@ public class StaffModeCommand extends ModernCommand {
     
             if (hotbarManager.getHotbar(player) != null) {
                 hotbarManager.setHotbar(player, null);
+                StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
+                StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
                 player.setAllowFlight(false);
                 player.setFlying(false);
                 player.sendMessage("Deactivated staff mode");
             } else {
+                StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
+                player.getInventory().clear();
                 hotbarManager.setHotbar(player, Hotbar.STAFF_HOTBAR);
                 player.setAllowFlight(true);
                 player.setFlying(true);

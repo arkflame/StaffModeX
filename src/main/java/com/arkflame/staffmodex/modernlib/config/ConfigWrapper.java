@@ -10,7 +10,6 @@ import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;

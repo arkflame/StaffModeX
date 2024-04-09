@@ -1,10 +1,12 @@
 package com.arkflame.staffmodex;
 
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.arkflame.staffmodex.commands.StaffModeCommand;
 import com.arkflame.staffmodex.hotbar.HotbarManager;
+import com.arkflame.staffmodex.inventories.InventoryManager;
 import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
@@ -17,6 +19,7 @@ public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
     private FreezeManager freezeManager = new FreezeManager();
     private VanishManager vanishManager = new VanishManager();
+    private InventoryManager inventoryManager = new InventoryManager(this, "inventories.yml");
 
     private ConfigWrapper config;
     private ConfigWrapper messages;
@@ -39,6 +42,10 @@ public class StaffModeX extends JavaPlugin {
 
     public VanishManager getVanishManager() {
         return vanishManager;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
     }
 
     @Override
@@ -64,6 +71,11 @@ public class StaffModeX extends JavaPlugin {
 
         // Register example commands
         new StaffModeCommand().register();
+    }
+
+    @Override
+    public void onDisable() {
+        HandlerList.unregisterAll(this);
     }
 
     private static StaffModeX instance;
