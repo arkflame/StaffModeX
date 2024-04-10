@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.cps.CpsTestingManager;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 
@@ -43,7 +44,9 @@ public class PlayerListeners implements Listener {
 
     @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            CpsTestingManager.click(event.getPlayer());
+        } else if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = event.getPlayer();
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
             if (hotbar != null) {

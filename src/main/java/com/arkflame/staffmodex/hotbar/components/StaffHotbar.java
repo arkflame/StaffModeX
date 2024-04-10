@@ -1,6 +1,7 @@
 package com.arkflame.staffmodex.hotbar.components;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -14,12 +15,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.cps.CpsTestingManager;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
-import com.arkflame.staffmodex.managers.CpsTestingManager;
 import com.arkflame.staffmodex.menus.ExaminePlayerMenu;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
+import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Effects;
 import com.arkflame.staffmodex.modernlib.utils.Sounds;
@@ -90,11 +92,39 @@ public class StaffHotbar extends Hotbar {
             }
         });
 
-        String guiHubName = "&3GUI Hub";
-        String guiHubLore = "&7Access central command interface; manage server settings, player issues, and plugins from one place.";
+        String guiHubName = "&3Miner GUI";
+        String guiHubLore = "&7Open the GUI to see players that are currently mining.";
         setItem(3, new HotbarItem(Material.PAPER, guiHubName, 1, (short) 0, Arrays.asList(guiHubLore)) {
             @Override
             public void onInteract(Player player) {
+                // Menu with heads of all players that are currently below Y 60 (mining)
+                Menu menu = new Menu(ChatColors.color("&3Miner GUI"), 4);
+                // Get players below coordinate Y 60
+                Collection<Player> miners = Bukkit.getOnlinePlayers().stream().filter(p -> p.getLocation().getY() < 60)
+                        .collect(Collectors.toSet());
+                int i = 0;
+                // Add heads of players to menu
+                for (Player miner : miners) {
+                    menu.setItem(i++, new MenuItem(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
+                            "&b" + miner.getName(), "&bLocation: &7" + miner.getLocation().getBlockX() + ", "
+                                    + miner.getLocation().getBlockY() + ", " + miner.getLocation().getBlockZ()) {
+                        @Override
+                        public void onClick() {
+                            player.closeInventory();
+                            player.teleport(miner.getLocation());
+                            Sounds.play(player, 1.0f, 1.0f, "ENTITY_ENDERMAN_TELEPORT", "ENDERMAN_TELEPORT");
+                            player.sendMessage(ChatColors.color("&aYou have been teleported to " + miner.getName() + "."));
+                        }
+                    });
+                }
+                menu.setItem(menu.getSize() - 9, new MenuItem(Material.ARROW, "&bClose") {
+                    @Override
+                    public void onClick() {
+                        player.closeInventory();
+                    }
+                });
+                menu.setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
+                menu.openInventory(player);
             }
         });
 
@@ -104,6 +134,26 @@ public class StaffHotbar extends Hotbar {
                 Arrays.asList(staffListLore)) {
             @Override
             public void onInteract(Player player) {
+                Menu menu = new Menu(ChatColors.color("&5Staff List"), 3);
+                Collection<Player> staff = StaffModeX.getInstance().getStaffModeManager().getStaffPlayers();
+                int i = 0;
+                for (Player staffMember : staff) {
+                    if (i >= 2 * 9) {
+                        break;
+                    }
+                    menu.setItem(i++, new MenuItem(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
+                            "&b" + staffMember.getDisplayName()));
+                }
+
+                // Item to return to the menu
+                menu.setItem(2 * 9, new MenuItem(Material.ARROW, "&bClose") {
+                    @Override
+                    public void onClick() {
+                        player.closeInventory();
+                    }
+                });
+                menu.setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
+                menu.openInventory(player);
             }
         });
 
@@ -132,20 +182,35 @@ public class StaffHotbar extends Hotbar {
 
                 Player testedPlayer = (Player) target;
 
+                if (CpsTestingManager.isTesting(testedPlayer)) {
+                    player.sendMessage(ChatColors.color("&c" + testedPlayer.getName() + " is already being tested."));
+                    return;
+                }
+
                 // Put the tested player in testing mode for 10 seconds
-                // You can implement this functionality using a separate class or method
-                // For demonstration purposes, let's assume a method called startCpsTesting in a
-                // CpsTestingManager class
                 CpsTestingManager.startCpsTesting(testedPlayer);
+                player.sendMessage(
+                        ChatColors.color("&aYou have started CPS testing for " + testedPlayer.getName() + "." +
+                                "\nPlease wait for 10 seconds to get the average CPS." +
+                                "\nYou will be notified when the average CPS is ready."));
 
                 // Wait for 10 seconds
                 Bukkit.getScheduler().runTaskLater(StaffModeX.getInstance(), () -> {
-                    // Get the average CPS of the tested player
+                    // Get the average CPS of the tested player and format to limit to 1 decimal place
                     double averageCps = CpsTestingManager.getAverageCps(testedPlayer);
+                    CpsTestingManager.stopCpsTesting(testedPlayer);
+                    String averageCpsString = String.format("%.1f", averageCps);
 
-                    // Return the average CPS to the staff member who tested the player
-                    player.sendMessage(
-                            ChatColors.color("&eAverage CPS of " + testedPlayer.getName() + ": " + averageCps));
+                    // Send message with average CPS and a text saynig if its dangerous or not
+                    if (averageCps > 10) {
+                        player.sendMessage(ChatColors
+                                .color("&cThe average CPS of " + testedPlayer.getName() + " is " + averageCpsString + ". " +
+                                        "(This is dangerous!)"));
+                    } else {
+                        player.sendMessage(ChatColors
+                                .color("&aThe average CPS of " + testedPlayer.getName() + " is " + averageCpsString + ". " +
+                                        "(This is safe!)"));
+                    }
                 }, 200L); // 10 seconds = 200 ticks
             }
         });

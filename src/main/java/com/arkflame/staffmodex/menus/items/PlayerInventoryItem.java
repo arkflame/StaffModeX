@@ -59,9 +59,11 @@ public class PlayerInventoryItem extends MenuItem {
         // Populate armor
         for (int i = 0; i < 4; i++) {
             ItemStack stack = target.getInventory().getArmorContents()[i];
-            if (stack != null) {
+            if (stack != null && stack.getType()!= Material.AIR) {
                 MenuItem item = new MenuItem(stack);
                 menu.setItem(5 * 9 - i - 1, item);
+            } else {
+                menu.setItem(5 * 9 - i - 1, new MenuItem(Materials.get("STAINED_GLASS_PANE", "RED_STAINED_GLASS_PANE"), 1, (short) 14, "&7Empty Slot"));
             }
         }
 

@@ -12,6 +12,7 @@ import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
 import com.arkflame.staffmodex.managers.FreezeManager;
+import com.arkflame.staffmodex.managers.StaffModeManager;
 import com.arkflame.staffmodex.managers.VanishManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
@@ -21,6 +22,7 @@ public class StaffModeX extends JavaPlugin {
     private FreezeManager freezeManager = new FreezeManager();
     private VanishManager vanishManager = new VanishManager();
     private InventoryManager inventoryManager = new InventoryManager(this, "inventories.yml");
+    private StaffModeManager staffModeManager = new StaffModeManager();
 
     private ConfigWrapper config;
     private ConfigWrapper messages;
@@ -47,6 +49,10 @@ public class StaffModeX extends JavaPlugin {
 
     public InventoryManager getInventoryManager() {
         return inventoryManager;
+    }
+
+    public StaffModeManager getStaffModeManager() {
+        return staffModeManager;
     }
 
     @Override

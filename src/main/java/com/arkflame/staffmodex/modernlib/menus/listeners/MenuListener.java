@@ -15,7 +15,6 @@ public class MenuListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Inventory inventory = event.getInventory();
         InventoryHolder holder = inventory.getHolder();
-
         if (holder instanceof Menu) {
             Menu menu = (Menu) holder;
             event.setCancelled(true);
@@ -34,7 +33,6 @@ public class MenuListener implements Listener {
     public void onInventoryDrag(InventoryDragEvent event) {
         Inventory inventory = event.getInventory();
         InventoryHolder holder = inventory.getHolder();
-
         if (holder instanceof Menu) {
             event.setCancelled(true);
         }
