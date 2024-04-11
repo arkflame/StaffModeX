@@ -61,7 +61,11 @@ public class InventoryManager {
         if (!inventoryConfig.contains(player.getUniqueId().toString())) {
             return;
         }
-        Map<Integer, ItemStack> contents = (Map<Integer, ItemStack>) inventoryConfig.get(player.getUniqueId().toString());
+        Object inv = inventoryConfig.get(player.getUniqueId().toString());
+        if (!(inv instanceof Map)) {
+            return;
+        }
+        Map<Integer, ItemStack> contents = (Map<Integer, ItemStack>) inv;
         Inventory inventory = player.getInventory();
         if (inventory == null) {
             return;
