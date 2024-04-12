@@ -11,8 +11,8 @@ public class LocationItem extends MenuItem {
         super(Material.MAP, StaffModeX.getInstance().getMsg().getText("menus.location.title"),
                 StaffModeX.getInstance().getMsg().getText("menus.location.coordinates")
                         .replace("{world}", location.getWorld().getName())
-                        .replace("{x}", String.valueOf(location.getX()))
-                        .replace("{y}", String.valueOf(location.getY()))
-                        .replace("{z}", String.valueOf(location.getZ())));
+                        .replace("{x}", String.valueOf(location.getBlockX()))
+                        .replace("{y}", String.valueOf(location.getBlockY()))
+                        .replace("{z}", String.valueOf(location.getBlockZ())));
     }
 }

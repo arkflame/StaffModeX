@@ -103,6 +103,11 @@ public class StaffModeX extends JavaPlugin {
                 player.setFlying(false);
             }
         }
+
+        // Close everyone's inventory
+        for (Player player : this.getServer().getOnlinePlayers()) {
+            player.closeInventory();
+        }
     }
 
     private static StaffModeX instance;
