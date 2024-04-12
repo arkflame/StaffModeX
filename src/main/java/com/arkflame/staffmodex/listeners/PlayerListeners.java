@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.cps.CpsTestingManager;
@@ -32,7 +33,12 @@ public class PlayerListeners implements Listener {
 
         if (staffPlayer.isWritingNote()) {
             String text = event.getMessage();
-            staffPlayer.openWriteMenu(player, text);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    staffPlayer.openWriteMenu(player, text);
+                }
+            }.runTask(StaffModeX.getInstance());
             StaffNote note = staffPlayer.writeNote(text);
             event.setCancelled(true);
             player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.note-writing-success").replace("{player}", note.getName()));
@@ -42,7 +48,12 @@ public class PlayerListeners implements Listener {
             String text = event.getMessage();
             String warnedName = staffPlayer.getWarningProcess().getTarget().getName();
             staffPlayer.getWarningProcess().complete(text);
-            staffPlayer.getWarningProcess().openWarningMenu(player);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    staffPlayer.getWarningProcess().openWarningMenu(player);
+                }
+            }.runTask(StaffModeX.getInstance());
             staffPlayer.getWarningProcess().clear();
             event.setCancelled(true);
             player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning-success").replace("{player}", warnedName));
