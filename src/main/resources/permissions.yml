@@ -1,0 +1,14 @@
+################################################################################
+#                            StaffModeX Permissions                            #
+#                                                                              #
+#        Below is the list of permissions used by the StaffModeX plugin.       #
+#  Ensure that appropriate permissions are granted to the respective players.  #
+#                                                                              #
+#        Note: This is a comment section. Do not modify the section.           #
+################################################################################
+
+permissions:
+  staffmodex.command.report: Grants permission to use the report command.
+  staffmodex.command.warning: Grants permission to issue warnings to players.
+  staffmodex.bypass.cooldown: Allows bypassing cooldown restrictions for commands.
+  staffmodex.command.staffmode: Grants permission to access Staff Mode features.

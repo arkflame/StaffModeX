@@ -5,27 +5,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.menus.InfractionsMenu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class InfractionItem extends MenuItem {
-    int warnings;
-    int reports;
-    String lastWarning;
-    String lastReport;
+    private Player player;
+    private Player target;
+    private StaffPlayer staffPlayer;
+    private int warnings;
+    private int reports;
+    private String lastWarning;
+    private String lastReport;
 
-    public InfractionItem(Player player) {
-        // Warnings, Reports, Reason
-        super(Material.PAPER, "&bInfractions", "&7Loading...");
+    public InfractionItem(Player player, Player target) {
+        super(Material.PAPER, StaffModeX.getInstance().getMsg().getText("menus.infraction.title"), StaffModeX.getInstance().getMsg().getText("menus.infraction.loading"));
+        this.player = player;
+        this.target = target;
         
-        asyncUpdate(player);
+        asyncUpdate(target);
     }
 
     public void asyncUpdate(Player player) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player.getUniqueId());
+                setStaffPlayer(StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player.getUniqueId()));
                 setWarnings(staffPlayer.getWarnings().count());
                 setReports(staffPlayer.getReports().count());
                 setLastWarning(staffPlayer.getWarnings().getLast());
@@ -34,53 +39,47 @@ public class InfractionItem extends MenuItem {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        updateLore(warnings, reports, lastWarning, lastReport);
+                        updateLore();
                     }
                 }.runTask(StaffModeX.getInstance());
             }
         }.runTaskAsynchronously(StaffModeX.getInstance());
     }
 
-    public void updateLore(int warnings, int reports, String lastWarning, String lastReport) {
-        setLore(
-            "&bWarnings: &7" + warnings,
-            "&bReports: &7" + reports,
-            "&bLast Warning: &7" + lastWarning,
-            "&bLast Report: &7" + lastReport
-        );
-    }
+    public void updateLore() {
+        String warningsMsg = StaffModeX.getInstance().getMsg().getText("menus.infraction.warnings").replace("{warnings}", String.valueOf(warnings));
+        String reportsMsg = StaffModeX.getInstance().getMsg().getText("menus.infraction.reports").replace("{reports}", String.valueOf(reports));
+        String lastWarningMsg = StaffModeX.getInstance().getMsg().getText("menus.infraction.lastWarning").replace("{lastWarning}", lastWarning != null ? lastWarning : "N/A");
+        String lastReportMsg = StaffModeX.getInstance().getMsg().getText("menus.infraction.lastReport").replace("{lastReport}", lastReport != null ? lastReport : "N/A");
 
-    public int getWarnings() {
-        return warnings;
+        setLore(warningsMsg, reportsMsg, lastWarningMsg, lastReportMsg);
     }
 
     public void setWarnings(int warnings) {
         this.warnings = warnings;
     }
 
-    public int getReports() {
-        return reports;
-    }
-
     public void setReports(int reports) {
         this.reports = reports;
-    }
-
-    public String getLastWarning() {
-        return lastWarning;
     }
 
     public void setLastWarning(String lastWarning) {
         this.lastWarning = lastWarning;
     }
 
-    public String getLastReport() {
-        return lastReport;
-    }
-
     public void setLastReport(String lastReport) {
         this.lastReport = lastReport;
     }
 
-    
+    public void setStaffPlayer(StaffPlayer staffPlayer) {
+        this.staffPlayer = staffPlayer;
+    }
+
+    @Override
+    public void onClick() {
+        if (staffPlayer == null) {
+            return;
+        }
+        new InfractionsMenu(getMenu(), player, staffPlayer).openInventory(player);
+    }
 }

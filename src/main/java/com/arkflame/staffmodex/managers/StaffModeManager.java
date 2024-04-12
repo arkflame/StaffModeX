@@ -1,18 +1,18 @@
 package com.arkflame.staffmodex.managers;
 
-import java.util.Collection;
-import java.util.HashSet;
-
-import org.bukkit.entity.Player;
-
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.hotbar.components.StaffHotbar;
+import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Players;
+import org.bukkit.entity.Player;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 public class StaffModeManager {
-    private Collection<Player> staffPlayers = new HashSet<>();
+    private final Collection<Player> staffPlayers = new HashSet<>();
 
     public void toggleStaff(Player player) {
         HotbarManager hotbarManager = StaffModeX.getInstance().getHotbarManager();
@@ -25,8 +25,9 @@ public class StaffModeManager {
             StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
             StaffModeX.getInstance().getVanishManager().makeVisible(player);
             Players.setFlying(player, false);
-            player.sendMessage(ChatColors.color("&aYou have left staff mode!"));
-            
+            ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+            player.sendMessage(ChatColors.color(msg.getText("staffmode.leave")));
+
             removeStaff(player);
         } else {
             // Activate
@@ -35,7 +36,8 @@ public class StaffModeManager {
             Players.clearInventory(player);
             hotbarManager.setHotbar(player, new StaffHotbar());
             Players.setFlying(player, true);
-            player.sendMessage(ChatColors.color("&aYou have entered staff mode!"));
+            ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+            player.sendMessage(ChatColors.color(msg.getText("staffmode.enter")));
 
             addStaff(player);
         }

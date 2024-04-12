@@ -11,3 +11,134 @@ messages:
   note-started: "&aYou have started writing a note to {player}."
   warn-started: "&aYou have started writing a warning to {player}."
   you-are-warned: "&cYou were warned by &b{staff}&c because of &f{reason}&c."
+  no-permission: "&cYou do not have permission to use this command."
+  # Infractions Viewer Menu
+  infractions-menu-title: "&cInfractions"
+  report-title: "&9Report"
+  warning-title: "&cWarning"
+  reason-label: "&bReason: &7{reason}"
+  reporter-label: "&bReporter: &7{reporter}"
+  time-label: "&bTime: &7{time}"
+  back-button: "&7Back"
+  return-to-previous-menu: "&eReturn to previous menu"
+
+staffmode:
+  enter: "&aYou have entered staff mode!"
+  leave: "&aYou have left staff mode!"
+
+vanish:
+  toggle_on: "&aYou are now invisible to other players."
+  toggle_off: "&aYou are now visible to other players."
+
+
+hotbar:
+  launcher:
+    name: "&6Launcher"
+    lore:
+    - "&7Launches you towards the direction you are looking."
+  random_teleport:
+    name: "&aRandom Teleport"
+    lore:
+    - "&7Teleport to a random player location; useful for random integrity checks or monitoring player activity."
+    no_players: "&cThere are no other players to teleport to."
+    success: "&aYou have been teleported to {player}."
+  vanish:
+    name: "&bVanish"
+    lore:
+    - "&7Toggle invisibility on/off; observe players without influencing their behavior."
+    vanished: "&aYou are now vanished."
+    unvanished: "&aYou are no longer vanished."
+  minergui:
+    name: "&3Miner GUI"
+    lore:
+    - "&7Open the GUI to see players that are currently mining."
+    menu_title: "&3Miner GUI"
+    close: "&bClose"
+    teleport: "&aYou have been teleported to {player}."
+  stafflist:
+    name: "&5Staff List"
+    lore:
+    - "&7Display active staff members; quick reference for coordination and player support."
+    menu_title: "&5Staff List"
+    close: "&bClose"
+  freeze:
+    name: "&cFreeze"
+    lore:
+    - "&7Immobilize a player; halt player movement for investigation or to address violations."
+    invalid: "&cNo valid target found."
+  cps:
+    name: "&eCPS"
+    lore:
+    - "&7Monitor clicks per second; identify potential use of auto-clickers or macros."
+    invalid: "&cInvalid target for CPS testing."
+    already_testing: "&c{player} is already being tested."
+    start_testing: "&aYou have started CPS testing for {player}. Please wait for 10 seconds to get the average CPS. You will be notified when the average CPS is ready."
+    dangerous: "&cThe average CPS of {player} is {cps}. (This is dangerous!)"
+    safe: "&aThe average CPS of {player} is {cps}. (This is safe!)"
+  examine:
+    name: "&dExamine"
+    lore:
+    - "&7Inspect player inventory and stats; crucial for checking compliance with server rules."
+  follow:
+    name: "&9Follow"
+    lore:
+    - "&7Mount the player to observe their behavior."
+    invalid: "&cInvalid target for following."
+    success: "&aYou are now following {player}."
+  playerItem:
+    title: "&b{playerName}"
+    description: "&bLocation: &7{blockX}, {blockY}, {blockZ}\n&bHealth: &7{health}/{maxHealth}\n&bFood: &7{foodLevel}\n&bXP: &7{exp}/{expToLevel}\n&bLevel: &7{level}\n&bGamemode: &7{gameMode}\n&bIP: &7{ip}\n&bUUID: &7{uuid}"
+
+menus:
+  warnPlayer:
+    title: "&bWarn Player"
+    description: "&7Warn this user"
+  playerNotes:
+    title: "&bNotes"
+    loading: "&bNotes: &7Loading..."
+    noNotes: "&bNotes: &7No notes found."
+  playerInventory:
+    title: "&bInventory"
+    viewInventory: "&7View the target's inventory"
+    back: "&bBack"
+    effects: "&bEffects"
+    noEffects: "&7No Effects"
+    emptySlot: "&7Empty Slot"
+  location:
+    title: "&bLocation"
+    coordinates: "&bLocation: &7{world}, {x}, {y}, {z}"
+  infraction:
+    title: "&bInfractions"
+    loading: "&7Loading..."
+    warnings: "&bWarnings: &7{warnings}"
+    reports: "&bReports: &7{reports}"
+    lastWarning: "&bLast Warning: &7{lastWarning}"
+    lastReport: "&bLast Report: &7{lastReport}"
+  gameMode:
+    title: "&bGameMode"
+    gameMode: "&bGameMode: &7{gamemode}"
+  freezePlayer:
+    title: "&bFreeze Player"
+    frozen: "&aThis player is frozen"
+    notFrozen: "&cCurrently not frozen"
+  food:
+    title: "&bFood"
+    health: "&bHealth: &7"
+    foodLevel: "&bFood: &7"
+  connection:
+    title: "&bConnection"
+    ip: "&bIP: &7"
+    port: "&bPort: &7"
+  infractions:
+    title: "&cInfractions"
+    warnings:
+      title: "&cWarnings"
+      description: "&7View warnings"
+      opening: "&7Opening warnings..."
+    reports:
+      title: "&9Reports"
+      description: "&7View reports"
+      opening: "&7Opening reports..."
+    back:
+      title: "&7Back"
+      description: "&eReturn to previous menu"

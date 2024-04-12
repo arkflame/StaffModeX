@@ -18,7 +18,7 @@ public class ExaminePlayerMenu extends Menu {
 
     public ExaminePlayerMenu(Player player, Player target) {
         super("&6Examining " + target.getName(), 3);
-        InfractionItem infractionItem = new InfractionItem(target);
+        InfractionItem infractionItem = new InfractionItem(player, target);
         setItem(9 + 0, new FoodItem(target));
         setItem(9 + 1, new ConnectionItem(target));
         setItem(9 + 2, new GameModeItem(target));

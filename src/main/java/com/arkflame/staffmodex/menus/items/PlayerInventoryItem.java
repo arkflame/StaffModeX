@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
+import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
@@ -18,7 +19,8 @@ public class PlayerInventoryItem extends MenuItem {
     private final Menu examinePlayerMenu;
 
     public PlayerInventoryItem(Player player, Player target, Menu examinePlayerMenu) {
-        super(Material.CHEST, "&bInventory", "&7View the target's inventory");
+        super(Material.CHEST, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.title"),
+                StaffModeX.getInstance().getMsg().getText("menus.playerInventory.viewInventory"));
         this.player = player;
         this.target = target;
         this.examinePlayerMenu = examinePlayerMenu;
@@ -42,7 +44,7 @@ public class PlayerInventoryItem extends MenuItem {
         menu.openInventory(player);
 
         // Item to return to the menu
-        menu.setItem(4 * 9, new MenuItem(Material.ARROW, "&bBack") {
+        menu.setItem(4 * 9, new MenuItem(Material.ARROW, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.back")) {
             @Override
             public void onClick() {
                 examinePlayerMenu.openInventory(player);
@@ -52,9 +54,9 @@ public class PlayerInventoryItem extends MenuItem {
         Collection<PotionEffect> effects = target.getActivePotionEffects();
 
         // Item that shows effect names duration and amplifier in lore
-        List<String> loreEffects = effects.isEmpty() ? List.of("&7No Effects")
+        List<String> loreEffects = effects.isEmpty() ? List.of(StaffModeX.getInstance().getMsg().getText("menus.playerInventory.noEffects"))
                 : effects.stream().map(this::formatEffect).toList();
-        menu.setItem(5 * 9 - 5, new MenuItem(Material.WATER_BUCKET, "&bEffects", loreEffects.toArray(new String[0])));
+        menu.setItem(5 * 9 - 5, new MenuItem(Material.WATER_BUCKET, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.effects"), loreEffects.toArray(new String[0])));
 
         // Populate armor
         for (int i = 0; i < 4; i++) {
@@ -63,7 +65,7 @@ public class PlayerInventoryItem extends MenuItem {
                 MenuItem item = new MenuItem(stack);
                 menu.setItem(5 * 9 - i - 1, item);
             } else {
-                menu.setItem(5 * 9 - i - 1, new MenuItem(Materials.get("STAINED_GLASS_PANE", "RED_STAINED_GLASS_PANE"), 1, (short) 14, "&7Empty Slot"));
+                menu.setItem(5 * 9 - i - 1, new MenuItem(Materials.get("STAINED_GLASS_PANE", "RED_STAINED_GLASS_PANE"), 1, (short) 14, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.emptySlot")));
             }
         }
 

@@ -14,6 +14,12 @@ public class StaffModeCommand extends ModernCommand {
 
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
+        // Check for permission
+        if (!sender.hasPermission("staffmodex.command.staffmode")) {
+            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
+            return;
+        }
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
 

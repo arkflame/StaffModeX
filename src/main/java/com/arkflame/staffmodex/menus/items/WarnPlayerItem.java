@@ -16,7 +16,7 @@ public class WarnPlayerItem extends MenuItem {
     private Player target;
 
     public WarnPlayerItem(InfractionItem infractionItem, Player player, Player target) {
-        super(Material.PAPER, "&bWarn Player", "&7Warn this user");
+        super(Material.PAPER, StaffModeX.getInstance().getMsg().getText("menus.warnPlayer.title"), StaffModeX.getInstance().getMsg().getText("menus.warnPlayer.description"));
         this.infractionItem = infractionItem;
         this.player = player;
         this.target = target;
@@ -34,6 +34,12 @@ public class WarnPlayerItem extends MenuItem {
 
     @Override
     public void onClick() {
+        // Check for permission
+        if (!player.hasPermission("staffmodex.command.warning")) {
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
+            return;
+        }
+
         player.closeInventory();
         staffPlayer.getWarningProcess().startWarning(infractionItem, player, target, staffPlayer, staffPlayerTarget);
         player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warn-started").replace("{player}", target.getName()));

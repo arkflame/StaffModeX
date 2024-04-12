@@ -116,6 +116,19 @@ public class ConfigWrapper {
         }
     }
 
+    public String getText(String key, String... placeholders) {
+        String text = getString(key);
+    
+        for (int i = 0; i < placeholders.length; i += 2) {
+            String placeholder = placeholders[i];
+            String replacement = i + 1 < placeholders.length ? placeholders[i + 1] : "";
+    
+            text = text.replace(placeholder, replacement);
+        }
+    
+        return text;
+    }    
+
     public String getString(String key) {
         if (!isLoaded())
             return "undefined";

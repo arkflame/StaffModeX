@@ -13,7 +13,7 @@ public class PlayerNotesItem extends MenuItem {
     private final Player target;
 
     public PlayerNotesItem(Player player, Player target) {
-        super(Material.PAPER, "&bNotes", "&bNotes: &7" + "Loading...");
+        super(Material.PAPER, StaffModeX.getInstance().getMsg().getText("menus.playerNotes.title"), "&bNotes: &7" + StaffModeX.getInstance().getMsg().getText("menus.playerNotes.loading"));
         this.player = player;
         this.target = target;
 
@@ -47,7 +47,7 @@ public class PlayerNotesItem extends MenuItem {
 
     public void updateLore(String notes) {
         if (notes == null) {
-            setLore("&bNotes: &7No notes found.");
+            setLore(StaffModeX.getInstance().getMsg().getText("menus.playerNotes.noNotes"));
         } else {
             setLore("&bNotes: &7" + notes);
         }
