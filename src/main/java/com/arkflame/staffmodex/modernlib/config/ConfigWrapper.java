@@ -119,7 +119,7 @@ public class ConfigWrapper {
     public String getString(String key) {
         if (!isLoaded())
             return "undefined";
-        return config.getString(key);
+        return config.getString(key, "");
     }
 
     public int getInt(String key) {

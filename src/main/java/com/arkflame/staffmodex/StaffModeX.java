@@ -5,7 +5,9 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffModeCommand;
+import com.arkflame.staffmodex.commands.WarnCommand;
 import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.inventories.InventoryManager;
 import com.arkflame.staffmodex.listeners.EntityListeners;
@@ -16,6 +18,7 @@ import com.arkflame.staffmodex.managers.StaffModeManager;
 import com.arkflame.staffmodex.managers.VanishManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
+import com.arkflame.staffmodex.player.StaffPlayerManager;
 
 public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
@@ -23,6 +26,7 @@ public class StaffModeX extends JavaPlugin {
     private VanishManager vanishManager = new VanishManager();
     private InventoryManager inventoryManager = new InventoryManager(this, "inventories.yml");
     private StaffModeManager staffModeManager = new StaffModeManager();
+    private StaffPlayerManager staffPlayerManager = new StaffPlayerManager();
 
     private ConfigWrapper config;
     private ConfigWrapper messages;
@@ -55,6 +59,10 @@ public class StaffModeX extends JavaPlugin {
         return staffModeManager;
     }
 
+    public StaffPlayerManager getStaffPlayerManager() {
+        return staffPlayerManager;
+    }
+
     @Override
     public void onEnable() {
         // Set static instance
@@ -77,7 +85,9 @@ public class StaffModeX extends JavaPlugin {
         // new ExampleTask().register();
 
         // Register example commands
+        new ReportCommand().register();
         new StaffModeCommand().register();
+        new WarnCommand().register();
     }
 
     @Override

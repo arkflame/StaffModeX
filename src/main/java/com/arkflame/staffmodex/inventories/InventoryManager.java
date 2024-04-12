@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -15,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import com.arkflame.staffmodex.StaffModeX;
 
 public class InventoryManager {
-
     private File inventoryFile;
     private FileConfiguration inventoryConfig;
 
@@ -23,6 +21,9 @@ public class InventoryManager {
         inventoryFile = new File(plugin.getDataFolder(), fileName);
         if (!inventoryFile.exists()) {
             try {
+                if (!inventoryFile.getParentFile().exists()) {
+                    inventoryFile.getParentFile().mkdirs();
+                }
                 inventoryFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();

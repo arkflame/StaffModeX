@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -16,8 +17,38 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.cps.CpsTestingManager;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.player.StaffNote;
+import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class PlayerListeners implements Listener {
+    @EventHandler(ignoreCancelled = true)
+    public void onAsyncPlayerChat(final AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayer(player.getUniqueId());
+
+        if (staffPlayer == null) {
+            return;
+        }
+
+        if (staffPlayer.isWritingNote()) {
+            String text = event.getMessage();
+            staffPlayer.openWriteMenu(player, text);
+            StaffNote note = staffPlayer.writeNote(text);
+            event.setCancelled(true);
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.note-writing-success").replace("{player}", note.getName()));
+        }
+
+        if (staffPlayer.getWarningProcess().isInProgress()) {
+            String text = event.getMessage();
+            String warnedName = staffPlayer.getWarningProcess().getTarget().getName();
+            staffPlayer.getWarningProcess().complete(text);
+            staffPlayer.getWarningProcess().openWarningMenu(player);
+            staffPlayer.getWarningProcess().clear();
+            event.setCancelled(true);
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning-success").replace("{player}", warnedName));
+        }
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();

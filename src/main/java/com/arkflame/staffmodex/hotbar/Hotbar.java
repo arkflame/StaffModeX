@@ -7,8 +7,6 @@ import java.util.Map;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.arkflame.staffmodex.hotbar.components.StaffHotbar;
-
 public class Hotbar {
     // Slot, HotbarItem
     public Map<Integer, HotbarItem> items = new HashMap<>();

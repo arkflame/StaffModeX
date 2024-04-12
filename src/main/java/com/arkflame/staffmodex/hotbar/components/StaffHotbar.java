@@ -105,9 +105,7 @@ public class StaffHotbar extends Hotbar {
                 int i = 0;
                 // Add heads of players to menu
                 for (Player miner : miners) {
-                    menu.setItem(i++, new MenuItem(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
-                            "&b" + miner.getName(), "&bLocation: &7" + miner.getLocation().getBlockX() + ", "
-                                    + miner.getLocation().getBlockY() + ", " + miner.getLocation().getBlockZ()) {
+                    menu.setItem(i++, new PlayerItem(miner) {
                         @Override
                         public void onClick() {
                             player.closeInventory();
@@ -141,8 +139,7 @@ public class StaffHotbar extends Hotbar {
                     if (i >= 2 * 9) {
                         break;
                     }
-                    menu.setItem(i++, new MenuItem(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
-                            "&b" + staffMember.getDisplayName()));
+                    menu.setItem(i++, new PlayerItem(staffMember));
                 }
 
                 // Item to return to the menu
