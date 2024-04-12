@@ -10,6 +10,7 @@ import com.arkflame.staffmodex.commands.StaffModeCommand;
 import com.arkflame.staffmodex.commands.WarnCommand;
 import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.inventories.InventoryManager;
+import com.arkflame.staffmodex.listeners.BlockListeners;
 import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
@@ -72,19 +73,16 @@ public class StaffModeX extends JavaPlugin {
         config = new ConfigWrapper("config.yml").saveDefault().load();
         messages = new ConfigWrapper("messages.yml").saveDefault().load();
 
-        // Register the example listener
+        // Register Listeners
         PluginManager pluginManager = this.getServer().getPluginManager();
 
+        pluginManager.registerEvents(new BlockListeners(), this);
         pluginManager.registerEvents(new EntityListeners(), this);
         pluginManager.registerEvents(new InventoryListeners(), this);
         pluginManager.registerEvents(new PlayerListeners(), this);
-
         pluginManager.registerEvents(new MenuListener(), this);
 
-        // Register the example task
-        // new ExampleTask().register();
-
-        // Register example commands
+        // Register Commands
         new ReportCommand().register();
         new StaffModeCommand().register();
         new WarnCommand().register();
