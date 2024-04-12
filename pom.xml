@@ -9,7 +9,7 @@
     <!-- Plugin Information -->
     <name>StaffModeX</name>
     <description>The ultimate Staff administration tool</description>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <url>https://github.com/arkflame/Spigot-Boilerplate</url>
 
     <properties>
