@@ -1,3 +1,5 @@
+# You can use hex colors on any message
+# Format: #000000
 messages:
   from-command: "&eHello world from Command."
   from-listener: "&aHello world from Listener."
