@@ -15,7 +15,7 @@ public class ExamineHotbarItem extends HotbarItem {
         super(Material.CHEST,
                 StaffModeX.getInstance().getMsg().getText("hotbar.examine.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.examine.lore")));
+                Arrays.asList(StaffModeX.getInstance().getMsg().getTextList("hotbar.examine.lore")));
     }
 
     @Override

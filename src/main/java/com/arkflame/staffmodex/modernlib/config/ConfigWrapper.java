@@ -3,8 +3,10 @@ package com.arkflame.staffmodex.modernlib.config;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -104,6 +106,31 @@ public class ConfigWrapper {
         return config != null;
     }
 
+    public List<String> getStringList(String key) {
+        if (!isLoaded())
+            return Collections.emptyList();
+        return config.getStringList(key);
+    }
+
+    public List<String> getTextList(String key) {
+        List<String> textList = new ArrayList<>();
+        List<String> stringList = getStringList(key);
+        for (String text : stringList) {
+            textList.add(ChatColors.color(text));
+        }
+        return textList;
+    }
+
+    public List<String> getTextList(String key, String... placeholders) {
+        List<String> textList = new ArrayList<>();
+        List<String> stringList = getStringList(key);
+        for (String text : stringList) {
+            String processedText = replacePlaceholders(text, placeholders);
+            textList.add(ChatColors.color(processedText));
+        }
+        return textList;
+    }
+
     public String getText(String key) {
         if (colorTextMap.containsKey(key)) {
             return colorTextMap.get(key);
@@ -117,17 +144,23 @@ public class ConfigWrapper {
     }
 
     public String getText(String key, String... placeholders) {
-        String text = getString(key);
+        String text = getText(key);
     
         for (int i = 0; i < placeholders.length; i += 2) {
-            String placeholder = placeholders[i];
-            String replacement = i + 1 < placeholders.length ? placeholders[i + 1] : "";
-    
-            text = text.replace(placeholder, replacement);
+            text = replacePlaceholders(text, placeholders);
         }
     
         return text;
     }    
+
+    private String replacePlaceholders(String text, String... placeholders) {
+        for (int i = 0; i < placeholders.length; i += 2) {
+            String placeholder = placeholders[i];
+            String replacement = i + 1 < placeholders.length ? placeholders[i + 1] : "";
+            text = text.replace(placeholder, replacement);
+        }
+        return text;
+    }
 
     public String getString(String key) {
         if (!isLoaded())
