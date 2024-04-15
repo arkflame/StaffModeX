@@ -9,7 +9,6 @@ import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 public class StaffListHotbarItem extends HotbarItem {
@@ -17,7 +16,7 @@ public class StaffListHotbarItem extends HotbarItem {
         super(Materials.get("SKULL_ITEM", "SKELETON_SKULL"),
                 StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.stafflist.lore"));
     }
 
     @Override

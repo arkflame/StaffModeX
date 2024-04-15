@@ -7,14 +7,12 @@ import com.arkflame.staffmodex.modernlib.utils.Materials;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 public class FollowHotbarItem extends HotbarItem {
     public FollowHotbarItem() {
         super(Materials.get("LEAD", "LEASH"),
                 StaffModeX.getInstance().getMsg().getText("hotbar.follow.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.follow.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.follow.lore"));
     }
 
     @Override

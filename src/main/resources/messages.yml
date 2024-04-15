@@ -26,11 +26,6 @@ staffmode:
   enter: "&aYou have entered staff mode!"
   leave: "&aYou have left staff mode!"
 
-vanish:
-  toggle_on: "&aYou are now invisible to other players."
-  toggle_off: "&aYou are now visible to other players."
-
-
 hotbar:
   launcher:
     name: "&6Launcher"

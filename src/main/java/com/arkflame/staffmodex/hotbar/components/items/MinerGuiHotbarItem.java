@@ -9,7 +9,6 @@ import com.arkflame.staffmodex.modernlib.utils.Materials;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ public class MinerGuiHotbarItem extends HotbarItem {
         super(Material.PAPER,
                 StaffModeX.getInstance().getMsg().getText("hotbar.minergui.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.minergui.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.minergui.lore"));
     }
 
     @Override

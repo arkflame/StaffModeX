@@ -8,14 +8,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 public class ExamineHotbarItem extends HotbarItem {
     public ExamineHotbarItem() {
         super(Material.CHEST,
                 StaffModeX.getInstance().getMsg().getText("hotbar.examine.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getTextList("hotbar.examine.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.examine.lore"));
     }
 
     @Override

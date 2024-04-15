@@ -8,14 +8,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import java.util.Arrays;
-
 public class LauncherHotbarItem extends HotbarItem {
     public LauncherHotbarItem() {
         super(Material.COMPASS,
                 StaffModeX.getInstance().getMsg().getText("hotbar.launcher.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.launcher.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.launcher.lore"));
     }
 
     @Override

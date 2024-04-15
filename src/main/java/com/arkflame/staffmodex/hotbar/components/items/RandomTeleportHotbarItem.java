@@ -8,7 +8,6 @@ import com.arkflame.staffmodex.modernlib.utils.Sounds;
 
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ public class RandomTeleportHotbarItem extends HotbarItem {
         super(Materials.get("ENDER_EYE", "EYE_OF_ENDER"),
                 StaffModeX.getInstance().getMsg().getText("hotbar.random_teleport.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.random_teleport.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.random_teleport.lore"));
     }
 
     @Override

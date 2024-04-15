@@ -1,7 +1,5 @@
 package com.arkflame.staffmodex.managers;
 
-import com.arkflame.staffmodex.StaffModeX;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -25,7 +23,6 @@ public class VanishManager {
             otherPlayer.hidePlayer(player);
         }
         vanishedPlayers.add(player.getUniqueId());
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("vanish.toggle_on"));
     }
 
     public void makeVisible(Player player) {
@@ -33,7 +30,6 @@ public class VanishManager {
             otherPlayer.showPlayer(player);
         }
         vanishedPlayers.remove(player.getUniqueId());
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("vanish.toggle_off"));
     }
 
     public boolean isVanished(Player player) {

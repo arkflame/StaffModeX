@@ -7,14 +7,12 @@ import com.arkflame.staffmodex.modernlib.utils.Effects;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 public class VanishHotbarItem extends HotbarItem {
     public VanishHotbarItem() {
         super(Materials.get("LIME_DYE", "INK_SACK"),
                 StaffModeX.getInstance().getMsg().getText("hotbar.vanish.name"),
                 1, (short) 10,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.vanish.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.vanish.lore"));
     }
 
     @Override

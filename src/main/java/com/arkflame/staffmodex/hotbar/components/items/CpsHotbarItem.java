@@ -9,14 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 public class CpsHotbarItem extends HotbarItem {
     public CpsHotbarItem() {
         super(Materials.get("CLOCK", "WATCH"),
                 StaffModeX.getInstance().getMsg().getText("hotbar.cps.name"),
                 1, (short) 0,
-                Arrays.asList(StaffModeX.getInstance().getMsg().getText("hotbar.cps.lore")));
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.cps.lore"));
     }
 
     @Override
