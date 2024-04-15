@@ -57,19 +57,28 @@ public abstract class ModernCommand extends Command {
     public void unregisterBukkitCommand() {
         try {
             Object commandMap = getCommandMap();
-            Object map = getPrivateField(commandMap, "knownCommands");
+            Object map = null;
+            try {
+                // Try to use reflection to access the 'knownCommands' field
+                map = getPrivateField(commandMap, "knownCommands");
+            } catch (NoSuchFieldException ignored) {
+                // If 'knownCommands' field doesn't exist, try to use the 'getKnownCommands' method
+                Method getKnownCommandsMethod = commandMap.getClass().getMethod("getKnownCommands");
+                map = getKnownCommandsMethod.invoke(commandMap);
+            }
+    
             @SuppressWarnings("unchecked")
             Map<String, Command> knownCommands = (HashMap<String, Command>) map;
             knownCommands.remove(getName());
-            for (String alias : getAliases()){
-               if(knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())){
+            for (String alias : getAliases()) {
+                if (knownCommands.containsKey(alias) && knownCommands.get(alias).toString().contains(this.getName())) {
                     knownCommands.remove(alias);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }    
 
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
