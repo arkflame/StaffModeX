@@ -4,3 +4,6 @@ author: ${author}
 main: ${mainClass}
 version: ${version}
 url: ${url}
+
+# This sets PlaceholderAPI as an optional dependency for your plugin.
+softdepend: [PlaceholderAPI]

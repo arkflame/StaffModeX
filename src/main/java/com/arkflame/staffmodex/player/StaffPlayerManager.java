@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.OfflinePlayer;
+
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class StaffPlayerManager {
@@ -33,5 +35,9 @@ public class StaffPlayerManager {
     public StaffPlayer getOrCreateStaffPlayer(UUID uuid) {
         ConfigWrapper config = new ConfigWrapper("infractions/" + uuid + ".yml");
         return staffPlayers.computeIfAbsent(uuid, (k) -> new StaffPlayer(k, config).load());
+    }
+
+    public StaffPlayer getStaffPlayer(OfflinePlayer player) {
+        return getStaffPlayer(player.getUniqueId());
     }
 }

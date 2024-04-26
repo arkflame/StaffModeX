@@ -25,7 +25,7 @@ public class ExaminePlayerMenu extends Menu {
         setItem(9 + 3, infractionItem);
         setItem(9 + 4, new LocationItem(target.getLocation()));
         setItem(9 + 5, new PlayerNotesItem(player, target));
-        setItem(9 + 6, new FreezePlayerItem(target));
+        setItem(9 + 6, new FreezePlayerItem(player, target));
         setItem(9 + 7, new WarnPlayerItem(infractionItem, player, target));
         setItem(9 + 8, new PlayerInventoryItem(player, target, this));
 

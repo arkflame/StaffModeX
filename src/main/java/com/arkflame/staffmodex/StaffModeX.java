@@ -1,5 +1,6 @@
 package com.arkflame.staffmodex;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
@@ -7,7 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffModeCommand;
+import com.arkflame.staffmodex.commands.VanishCommand;
 import com.arkflame.staffmodex.commands.WarnCommand;
+import com.arkflame.staffmodex.expansion.StaffModePlaceholderExpansion;
 import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.inventories.InventoryManager;
 import com.arkflame.staffmodex.listeners.BlockListeners;
@@ -19,6 +22,7 @@ import com.arkflame.staffmodex.managers.StaffModeManager;
 import com.arkflame.staffmodex.managers.VanishManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
+import com.arkflame.staffmodex.modernlib.utils.Players;
 import com.arkflame.staffmodex.player.StaffPlayerManager;
 
 public class StaffModeX extends JavaPlugin {
@@ -86,6 +90,12 @@ public class StaffModeX extends JavaPlugin {
         new ReportCommand().register();
         new StaffModeCommand().register();
         new WarnCommand().register();
+        new VanishCommand().register();
+
+        // Small check to make sure that PlaceholderAPI is installed
+        if (pluginManager.getPlugin("PlaceholderAPI") != null) {
+            new StaffModePlaceholderExpansion().register();
+        }
     }
 
     @Override
@@ -95,10 +105,9 @@ public class StaffModeX extends JavaPlugin {
         for (Player player : this.getServer().getOnlinePlayers()) {
             if (hotbarManager.getHotbar(player) != null) {
                 hotbarManager.setHotbar(player, null);
-                StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
-                StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
-                player.setAllowFlight(false);
-                player.setFlying(false);
+                inventoryManager.loadPlayerInventory(player);
+                inventoryManager.deletePlayerInventory(player);
+                Players.setFlying(player, false);
             }
         }
 

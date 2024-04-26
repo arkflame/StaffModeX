@@ -7,12 +7,9 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 
 public class ConnectionItem extends MenuItem {
-    private final Player examinPlayer;
 
-    public ConnectionItem(Player examinPlayer) {
+    public ConnectionItem(Player target) {
         super(Material.COMPASS, StaffModeX.getInstance().getMsg().getText("menus.connection.title"),
-                StaffModeX.getInstance().getMsg().getText("menus.connection.ip") + examinPlayer.getAddress().getAddress().getHostAddress(),
-                StaffModeX.getInstance().getMsg().getText("menus.connection.port") + examinPlayer.getAddress().getPort());
-        this.examinPlayer = examinPlayer;
+                StaffModeX.getInstance().getMsg().getTextList("menus.connection.lore", "{ip}", target.getAddress().getAddress().getHostAddress(), "{port}", String.valueOf(target.getAddress().getPort())).toArray(new String[0]));
     }
 }

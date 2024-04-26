@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -63,9 +64,24 @@ public class PlayerListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        if (StaffModeX.getInstance().getVanishManager().isVanished(player)) {
+            event.setJoinMessage(null);
+        }
         StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerQuit(final PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        if (StaffModeX.getInstance().getVanishManager().isVanished(player)) {
+            event.setQuitMessage(null);
+        }
+        StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
+        StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
+        StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
+        StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -1,14 +1,26 @@
 package com.arkflame.staffmodex.modernlib.utils;
 
+import java.util.List;
+
 import org.bukkit.entity.Player;
 
 public class Players {
     public static void setFlying(Player player, boolean flying) {
-        player.setAllowFlight(flying);
-        player.setFlying(flying);
+        if (player.getAllowFlight() != flying) {
+            player.setAllowFlight(flying);
+        }
+        if (player.isFlying() != flying) {
+            player.setFlying(flying);
+        }
     }
 
     public static void clearInventory(Player player) {
         player.getInventory().clear();
+    }
+
+    public static void sendMessage(Player player, List<String> textList) {
+        for (String text : textList) {
+            player.sendMessage(text);
+        }
     }
 }

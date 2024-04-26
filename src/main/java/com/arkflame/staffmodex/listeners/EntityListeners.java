@@ -1,9 +1,11 @@
 package com.arkflame.staffmodex.listeners;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.Hotbar;
@@ -21,6 +23,19 @@ public class EntityListeners implements Listener {
             // Check your condition here
             if (hotbar instanceof StaffHotbar) {
                 // Prevent damage if the condition is met
+                event.setCancelled(true);
+            }
+        }
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityTarget(EntityTargetEvent event) {
+        Entity target = event.getTarget();
+
+        if (target instanceof Player) {
+            boolean staff = StaffModeX.getInstance().getStaffModeManager().isStaff((Player) target);
+
+            if (staff) {
                 event.setCancelled(true);
             }
         }

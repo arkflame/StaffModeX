@@ -24,6 +24,14 @@ messages:
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
 
+  freeze:
+    no_permission: "&cYou do not have permission to freeze players."
+    has_bypass: "&cThis player has bypassed freezing."
+    unfreeze: "&7The player has been &aunfrozen&r&7."
+    freeze: "&7The player has been &cfrozen&r&7. Please review the player for &csuspicious activity&r&7."
+    frozen: "&r\n&8&m---------------------------\n&7You have been frozen for &csuspicious activity&7.\n&7Please connect to the &9TS Server&r&7 for a review.\n&8&m---------------------------&r\n"
+    unfrozen: "&r\n&8&m---------------------------\n&7You have been reviewed and &aunfrozen&7.\n&7You can now play again. Stay safe.\n&8&m---------------------------&r\n"
+
 staffmode:
   enter: "&aYou have entered staff mode!"
   leave: "&aYou have left staff mode!"
@@ -124,8 +132,9 @@ menus:
     foodLevel: "&bFood: &7"
   connection:
     title: "&bConnection"
-    ip: "&bIP: &7"
-    port: "&bPort: &7"
+    lore: 
+      - "&bIP: &7{ip}"
+      - "&bPort: &7{port}"
   infractions:
     title: "&cInfractions"
     warnings:

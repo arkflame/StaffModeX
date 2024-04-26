@@ -8,29 +8,35 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import net.md_5.bungee.api.ChatColor;
+import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class FreezeManager {
     private final Set<UUID> frozenPlayers = new HashSet<>();
 
-    public void toggleFreeze(Player player) {
-        if (isFrozen(player)) {
-            unfreezePlayer(player);
+    public void toggleFreeze(Player player, Player target) {
+        ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+        if (!player.hasPermission("staffmode.freeze")) {
+            player.sendMessage(msg.getText("messages.freeze.no_permission"));
+        } else if (target.hasPermission("staffmode.freeze.bypass")) {
+            player.sendMessage(msg.getText("messages.freeze.has_bypass"));
+        } else if (isFrozen(target)) {
+            player.sendMessage(msg.getText("messages.freeze.unfreeze"));
+            unfreezePlayer(target);
         } else {
-            freezePlayer(player);
+            player.sendMessage(msg.getText("messages.freeze.freeze"));
+            freezePlayer(target);
         }
     }
 
     private void freezePlayer(Player player) {
         frozenPlayers.add(player.getUniqueId());
-        player.sendMessage(ChatColor.RED + "You have been frozen and cannot move.");
-        // Additional actions can be added here (e.g., hiding from other players)
+        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen"));
     }
 
     private void unfreezePlayer(Player player) {
         frozenPlayers.remove(player.getUniqueId());
-        player.sendMessage(ChatColor.GREEN + "You are now free to move again.");
-        // Reverse any actions taken when the player was frozen
+        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen"));
     }
 
     public boolean isFrozen(Player player) {

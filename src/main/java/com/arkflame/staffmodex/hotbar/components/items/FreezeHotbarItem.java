@@ -22,6 +22,6 @@ public class FreezeHotbarItem extends HotbarItem {
             return;
         }
 
-        StaffModeX.getInstance().getFreezeManager().toggleFreeze((Player) target);
+        StaffModeX.getInstance().getFreezeManager().toggleFreeze(player, (Player) target);
     }
 }

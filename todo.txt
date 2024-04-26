@@ -1,0 +1,25 @@
+#Fix staff list accumulation on leave.
+#I want to be able to customize the heads of players on stafflist and others.
+#Add PlaceholderAPI hooks for staffmodex.
+#Modify vanish to hide disconnect/join messages.
+#Hide from all players on tablist while vanishing.
+#Allow bypass to reveal hidden players. (staffmode.vanish.bypass)
+#Ensure fly remains active in staffmode.
+#Prevent mobs from targeting staffmode players.
+#Permission to prevent staffmode players from freezing you. (staffmode.freeze.bypass)
+#Permission to freeze players. (staffmode.freeze)
+#Develop vanish command.
+#Implement freeze messages.
+Retain inventory when dying in staff mode.
+Chat Mod-Freze.
+Placeholder of time passed since frozen.
+Send messages to console when writing player only cmds.
+Disconnet during freeze, freeze, and unfreeze commands.
+Check how this works when changing worlds.
+Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
+StaffChat feature.
+Create sidebar for staffmode.
+Implement bans, mutes, databases, and playerlogs commands.
+Redis database to sync staffmode status join=+1 quit=-1 timeout=30s
+
+TEST WITH 1.8 and 1.20!!!!!!! (TARGET, FLY, STAFFMODE, PLACEHOLDERAPI)
