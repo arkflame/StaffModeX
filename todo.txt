@@ -10,10 +10,13 @@
 #Permission to freeze players. (staffmode.freeze)
 #Develop vanish command.
 #Implement freeze messages.
-Retain inventory when dying in staff mode.
+#Retain inventory when dying in staff mode.
+#Teleport staff back to old location. Save location.
+#Send messages to console when writing player only cmds.
+Permission to have the force vanish. (staffmode.vanish.force)
+StaffList see count of freezes applied and times on staffmode.
 Chat Mod-Freze.
 Placeholder of time passed since frozen.
-Send messages to console when writing player only cmds.
 Disconnet during freeze, freeze, and unfreeze commands.
 Check how this works when changing worlds.
 Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20

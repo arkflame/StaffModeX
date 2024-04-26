@@ -6,6 +6,8 @@ import com.arkflame.staffmodex.hotbar.components.StaffHotbar;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Players;
+import com.arkflame.staffmodex.player.StaffPlayer;
+
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -19,6 +21,11 @@ public class StaffModeManager {
 
         if (isStaff(player)) {
             // Deactivate
+            /* Restore old location */
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
+            if (staffPlayer != null) {
+                staffPlayer.restoreOldLocation(player);
+            }
             hotbarManager.setHotbar(player, null);
             Players.clearInventory(player);
             StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
@@ -31,6 +38,11 @@ public class StaffModeManager {
             removeStaff(player);
         } else {
             // Activate
+            /* Save this location */
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
+            if (staffPlayer != null) {
+                staffPlayer.setOldLocation(player.getLocation());
+            }
             StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
             StaffModeX.getInstance().getVanishManager().makeInvisible(player);
             Players.clearInventory(player);

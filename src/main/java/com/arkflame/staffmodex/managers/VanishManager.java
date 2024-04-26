@@ -19,8 +19,10 @@ public class VanishManager {
     }
 
     public void makeInvisible(Player player) {
+        boolean force = player.hasPermission("staffmode.vanish.force");
+
         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
-            if (!otherPlayer.hasPermission("staffmode.vanish.bypass")) {
+            if (force || !otherPlayer.hasPermission("staffmode.vanish.bypass")) {
                 otherPlayer.hidePlayer(player);
             }
         }

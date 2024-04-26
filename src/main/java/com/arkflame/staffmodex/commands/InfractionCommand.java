@@ -48,7 +48,8 @@ public abstract class InfractionCommand extends ModernCommand {
             }
 
             if (!args.hasArg(1)) {
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + "-usage"));
+                player.sendMessage(StaffModeX.getInstance().getMsg()
+                        .getText("messages." + infractionType.name().toLowerCase() + "-usage"));
                 return;
             }
 
@@ -66,7 +67,8 @@ public abstract class InfractionCommand extends ModernCommand {
                     if (staffPlayer != null) {
                         staffPlayer.infraction(infractionType, player.getName(), reason);
                         String successMessage = StaffModeX.getInstance().getMsg()
-                                .getText("messages." + infractionType.name().toLowerCase() + "-success").replace("{player}", playerName);
+                                .getText("messages." + infractionType.name().toLowerCase() + "-success")
+                                .replace("{player}", playerName);
                         player.sendMessage(successMessage);
                         // Set cooldown for player
                         long cooldown = StaffModeX.getInstance().getConfig().getLong("infraction_cooldown", 60) * 1000;
@@ -76,6 +78,8 @@ public abstract class InfractionCommand extends ModernCommand {
                     }
                 }
             }.runTaskAsynchronously(StaffModeX.getInstance());
+        } else {
+            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
         }
     }
 }

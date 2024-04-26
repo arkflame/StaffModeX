@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -22,6 +23,26 @@ public class StaffPlayer {
 
     private StaffNotes notes;
     private WarningProcess warningProcess;
+
+    // This saves the old location of the staff
+    private Location oldLocation;
+
+    // Get old location of the staff
+    public Location getOldLocation() {
+        return oldLocation;
+    }
+
+    // Set old location of the staff
+    public void setOldLocation(Location oldLocation) {
+        this.oldLocation = oldLocation;
+    }
+
+    // Teleport the player to the old location (check not null)
+    public void restoreOldLocation(Player player) {
+        if (oldLocation != null) {
+            player.teleport(oldLocation);
+        }
+    }
 
     public StaffPlayer(UUID uuid, ConfigWrapper config) {
         this.uuid = uuid;

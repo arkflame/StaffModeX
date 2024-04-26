@@ -1,9 +1,8 @@
 # You can use hex colors on any message
 # Format: #000000
 messages:
-  from-command: "&eHello world from Command."
-  from-listener: "&aHello world from Listener."
-  from-task: "&dHello world from Task."
+  only-players: "&cThis command cannot be used from the console."
+
   report-usage: "&cIncorrect usage! Please use: /report <playerName> <reason>"
   warn-usage: "&cIncorrect usage! Please use: /warn <playerName> <reason>"
   player-not-found: "&cPlayer not found. Please check the name and try again."
@@ -14,6 +13,7 @@ messages:
   warn-started: "&aYou have started writing a warning to {player}."
   you-are-warned: "&cYou were warned by &b{staff}&c because of &f{reason}&c."
   no-permission: "&cYou do not have permission to use this command."
+  
   # Infractions Viewer Menu
   infractions-menu-title: "&cInfractions"
   report-title: "&9Report"

@@ -37,6 +37,10 @@ public class StaffPlayerManager {
         return staffPlayers.computeIfAbsent(uuid, (k) -> new StaffPlayer(k, config).load());
     }
 
+    public StaffPlayer getOrCreateStaffPlayer(OfflinePlayer player) {
+        return getOrCreateStaffPlayer(player.getUniqueId());
+    }
+
     public StaffPlayer getStaffPlayer(OfflinePlayer player) {
         return getStaffPlayer(player.getUniqueId());
     }

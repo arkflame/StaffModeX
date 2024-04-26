@@ -24,6 +24,8 @@ public class StaffModeCommand extends ModernCommand {
             Player player = (Player) sender;
 
             StaffModeX.getInstance().getStaffModeManager().toggleStaff(player);
+        } else {
+            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
         }
     }
 }
