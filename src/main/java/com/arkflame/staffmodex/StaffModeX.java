@@ -1,12 +1,12 @@
 package com.arkflame.staffmodex;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.arkflame.staffmodex.commands.ReportCommand;
+import com.arkflame.staffmodex.commands.StaffChatCommand;
 import com.arkflame.staffmodex.commands.StaffModeCommand;
 import com.arkflame.staffmodex.commands.VanishCommand;
 import com.arkflame.staffmodex.commands.WarnCommand;
@@ -17,9 +17,7 @@ import com.arkflame.staffmodex.listeners.BlockListeners;
 import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
-import com.arkflame.staffmodex.managers.FreezeManager;
 import com.arkflame.staffmodex.managers.StaffModeManager;
-import com.arkflame.staffmodex.managers.VanishManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
 import com.arkflame.staffmodex.modernlib.utils.Players;
@@ -27,8 +25,6 @@ import com.arkflame.staffmodex.player.StaffPlayerManager;
 
 public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
-    private FreezeManager freezeManager = new FreezeManager();
-    private VanishManager vanishManager = new VanishManager();
     private InventoryManager inventoryManager = new InventoryManager(this, "inventories.yml");
     private StaffModeManager staffModeManager = new StaffModeManager();
     private StaffPlayerManager staffPlayerManager = new StaffPlayerManager();
@@ -46,14 +42,6 @@ public class StaffModeX extends JavaPlugin {
 
     public HotbarManager getHotbarManager() {
         return hotbarManager;
-    }
-
-    public FreezeManager getFreezeManager() {
-        return freezeManager;
-    }
-
-    public VanishManager getVanishManager() {
-        return vanishManager;
     }
 
     public InventoryManager getInventoryManager() {
@@ -88,6 +76,7 @@ public class StaffModeX extends JavaPlugin {
 
         // Register Commands
         new ReportCommand().register();
+        new StaffChatCommand().register();
         new StaffModeCommand().register();
         new WarnCommand().register();
         new VanishCommand().register();

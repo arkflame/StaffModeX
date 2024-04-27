@@ -13,16 +13,25 @@
 #Retain inventory when dying in staff mode.
 #Teleport staff back to old location. Save location.
 #Send messages to console when writing player only cmds.
-Permission to have the force vanish. (staffmode.vanish.force)
+#Permission to have the force vanish. (staffmode.vanish.force)
+# placeholders: staffmode_enabled staffmode_freeze_time
+#Placeholder of time passed since frozen.
+#Chat Mod-Freze.
+#Staff Chat (Recibe los Freeze MSG) (staffmode.staffchat)
+Title y subtitle de que no se desconecte al frozear y al desfrozear.
+Prevenir muerte del jugador frozeado.
+Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
+PRIORIDAD => Action-bar tiempo restante hasta ser baneado freeze. (Tanto el frezeador como el frezeado) Se congela en cero y el staff debe tomar accion manualmente.
+Disconnet during freeze, freeze, and unfreeze commands.
 StaffList see count of freezes applied and times on staffmode.
-Chat Mod-Freze.
-Placeholder of time passed since frozen.
 Disconnet during freeze, freeze, and unfreeze commands.
 Check how this works when changing worlds.
-Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
-StaffChat feature.
-Create sidebar for staffmode.
-Implement bans, mutes, databases, and playerlogs commands.
-Redis database to sync staffmode status join=+1 quit=-1 timeout=30s
+Redis database to sync staffmode status between servers join=+1 quit=-1 timeout=30s
+StaffMode Alias /staff /mod
+Freeze Alias /ss
+Force admin to be in staffmode to use freeze
+Force admin to be in staffmode to vanish
+Command to invsee (you have to be in staffmode)
 
-TEST WITH 1.8 and 1.20!!!!!!! (TARGET, FLY, STAFFMODE, PLACEHOLDERAPI)
+Implement bans, mutes, databases, and playerlogs commands.
+Create sidebar for staffmode.

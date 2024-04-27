@@ -24,13 +24,21 @@ messages:
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
 
+  staffchat:
+    chat: "&8[&aStaffChat&8] &e{player}&8: &f{message}"
+    enabled: "&aStaff chat enabled"
+    disabled: "&cStaff chat disabled"
+
   freeze:
+    staff_msg: "&8[&6Freeze&8] [&cStaff&8] &c{player}&8: &r{message}"
+    frozen_msg: "&8[&6Freeze&8] &b{player}&8: &7{message}"
+    quit_msg: "&8&m---------------------------&r\n&b{player}&c left while frozen.\n&8&m---------------------------&r"
     no_permission: "&cYou do not have permission to freeze players."
     has_bypass: "&cThis player has bypassed freezing."
     unfreeze: "&7The player has been &aunfrozen&r&7."
     freeze: "&7The player has been &cfrozen&r&7. Please review the player for &csuspicious activity&r&7."
-    frozen: "&r\n&8&m---------------------------\n&7You have been frozen for &csuspicious activity&7.\n&7Please connect to the &9TS Server&r&7 for a review.\n&8&m---------------------------&r\n"
-    unfrozen: "&r\n&8&m---------------------------\n&7You have been reviewed and &aunfrozen&7.\n&7You can now play again. Stay safe.\n&8&m---------------------------&r\n"
+    frozen: "&8&m---------------------------&r\n&7You have been frozen for &csuspicious activity&7.\n&7Please connect to the &9TS Server&r&7 for a review.\n&7You have &b5 minutes&7 to not be &cBANNED&7.\n&8&m---------------------------&r"
+    unfrozen: "&8&m---------------------------&r\n&7You have been reviewed and &aunfrozen&7.\n&7You can now play again. Stay safe.\n&8&m---------------------------&r"
 
 staffmode:
   enter: "&aYou have entered staff mode!"

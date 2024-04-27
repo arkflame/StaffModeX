@@ -27,7 +27,8 @@ public class PlayerListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onAsyncPlayerChat(final AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayer(player.getUniqueId());
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player.getUniqueId());
 
         if (staffPlayer == null) {
             return;
@@ -43,7 +44,8 @@ public class PlayerListeners implements Listener {
             }.runTask(StaffModeX.getInstance());
             StaffNote note = staffPlayer.writeNote(text);
             event.setCancelled(true);
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.note-writing-success").replace("{player}", note.getName()));
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.note-writing-success")
+                    .replace("{player}", note.getName()));
         }
 
         if (staffPlayer.getWarningProcess().isInProgress()) {
@@ -58,14 +60,26 @@ public class PlayerListeners implements Listener {
             }.runTask(StaffModeX.getInstance());
             staffPlayer.getWarningProcess().clear();
             event.setCancelled(true);
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning-success").replace("{player}", warnedName));
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning-success").replace("{player}",
+                    warnedName));
+        }
+
+        // Freeze Chat
+        if (staffPlayer.sendFreezeChat(event.getMessage())) {
+            event.setCancelled(true);
+        } // Staff Chat
+        else if (staffPlayer.isStaffChat()) {
+            staffPlayer.sendStaffChat(event.getMessage());
+            event.setCancelled(true);
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (StaffModeX.getInstance().getVanishManager().isVanished(player)) {
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player.getUniqueId());
+        if (staffPlayer.isVanished()) {
             event.setJoinMessage(null);
         }
         StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
@@ -76,8 +90,14 @@ public class PlayerListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(final PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (StaffModeX.getInstance().getVanishManager().isVanished(player)) {
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player.getUniqueId());
+        if (staffPlayer.isVanished()) {
             event.setQuitMessage(null);
+        }
+        if (staffPlayer.isFrozen()) {
+            staffPlayer.getWhoFroze().sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg", "{player}", player.getName()));
+            staffPlayer.unfreeze();
         }
         StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
@@ -104,12 +124,13 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent event) {
         boolean leftClick = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
-        boolean rightClick = event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK;
+        boolean rightClick = event.getAction() == Action.RIGHT_CLICK_AIR
+                || event.getAction() == Action.RIGHT_CLICK_BLOCK;
 
         if (leftClick) {
             CpsTestingManager.click(event.getPlayer());
         }
-        
+
         if (leftClick || rightClick) {
             Player player = event.getPlayer();
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
@@ -142,7 +163,7 @@ public class PlayerListeners implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
-        StaffModeX.getInstance().getFreezeManager().preventMovement(event);
+        StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(event.getPlayer()).preventMovement(event);
     }
 
     @EventHandler(ignoreCancelled = true)

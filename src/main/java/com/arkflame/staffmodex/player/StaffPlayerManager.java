@@ -16,7 +16,7 @@ public class StaffPlayerManager {
     }
 
     public void addStaffPlayer(StaffPlayer staffPlayer) {
-        staffPlayers.put(staffPlayer.getUuid(), staffPlayer);
+        staffPlayers.put(staffPlayer.getUUID(), staffPlayer);
     }
 
     public void setStaffPlayers(Map<UUID, StaffPlayer> staffPlayers) {

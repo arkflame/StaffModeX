@@ -5,14 +5,15 @@ import org.bukkit.entity.Player;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
+import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class FreezePlayerItem extends MenuItem {
     private Player player;
     private Player target;
 
     public FreezePlayerItem(Player player, Player target) {
-        super(Material.BLAZE_ROD, StaffModeX.getInstance().getMsg().getText("menus.freezePlayer.title"),
-                StaffModeX.getInstance().getFreezeManager().isFrozen(target)
+        super(Material.ICE, StaffModeX.getInstance().getMsg().getText("menus.freezePlayer.title"),
+                StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target).isFrozen()
                         ? StaffModeX.getInstance().getMsg().getText("menus.freezePlayer.frozen")
                         : StaffModeX.getInstance().getMsg().getText("menus.freezePlayer.notFrozen"));
         this.player = player;
@@ -21,8 +22,9 @@ public class FreezePlayerItem extends MenuItem {
 
     @Override
     public void onClick(int slot) {
-        StaffModeX.getInstance().getFreezeManager().toggleFreeze(player, target);
-        setLore(StaffModeX.getInstance().getFreezeManager().isFrozen(target)
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
+        staffPlayer.toggleFreeze(player);
+        setLore(staffPlayer.isFrozen()
                 ? StaffModeX.getInstance().getMsg().getText("menus.freezePlayer.frozen")
                 : StaffModeX.getInstance().getMsg().getText("menus.freezePlayer.notFrozen"));
     }

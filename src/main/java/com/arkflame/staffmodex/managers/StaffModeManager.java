@@ -24,13 +24,13 @@ public class StaffModeManager {
             /* Restore old location */
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
             if (staffPlayer != null) {
-                staffPlayer.restoreOldLocation(player);
+                staffPlayer.restoreOldLocation();
+                staffPlayer.makeVisible();
             }
             hotbarManager.setHotbar(player, null);
             Players.clearInventory(player);
             StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
             StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
-            StaffModeX.getInstance().getVanishManager().makeVisible(player);
             Players.setFlying(player, false);
             ConfigWrapper msg = StaffModeX.getInstance().getMsg();
             player.sendMessage(ChatColors.color(msg.getText("staffmode.leave")));
@@ -42,9 +42,9 @@ public class StaffModeManager {
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
             if (staffPlayer != null) {
                 staffPlayer.setOldLocation(player.getLocation());
+                staffPlayer.makeInvisible();
             }
             StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
-            StaffModeX.getInstance().getVanishManager().makeInvisible(player);
             Players.clearInventory(player);
             hotbarManager.setHotbar(player, new StaffHotbar());
             Players.setFlying(player, true);

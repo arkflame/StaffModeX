@@ -1,6 +1,7 @@
 package com.arkflame.staffmodex.modernlib.utils;
 
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class Effects {
@@ -37,7 +38,21 @@ public class Effects {
         Object effectObject = get(effects);
         if (effectObject instanceof Effect) {
             Effect effect = (Effect) effectObject;
-            player.playEffect(player.getLocation(), effect, null);
+            player.playEffect(player.getLocation(), effect, 0);
+        }
+    }
+
+    /**
+     * Plays an effect at a specified location for a location, if the effect is not null.
+     *
+     * @param loc    The location to play the effect
+     * @param effects   One or more String names of the Effect to play.
+     */
+    public static void play(Location loc, String... effects) {
+        Object effectObject = get(effects);
+        if (effectObject instanceof Effect) {
+            Effect effect = (Effect) effectObject;
+            loc.getWorld().playEffect(loc, effect, 0);
         }
     }
 }

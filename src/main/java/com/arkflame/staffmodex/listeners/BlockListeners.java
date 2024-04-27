@@ -10,7 +10,7 @@ public class BlockListeners implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-        if (StaffModeX.getInstance().getFreezeManager().isFrozen(player)) {
+        if (StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player).isFrozen()) {
             event.setCancelled(true);
         }
     }
