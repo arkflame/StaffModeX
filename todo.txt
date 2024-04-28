@@ -39,26 +39,25 @@
 #Implement command to check infractions.
 #Disconnet during freeze, freeze, and unfreeze commands.
 #Hexadecimal colors
-Check how this works when changing worlds.
-Redis database to sync staffmode status between servers join=+1 quit=-1 timeout=30s
-Redis database read list of staffs to list all staff in all servers (and able to get their server)
-In staff list show the staff server and if same server, show detailed stuff like world and location.
-
-Database system for infractions (warnings/reports)
-
+#Check how this works when changing worlds.
+#Redis database to sync staffmode status between servers
 = REDIS ONLINE STATUS =
 permission: staffmodex.staffmode
-
 
 JOIN + 1 1
 
 JOIN + 1 2
 QUIT - 1 1
 QUIT - 1 0
-
 = REDIS SERVER =
-
 JOIN SERVER: SERVERNAME
+###
+
+#In StaffList, show players from Redis.
+In staff list, show the server the players are in.
+Staff joined/left message (global communication, once)
+
+Database system for infractions (warnings/reports)
 
 = MARKETING =
 REDDIT POSTS

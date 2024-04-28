@@ -1,6 +1,13 @@
 infraction_cooldown: 60
+server_name: "Server"
+redis:
+  scheme: redis
+  username: default
+  password: dbscyoBwv4Qe1EgUw9CEKCGkMEIXfnyM
+  ip: redis-13955.c274.us-east-1-3.ec2.redns.redis-cloud.com
+  port: 13955
 freeze:
   commands:
     disconnect:
-    #- 'ban {player} Testinggg from {staff}'
+    #- 'ban {player} Testing from {staff}'
     - ''

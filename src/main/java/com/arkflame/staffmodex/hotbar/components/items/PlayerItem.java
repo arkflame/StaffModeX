@@ -22,7 +22,7 @@ public class PlayerItem extends MenuItem {
                         "{level}", String.valueOf(miner.getLevel()),
                         "{gameMode}", miner.getGameMode().name(),
                         "{ip}", miner.getAddress().getAddress().getHostAddress() + ":" + miner.getAddress().getPort(),
-                        "{uuid}", miner.getUniqueId().toString()).toArray(new String[0]));
+                        "{uuid}", miner.getUniqueId().toString()));
     }
 
     @Override

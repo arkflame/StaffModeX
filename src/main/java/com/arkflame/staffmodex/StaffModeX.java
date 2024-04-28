@@ -2,6 +2,7 @@ package com.arkflame.staffmodex;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,6 +21,7 @@ import com.arkflame.staffmodex.listeners.BlockListeners;
 import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
+import com.arkflame.staffmodex.managers.RedisManager;
 import com.arkflame.staffmodex.managers.StaffModeManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
@@ -32,6 +34,7 @@ public class StaffModeX extends JavaPlugin {
     private InventoryManager inventoryManager = new InventoryManager(this, "inventories.yml");
     private StaffModeManager staffModeManager = new StaffModeManager();
     private StaffPlayerManager staffPlayerManager = new StaffPlayerManager();
+    private RedisManager redisManager;
 
     private ConfigWrapper config;
     private ConfigWrapper messages;
@@ -60,6 +63,10 @@ public class StaffModeX extends JavaPlugin {
         return staffPlayerManager;
     }
 
+    public RedisManager getRedisManager() {
+        return redisManager;
+    }
+
     @Override
     public void onEnable() {
         // Set static instance
@@ -68,6 +75,10 @@ public class StaffModeX extends JavaPlugin {
         // Save default config
         config = new ConfigWrapper("config.yml").saveDefault().load();
         messages = new ConfigWrapper("messages.yml").saveDefault().load();
+
+        // Initialize Redis
+        redisManager = new RedisManager(this);
+        redisManager.connectToRedis();
 
         // Register Listeners
         PluginManager pluginManager = this.getServer().getPluginManager();

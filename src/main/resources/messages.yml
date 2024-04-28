@@ -128,6 +128,11 @@ hotbar:
     - "&7Mount the player to observe their behavior."
     invalid: "&cInvalid target for following."
     success: "&aYou are now following {player}."
+  staff_player_item:
+    title: "&b{playerName}"
+    here: "&a"
+    description:
+      - "&bServer: &7{here}{serverName}"
   playerItem:
     title: "&b{playerName}"
     description:

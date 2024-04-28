@@ -9,6 +9,7 @@ import com.arkflame.staffmodex.modernlib.utils.Players;
 import com.arkflame.staffmodex.modernlib.utils.PotionEffects;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -20,8 +21,10 @@ public class StaffModeManager {
     public void toggleStaff(Player player) {
         if (isStaff(player)) {
             removeStaff(player);
+            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> StaffModeX.getInstance().getRedisManager().removePlayerFromStaffMode(player.getName()));
         } else {
             addStaff(player);
+            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> StaffModeX.getInstance().getRedisManager().addPlayerToStaffMode(player.getName()));
         }
     }
 

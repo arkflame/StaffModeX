@@ -1,6 +1,7 @@
 package com.arkflame.staffmodex.modernlib.menus.items;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +28,10 @@ public class MenuItem extends ItemStack {
             setItemMeta(meta);
         }
         setDurability(damage);
+    }
+
+    public MenuItem(Material material, int amount, short damage, String displayName, List<String> lore) {
+        this(material, amount, damage, displayName, lore.toArray(new String[0]));
     }
 
     public MenuItem(Material material) {

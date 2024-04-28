@@ -4,9 +4,11 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
-import com.arkflame.staffmodex.player.StaffPlayer;
+import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -24,27 +26,44 @@ public class StaffListHotbarItem extends HotbarItem {
     public void onInteract(Player player) {
         Menu menu = new Menu(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.menu_title")),
                 3);
-        Collection<StaffPlayer> staff = StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values();
-        int i = 0;
-        for (StaffPlayer staffMember : staff) {
-            if (i >= 2 * 9) {
-                break;
-            }
-            Player ply = staffMember.getPlayer();
-            if (ply != null && ply.hasPermission("staffmodex.staffmode")) {
-                menu.setItem(i++, new PlayerItem(ply));
-            }
-        }
 
         // Item to return to the menu
         menu.setItem(2 * 9,
-                new MenuItem(Material.ARROW, StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.close")) {
+                new MenuItem(Material.ARROW,
+                        StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.close")) {
                     @Override
                     public void onClick() {
                         player.closeInventory();
                     }
                 });
+
+        // Set background
         menu.setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
+
         menu.openInventory(player);
+
+        // Set items async
+        Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
+            Collection<String> online = StaffModeX.getInstance().getRedisManager().getOnline();
+
+            int i = 0;
+            for (String playerName : online) {
+                if (i >= 2 * 9) {
+                    break;
+                }
+                if (playerName != null) {
+                    final int currentIndex = i++;
+                    String serverName = StaffModeX.getInstance().getRedisManager().getConnectedServer(playerName);
+                    Bukkit.getScheduler().runTask(StaffModeX.getInstance(), () -> {
+                        ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+                        String server = (serverName == null || serverName.isEmpty() ? "N/A" : serverName);
+                        String here = Bukkit.getPlayer(playerName) != null ? msg.getText("hotbar.staff_player_item.here") : "";
+                        menu.setItem(currentIndex, new MenuItem(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
+                        msg.getText("hotbar.staff_player_item.title", "{playerName}", playerName), msg.getTextList("hotbar.staff_player_item.description", "{playerName}", playerName, "{serverName}", server, "{here}", here)));
+                    });
+                }
+            }
+            player.updateInventory();
+        });
     }
 }

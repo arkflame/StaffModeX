@@ -2,6 +2,7 @@ package com.arkflame.staffmodex.listeners;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -105,6 +106,17 @@ public class PlayerListeners implements Listener {
         StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
+
+        if (player.hasPermission("staffmodex.staffmode")) {
+            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
+                StaffModeX.getInstance().getRedisManager().incrementOnlineStatus(player.getName(), StaffModeX.getInstance().getCfg().getString("server_name"));
+
+                if (StaffModeX.getInstance().getRedisManager().isStaffMode(player.getName())) {
+                    Bukkit.getScheduler().runTask(StaffModeX.getInstance(),
+                            () -> StaffModeX.getInstance().getStaffModeManager().addStaff(player));
+                }
+            });
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -112,15 +124,18 @@ public class PlayerListeners implements Listener {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getOrCreateStaffPlayer(player);
+
         if (staffPlayer.isVanished()) {
             event.setQuitMessage(null);
         }
+
         if (staffPlayer.isFrozen()) {
             FreezablePlayer whoFroze = staffPlayer.getWhoFroze();
             whoFroze.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg",
                     "{player}", player.getName()));
             staffPlayer.unfreeze();
-            List<String> disconnectCmds = StaffModeX.getInstance().getCfg().getTextList("freeze.commands.disconnect", "{player}", player.getName(), "{staff}", whoFroze.getName());
+            List<String> disconnectCmds = StaffModeX.getInstance().getCfg().getTextList("freeze.commands.disconnect",
+                    "{player}", player.getName(), "{staff}", whoFroze.getName());
             if (disconnectCmds != null && !disconnectCmds.isEmpty()) {
                 Player whoFrozePlayer = whoFroze.getPlayer();
                 Server server = StaffModeX.getInstance().getServer();
@@ -133,7 +148,11 @@ public class PlayerListeners implements Listener {
                 }
             }
         }
+
         StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
+
+        Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(),
+                () -> StaffModeX.getInstance().getRedisManager().decrementOnlineStatus(player.getName()));
     }
 
     @EventHandler(ignoreCancelled = true)
