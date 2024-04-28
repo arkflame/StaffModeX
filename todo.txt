@@ -21,20 +21,37 @@
 #Title y subtitle de que no se desconecte al frozear y al desfrozear.
 #Actualizar miner gui
 #Al salir no teletransporta
-Efecto night vision, speed 2 y jump
-Prevenir muerte del jugador frozeado.
-Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
-PRIORIDAD => Action-bar tiempo restante hasta ser baneado freeze. (Tanto el frezeador como el frezeado) Se congela en cero y el staff debe tomar accion manualmente.
-Disconnet during freeze, freeze, and unfreeze commands.
-StaffList see count of freezes applied and times on staffmode.
-Disconnet during freeze, freeze, and unfreeze commands.
-Check how this works when changing worlds.
-Redis database to sync staffmode status between servers join=+1 quit=-1 timeout=30s
+#Efecto night vision, speed 2 y jump
+#Prevenir muerte del jugador frozeado.
+#Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
+#PRIORIDAD => Action-bar tiempo restante hasta ser baneado freeze. (Tanto el frezeador como el frezeado) #Se congela en cero y el staff debe tomar accion manualmente.
+
 StaffMode Alias /staff /mod
 Freeze Alias /ss
 Force admin to be in staffmode to use freeze
 Force admin to be in staffmode to vanish
 Command to invsee (you have to be in staffmode)
+Implement examine commmand.
+Implemnet command to check infractions.
+Disconnet during freeze, freeze, and unfreeze commands.
+Check how this works when changing worlds.
+Redis database to sync staffmode status between servers join=+1 quit=-1 timeout=30s
+Redis database read list of staffs to list all staff in all servers (and able to get their server)
+In staff list show the staff server and if same server, show detailed stuff like world and location.
 
-Implement bans, mutes, databases, and playerlogs commands.
-Create sidebar for staffmode.
+Database system for infractions (warnings/reports)
+
+===
+REDIS ONLINE STATUS (IF PERMISSION staffmodex.staffmode)
+
+JOIN + 1 1
+
+JOIN + 1 2
+QUIT - 1 1
+
+QUIT - 1 0
+
+REDIS SERVER
+
+JOIN SERVER: SERVERNAME
+===

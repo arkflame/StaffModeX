@@ -186,7 +186,7 @@ public class StaffPlayer extends UUIDPlayer {
     }
 
     public boolean isStaffChatReceiver() {
-        return getPlayer().hasPermission("staffmode.staffchat");
+        return getPlayer().hasPermission("staffmodex.staffchat");
     }
 
     public void sendStaffChat(String msg) {

@@ -17,7 +17,7 @@ public class StaffChatCommand extends ModernCommand {
     public void onCommand(CommandSender sender, ModernArguments args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (player.hasPermission("staffmode.staffchat")) {
+            if (player.hasPermission("staffmodex.staffchat")) {
                 StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
 
                 staffPlayer.toggleStaffChat();

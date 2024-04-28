@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -36,18 +37,14 @@ public class InventoryManager {
         if (player == null) {
             return;
         }
+        inventoryConfig.createSection(player.getUniqueId().toString());
         Inventory inventory = player.getInventory();
-        if (inventory == null) {
-            return;
-        }
-        Map<Integer, ItemStack> contents = new HashMap<>();
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = inventory.getItem(i);
             if (item != null) {
-                contents.put(i, item.clone());
+                inventoryConfig.set(player.getUniqueId().toString() + "." + i, item);
             }
         }
-        inventoryConfig.set(player.getUniqueId().toString(), contents);
         try {
             inventoryConfig.save(inventoryFile);
         } catch (IOException e) {
@@ -59,21 +56,23 @@ public class InventoryManager {
         if (player == null) {
             return;
         }
+
         if (!inventoryConfig.contains(player.getUniqueId().toString())) {
             return;
         }
-        Object inv = inventoryConfig.get(player.getUniqueId().toString());
-        if (!(inv instanceof Map)) {
-            return;
-        }
-        Map<Integer, ItemStack> contents = (Map<Integer, ItemStack>) inv;
+
         Inventory inventory = player.getInventory();
-        if (inventory == null) {
+        inventory.clear();
+
+        ConfigurationSection invSection = inventoryConfig.getConfigurationSection(player.getUniqueId().toString());
+        if (invSection == null) {
+            player.sendMessage("Inv section is null!!!");
             return;
         }
-        inventory.clear();
-        for (Map.Entry<Integer, ItemStack> entry : contents.entrySet()) {
-            inventory.setItem(entry.getKey(), entry.getValue());
+        for (String key : invSection.getKeys(false)) {
+            int slot = Integer.parseInt(key);
+            ItemStack value = invSection.getItemStack(key);
+            inventory.setItem(slot, value);
         }
     }
 

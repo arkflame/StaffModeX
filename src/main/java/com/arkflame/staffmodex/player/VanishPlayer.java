@@ -22,10 +22,10 @@ public class VanishPlayer extends UUIDPlayer {
 
     public void makeInvisible() {
         Player player = getPlayer();
-        boolean force = player.hasPermission("staffmode.vanish.force");
+        boolean force = player.hasPermission("staffmodex.vanish.force");
 
         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
-            if (force || !otherPlayer.hasPermission("staffmode.vanish.bypass")) {
+            if (force || !otherPlayer.hasPermission("staffmodex.vanish.bypass")) {
                 otherPlayer.hidePlayer(player);
             }
         }

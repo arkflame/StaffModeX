@@ -8,8 +8,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.arkflame.staffmodex.StaffModeX;
-import com.arkflame.staffmodex.hotbar.Hotbar;
-import com.arkflame.staffmodex.hotbar.components.StaffHotbar;
+import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class EntityListeners implements Listener {
 
@@ -17,17 +16,13 @@ public class EntityListeners implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            // Get the hotbar the player has
-            Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
-
-            // Check your condition here
-            if (hotbar instanceof StaffHotbar) {
-                // Prevent damage if the condition is met
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
+            if (staffPlayer.isFrozen() || StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
                 event.setCancelled(true);
             }
         }
     }
-    
+
     @EventHandler(ignoreCancelled = true)
     public void onEntityTarget(EntityTargetEvent event) {
         Entity target = event.getTarget();

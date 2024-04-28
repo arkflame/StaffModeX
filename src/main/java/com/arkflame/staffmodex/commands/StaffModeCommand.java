@@ -15,7 +15,7 @@ public class StaffModeCommand extends ModernCommand {
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
         // Check for permission
-        if (!sender.hasPermission("staffmodex.command.staffmode")) {
+        if (!sender.hasPermission("staffmodex.staffmode")) {
             sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
             return;
         }

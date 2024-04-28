@@ -169,5 +169,9 @@ public class PlayerListeners implements Listener {
         if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
             event.setKeepInventory(true);
         }
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
+        if (staffPlayer.isFrozen()) {
+            event.setKeepInventory(true);
+        }
     }
 }

@@ -22,6 +22,7 @@ import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
 import com.arkflame.staffmodex.modernlib.utils.Players;
 import com.arkflame.staffmodex.player.StaffPlayerManager;
+import com.arkflame.staffmodex.tasks.StaffActionBarTask;
 
 public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
@@ -80,6 +81,9 @@ public class StaffModeX extends JavaPlugin {
         new StaffModeCommand().register();
         new WarnCommand().register();
         new VanishCommand().register();
+
+        // Register tasks
+        new StaffActionBarTask().register();
 
         // Small check to make sure that PlaceholderAPI is installed
         if (pluginManager.getPlugin("PlaceholderAPI") != null) {

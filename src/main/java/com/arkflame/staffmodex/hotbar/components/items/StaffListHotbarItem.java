@@ -4,6 +4,7 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
+import com.arkflame.staffmodex.player.StaffPlayer;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import org.bukkit.Material;
@@ -21,23 +22,28 @@ public class StaffListHotbarItem extends HotbarItem {
 
     @Override
     public void onInteract(Player player) {
-        Menu menu = new Menu(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.menu_title")), 3);
-        Collection<Player> staff = StaffModeX.getInstance().getStaffModeManager().getStaffPlayers();
+        Menu menu = new Menu(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.menu_title")),
+                3);
+        Collection<StaffPlayer> staff = StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values();
         int i = 0;
-        for (Player staffMember : staff) {
+        for (StaffPlayer staffMember : staff) {
             if (i >= 2 * 9) {
                 break;
             }
-            menu.setItem(i++, new PlayerItem(staffMember));
+            Player ply = staffMember.getPlayer();
+            if (ply != null && ply.hasPermission("staffmodex.staffmode")) {
+                menu.setItem(i++, new PlayerItem(ply));
+            }
         }
 
         // Item to return to the menu
-        menu.setItem(2 * 9, new MenuItem(Material.ARROW, StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.close")) {
-            @Override
-            public void onClick() {
-                player.closeInventory();
-            }
-        });
+        menu.setItem(2 * 9,
+                new MenuItem(Material.ARROW, StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.close")) {
+                    @Override
+                    public void onClick() {
+                        player.closeInventory();
+                    }
+                });
         menu.setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
         menu.openInventory(player);
     }
