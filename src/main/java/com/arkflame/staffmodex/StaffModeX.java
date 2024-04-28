@@ -5,6 +5,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.arkflame.staffmodex.commands.FreezeCommand;
 import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffChatCommand;
 import com.arkflame.staffmodex.commands.StaffModeCommand;
@@ -76,6 +77,7 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new MenuListener(), this);
 
         // Register Commands
+        new FreezeCommand().register();
         new ReportCommand().register();
         new StaffChatCommand().register();
         new StaffModeCommand().register();

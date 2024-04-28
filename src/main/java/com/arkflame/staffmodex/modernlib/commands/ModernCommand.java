@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -16,6 +17,11 @@ import com.arkflame.staffmodex.StaffModeX;
 public abstract class ModernCommand extends Command {
     public ModernCommand(String name) {
         super(name);
+    }
+
+    public ModernCommand(String name, String ...aliases) {
+        super(name);
+        setAliases(List.of(aliases));
     }
 
     public void register() {

@@ -9,7 +9,7 @@ import com.arkflame.staffmodex.modernlib.commands.ModernCommand;
 
 public class StaffModeCommand extends ModernCommand {
     public StaffModeCommand() {
-        super("staffmode");
+        super("staffmode", "staff", "mod");
     }
 
     @Override

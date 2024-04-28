@@ -32,7 +32,7 @@ Force admin to be in staffmode to use freeze
 Force admin to be in staffmode to vanish
 Command to invsee (you have to be in staffmode)
 Implement examine commmand.
-Implemnet command to check infractions.
+Implement command to check infractions.
 Disconnet during freeze, freeze, and unfreeze commands.
 Check how this works when changing worlds.
 Redis database to sync staffmode status between servers join=+1 quit=-1 timeout=30s
@@ -41,8 +41,8 @@ In staff list show the staff server and if same server, show detailed stuff like
 
 Database system for infractions (warnings/reports)
 
-===
-REDIS ONLINE STATUS (IF PERMISSION staffmodex.staffmode)
+= REDIS ONLINE STATUS =
+permission: staffmodex.staffmode
 
 JOIN + 1 1
 
@@ -51,7 +51,14 @@ QUIT - 1 1
 
 QUIT - 1 0
 
-REDIS SERVER
+= REDIS SERVER =
 
 JOIN SERVER: SERVERNAME
-===
+
+= MARKETING =
+REDDIT POSTS
+TWITTER POSTS
+DISCORD POSTS
+YOUTUBE VIDEO
+MCMARKET THREAD
+CUSTOM IMAGES FOR EVERYTHING

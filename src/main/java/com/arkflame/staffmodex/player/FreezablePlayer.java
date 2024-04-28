@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
+import com.arkflame.staffmodex.modernlib.utils.PotionEffects;
+import com.arkflame.staffmodex.modernlib.utils.Sounds;
 import com.arkflame.staffmodex.modernlib.utils.Titles;
 
 public class FreezablePlayer extends UUIDPlayer {
@@ -34,9 +36,11 @@ public class FreezablePlayer extends UUIDPlayer {
             player.sendMessage(msg.getText("messages.freeze.has_bypass"));
         } else if (isFrozen()) {
             player.sendMessage(msg.getText("messages.freeze.unfreeze"));
+            Sounds.play(player, 1.0F, 1.0F, "ENDERMAN_TELEPORT", "ENTITY_ENDERMAN_TELEPORT");
             unfreeze();
         } else {
             player.sendMessage(msg.getText("messages.freeze.freeze"));
+            Sounds.play(player, 1.0F, 1.0F, "SUCCESSFUL_HIT", "ENTITY_ARROW_HIT_PLAYER");
             freeze(StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player).getFreezablePlayer());
         }
     }
@@ -72,6 +76,10 @@ public class FreezablePlayer extends UUIDPlayer {
         
         // Set the player's helmet to the ice cube
         freezeStatus.setHelmet(player.getEquipment().getHelmet());
+
+        PotionEffects.add(player, 0, 20 * 60 * 20, "BLINDNESS");
+        Sounds.play(player, 1.0F, 1.0F, "ANVIL_LAND", "BLOCK_ANVIL_LAND");
+
         player.getEquipment().setHelmet(new ItemStack(Material.PACKED_ICE));
     }
     
@@ -85,6 +93,10 @@ public class FreezablePlayer extends UUIDPlayer {
         
         // Set the player's helmet back to air and clear for packed ice
         player.getEquipment().setHelmet(freezeStatus.getHelmet());
+
+        PotionEffects.remove(player, "BLINDNESS");
+        Sounds.play(player, 1.0F, 1.0F, "SUCCESSFUL_HIT", "ENTITY_ARROW_HIT_PLAYER");
+
         freezeStatus = null;
     }
 

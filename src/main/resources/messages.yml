@@ -30,6 +30,8 @@ messages:
     disabled: "&cStaff chat disabled"
 
   freeze:
+    usage: "&c/freeze <target>\n&cFreeze the target player to review him."
+    player-not-online: "&cThe player '&b{player}&c' is not online."
     action_bar: "&cUnder Review &7(&e{countdown}&7)"
     frozen_action: "&bYou have been frozen!"
     frozen_title: "&bFrozen"
