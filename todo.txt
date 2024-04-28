@@ -34,8 +34,9 @@
 #Command to invsee (you have to be in staffmode)
 #staffmodex.warning
 #Implement examine commmand.
-Block actions while frozen cannot-drop-items cannot-take-items cannot-interact
-Implement command to check infractions.
+#Reload no quita freeze
+#Block actions while frozen cannot-drop-items cannot-take-items #cannot-interact cannnot-drag-iventory cannot-click-inventory
+#Implement command to check infractions.
 Disconnet during freeze, freeze, and unfreeze commands.
 Check how this works when changing worlds.
 Redis database to sync staffmode status between servers join=+1 quit=-1 timeout=30s
@@ -47,11 +48,11 @@ Database system for infractions (warnings/reports)
 = REDIS ONLINE STATUS =
 permission: staffmodex.staffmode
 
+
 JOIN + 1 1
 
 JOIN + 1 2
 QUIT - 1 1
-
 QUIT - 1 0
 
 = REDIS SERVER =

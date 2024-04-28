@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.arkflame.staffmodex.commands.ExamineCommand;
 import com.arkflame.staffmodex.commands.FreezeCommand;
+import com.arkflame.staffmodex.commands.InfractionsCommand;
 import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffChatCommand;
 import com.arkflame.staffmodex.commands.StaffModeCommand;
@@ -22,7 +23,6 @@ import com.arkflame.staffmodex.listeners.PlayerListeners;
 import com.arkflame.staffmodex.managers.StaffModeManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
-import com.arkflame.staffmodex.modernlib.utils.Players;
 import com.arkflame.staffmodex.player.StaffPlayer;
 import com.arkflame.staffmodex.player.StaffPlayerManager;
 import com.arkflame.staffmodex.tasks.StaffActionBarTask;
@@ -81,6 +81,7 @@ public class StaffModeX extends JavaPlugin {
         // Register Commands
         new ExamineCommand().register();
         new FreezeCommand().register();
+        new InfractionsCommand().register();
         new ReportCommand().register();
         new StaffChatCommand().register();
         new StaffModeCommand().register();

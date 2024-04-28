@@ -10,7 +10,7 @@ import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class StaffChatCommand extends ModernCommand {
     public StaffChatCommand() {
-        super("staffchat");
+        super("staffchat", "sc");
     }
 
     @Override
@@ -21,7 +21,8 @@ public class StaffChatCommand extends ModernCommand {
                 StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
 
                 staffPlayer.toggleStaffChat();
-
+            } else {
+                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.staffchat.no-permission"));
             }
         } else {
             sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));

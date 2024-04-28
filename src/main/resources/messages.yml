@@ -24,9 +24,14 @@ messages:
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
 
+  infractions:
+    no-permission: "&cNo permission to see infractions for this player."
+    player-not-online: "&cThe player '&b{player}&c' is not online."
+    usage: "&cUsage: /infractions <player>\nCheck the infractions for this player."
+
   examine:
     no-permission: '&cYou do not have permission to use this command.'
-    player-not-online: '&cPlayer "{player}" is not online.'
+    player-not-online: "&cThe player '&b{player}&c' is not online."
     usage: '&cUsage: /examine <player>'
 
   vanish:

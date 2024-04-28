@@ -17,30 +17,55 @@ public class InfractionsMenu extends Menu {
         Menu menu = this;
 
         // Add item for warnings
-        setItem(0, new MenuItem(Material.REDSTONE, StaffModeX.getInstance().getMsg().getText("menus.infractions.warnings.title"), StaffModeX.getInstance().getMsg().getText("menus.infractions.warnings.description")) {
-            @Override
-            public void onClick() {
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("menus.infractions.warnings.opening"));
-                new InfractionsViewerMenu(InfractionType.WARNING, player, staffPlayer, menu).openInventory(player);
-            }
-        });
+        setItem(0,
+                new MenuItem(Material.REDSTONE,
+                        StaffModeX.getInstance().getMsg().getText("menus.infractions.warnings.title"),
+                        StaffModeX.getInstance().getMsg().getText("menus.infractions.warnings.description")) {
+                    @Override
+                    public void onClick() {
+                        player.sendMessage(
+                                StaffModeX.getInstance().getMsg().getText("menus.infractions.warnings.opening"));
+                        new InfractionsViewerMenu(InfractionType.WARNING, player, staffPlayer, menu)
+                                .openInventory(player);
+                    }
+                });
         // Add item for reports
-        setItem(1, new MenuItem(Material.BOOK, StaffModeX.getInstance().getMsg().getText("menus.infractions.reports.title"), StaffModeX.getInstance().getMsg().getText("menus.infractions.reports.description")) {
-            @Override
-            public void onClick() {
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("menus.infractions.reports.opening"));
-                new InfractionsViewerMenu(InfractionType.REPORT, player, staffPlayer, menu).openInventory(player);
-            }
-        });
+        setItem(1,
+                new MenuItem(Material.BOOK,
+                        StaffModeX.getInstance().getMsg().getText("menus.infractions.reports.title"),
+                        StaffModeX.getInstance().getMsg().getText("menus.infractions.reports.description")) {
+                    @Override
+                    public void onClick() {
+                        player.sendMessage(
+                                StaffModeX.getInstance().getMsg().getText("menus.infractions.reports.opening"));
+                        new InfractionsViewerMenu(InfractionType.REPORT, player, staffPlayer, menu)
+                                .openInventory(player);
+                    }
+                });
 
-        // Add back button
-        setItem(getSize() - 1, new MenuItem(Material.ARROW, StaffModeX.getInstance().getMsg().getText("menus.infractions.back.title"), StaffModeX.getInstance().getMsg().getText("menus.infractions.back.description")) {
-            @Override
-            public void onClick() {
-                oldMenu.openInventory(player);
-            }
-        });
+        if (oldMenu != null) {
+            // Add back button
+            setItem(getSize() - 1,
+                    new MenuItem(Material.ARROW,
+                            StaffModeX.getInstance().getMsg().getText("menus.infractions.back.title"),
+                            StaffModeX.getInstance().getMsg().getText("menus.infractions.back.description")) {
+                        @Override
+                        public void onClick() {
+                            oldMenu.openInventory(player);
+                        }
+                    });
+        }
 
         setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
+    }
+
+    @Override
+    public void openInventory(Player player) {
+        if (!player.hasPermission("staffmode.infractions")) {
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.no-permission"));
+            return;
+        }
+
+        super.openInventory(player);
     }
 }
