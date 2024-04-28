@@ -26,12 +26,17 @@ public class StaffModeManager {
     }
 
     public void addStaff(Player player) {
+        if (isStaff(player)) {
+            return;
+        }
+
         HotbarManager hotbarManager = StaffModeX.getInstance().getHotbarManager();
         /* Save this location */
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         if (staffPlayer != null) {
             staffPlayer.setOldLocation(player.getLocation());
             staffPlayer.makeInvisible();
+            staffPlayer.setStaffChat(true);
         }
         StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
         Players.clearInventory(player);
@@ -46,6 +51,10 @@ public class StaffModeManager {
     }
 
     public void removeStaff(Player player) {
+        if (!isStaff(player)) {
+            return;
+        }
+
         HotbarManager hotbarManager = StaffModeX.getInstance().getHotbarManager();
         /* Restore old location */
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);

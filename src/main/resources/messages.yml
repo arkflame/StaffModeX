@@ -24,6 +24,11 @@ messages:
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
 
+  examine:
+    no-permission: '&cYou do not have permission to use this command.'
+    player-not-online: '&cPlayer "{player}" is not online.'
+    usage: '&cUsage: /examine <player>'
+
   vanish:
     not-staff: "&cYou have to be in staff mode to use vanish."
     no-permission: "&cYou do not have permission to vanish."
@@ -36,6 +41,11 @@ messages:
     disabled: "&cStaff chat disabled"
 
   freeze:
+    cannot-drop-items: '&cYou cannot drop items.'
+    cannot-interact: '&cYou cannot interact.'
+    cannot-drag-inventory: '&cYou cannot drag items in the inventory.'
+    cannot-click-inventory: '&cYou cannot click items in the inventory.'
+    cannot-use-commands: "&cYou cannot use commands while frozen!"
     not-staff: "&cYou have to be in staff mode to freeze players."
     no_permission: "&cYou do not have permission to freeze players."
     usage: "&c/freeze <target>\n&cFreeze the target player to review him."

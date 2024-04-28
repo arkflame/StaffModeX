@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -25,10 +26,25 @@ import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class PlayerListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
-    public void onAsyncPlayerChat(final AsyncPlayerChatEvent event) {
+    public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                .getOrCreateStaffPlayer(player.getUniqueId());
+                .getOrCreateStaffPlayer(player);
+
+        if (staffPlayer == null) {
+            return;
+        }
+
+        if (staffPlayer.isFrozen()) {
+            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-use-commands"));
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onAsyncPlayerChat(final AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
 
         if (staffPlayer == null) {
             return;
@@ -78,7 +94,7 @@ public class PlayerListeners implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                .getOrCreateStaffPlayer(player.getUniqueId());
+                .getOrCreateStaffPlayer(player);
         if (staffPlayer.isVanished()) {
             event.setJoinMessage(null);
         }
@@ -91,12 +107,13 @@ public class PlayerListeners implements Listener {
     public void onPlayerQuit(final PlayerQuitEvent event) {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                .getOrCreateStaffPlayer(player.getUniqueId());
+                .getOrCreateStaffPlayer(player);
         if (staffPlayer.isVanished()) {
             event.setQuitMessage(null);
         }
         if (staffPlayer.isFrozen()) {
-            staffPlayer.getWhoFroze().sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg", "{player}", player.getName()));
+            staffPlayer.getWhoFroze().sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg",
+                    "{player}", player.getName()));
             staffPlayer.unfreeze();
         }
         StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
@@ -108,12 +125,35 @@ public class PlayerListeners implements Listener {
         if (StaffModeX.getInstance().getHotbarManager().getHotbar(player) != null) {
             event.setCancelled(true);
         }
+
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player);
+
+        if (staffPlayer == null) {
+            return;
+        }
+
+        if (staffPlayer.isFrozen()) {
+            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-drop-items"));
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerPickupItem(final PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
         if (StaffModeX.getInstance().getHotbarManager().getHotbar(player) != null) {
+            event.setCancelled(true);
+        }
+
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player);
+
+        if (staffPlayer == null) {
+            return;
+        }
+
+        if (staffPlayer.isFrozen()) {
             event.setCancelled(true);
         }
     }
@@ -140,6 +180,19 @@ public class PlayerListeners implements Listener {
                     event.setCancelled(true);
                 }
             }
+
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                    .getOrCreateStaffPlayer(player);
+
+            if (staffPlayer == null) {
+                return;
+            }
+
+            if (staffPlayer.isFrozen()) {
+                staffPlayer
+                        .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
+                event.setCancelled(true);
+            }
         }
     }
 
@@ -160,7 +213,8 @@ public class PlayerListeners implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerMove(PlayerMoveEvent event) {
-        StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(event.getPlayer()).preventMovement(event);
+        StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(event.getPlayer())
+                .preventMovement(event);
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -130,7 +130,7 @@ public class StaffPlayer extends UUIDPlayer {
     }
 
     public void makeVisible() {
-        vanishPlayer.makeInvisible();
+        vanishPlayer.makeVisible();
     }
 
     public void makeInvisible() {

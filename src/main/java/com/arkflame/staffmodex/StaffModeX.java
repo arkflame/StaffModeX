@@ -5,6 +5,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.arkflame.staffmodex.commands.ExamineCommand;
 import com.arkflame.staffmodex.commands.FreezeCommand;
 import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffChatCommand;
@@ -22,6 +23,7 @@ import com.arkflame.staffmodex.managers.StaffModeManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
 import com.arkflame.staffmodex.modernlib.utils.Players;
+import com.arkflame.staffmodex.player.StaffPlayer;
 import com.arkflame.staffmodex.player.StaffPlayerManager;
 import com.arkflame.staffmodex.tasks.StaffActionBarTask;
 
@@ -77,6 +79,7 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new MenuListener(), this);
 
         // Register Commands
+        new ExamineCommand().register();
         new FreezeCommand().register();
         new ReportCommand().register();
         new StaffChatCommand().register();
@@ -98,12 +101,11 @@ public class StaffModeX extends JavaPlugin {
         HandlerList.unregisterAll(this);
 
         for (Player player : this.getServer().getOnlinePlayers()) {
-            if (hotbarManager.getHotbar(player) != null) {
-                hotbarManager.setHotbar(player, null);
-                inventoryManager.loadPlayerInventory(player);
-                inventoryManager.deletePlayerInventory(player);
-                Players.setFlying(player, false);
+            StaffPlayer staffPlayer = getStaffPlayerManager().getStaffPlayer(player);
+            if (staffPlayer != null) {
+                staffPlayer.unfreeze();
             }
+            getStaffModeManager().removeStaff(player);
         }
 
         // Close everyone's inventory

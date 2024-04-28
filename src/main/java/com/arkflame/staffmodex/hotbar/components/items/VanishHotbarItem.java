@@ -2,8 +2,6 @@ package com.arkflame.staffmodex.hotbar.components.items;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
-import com.arkflame.staffmodex.modernlib.utils.ChatColors;
-import com.arkflame.staffmodex.modernlib.utils.Effects;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import com.arkflame.staffmodex.player.StaffPlayer;
 

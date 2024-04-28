@@ -29,10 +29,12 @@
 #StaffMode Alias /staff /mod
 #Freeze Alias /ss
 #Force admin to be in staffmode to use freeze
-Force admin to be in staffmode to vanish
-Permission to vanish (staffmodex.vanish)
-Command to invsee (you have to be in staffmode)
-Implement examine commmand.
+#Force admin to be in staffmode to vanish
+#Permission to vanish (staffmodex.vanish)
+#Command to invsee (you have to be in staffmode)
+#staffmodex.warning
+#Implement examine commmand.
+Block actions while frozen cannot-drop-items cannot-take-items cannot-interact
 Implement command to check infractions.
 Disconnet during freeze, freeze, and unfreeze commands.
 Check how this works when changing worlds.

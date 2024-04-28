@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class InventoryListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
@@ -24,6 +25,18 @@ public class InventoryListeners implements Listener {
             }
             if (StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getSlot())
                     || StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getHotbarButton())) {
+                event.setCancelled(true);
+            }
+
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                    .getOrCreateStaffPlayer(player);
+    
+            if (staffPlayer == null) {
+                return;
+            }
+    
+            if (staffPlayer.isFrozen()) {
+                staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-click-inventory"));
                 event.setCancelled(true);
             }
         }
@@ -44,6 +57,18 @@ public class InventoryListeners implements Listener {
                     }
                 }
             }
+
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player);
+
+        if (staffPlayer == null) {
+            return;
+        }
+
+        if (staffPlayer.isFrozen()) {
+            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-drag-inventory"));
+            event.setCancelled(true);
+        }
         }
     }
 }

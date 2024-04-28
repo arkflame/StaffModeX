@@ -28,7 +28,7 @@ public abstract class InfractionCommand extends ModernCommand {
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
         // Check for permission
-        if (!sender.hasPermission("staffmodex.command." + getName())) {
+        if (!sender.hasPermission("staffmodex." + getName())) {
             sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
             return;
         }

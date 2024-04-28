@@ -2,6 +2,7 @@ package com.arkflame.staffmodex.menus;
 
 import org.bukkit.entity.Player;
 
+import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.menus.items.ConnectionItem;
 import com.arkflame.staffmodex.menus.items.FoodItem;
 import com.arkflame.staffmodex.menus.items.FreezePlayerItem;
@@ -30,5 +31,15 @@ public class ExaminePlayerMenu extends Menu {
         setItem(9 + 8, new PlayerInventoryItem(player, target, this));
 
         setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
+    }
+
+    @Override
+    public void openInventory(Player player) {
+        if (!player.hasPermission("staffmodex.examine")) {
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.examine.no-permission"));
+            return;
+        }
+        
+        super.openInventory(player);
     }
 }

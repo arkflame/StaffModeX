@@ -69,6 +69,11 @@ public class FreezablePlayer extends UUIDPlayer {
     }
 
     public void freeze(FreezablePlayer origin) {
+        if (freezeStatus != null) {
+            unfreeze();
+            return;
+        }
+
         Player player = getPlayer();
         freezeStatus = new FreezeStatus(origin, this);
         origin.addFrozenPlayerByMe(this);
@@ -87,6 +92,10 @@ public class FreezablePlayer extends UUIDPlayer {
     
 
     public void unfreeze() {
+        if (freezeStatus == null) {
+            return;
+        }
+
         Player player = getPlayer();
         freezeStatus.getStaff().removeFrozenPlayerByMe(this);
         player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen"));

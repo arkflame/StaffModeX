@@ -35,7 +35,7 @@ public class WarnPlayerItem extends MenuItem {
     @Override
     public void onClick() {
         // Check for permission
-        if (!player.hasPermission("staffmodex.command.warning")) {
+        if (!player.hasPermission("staffmodex.warning")) {
             player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
             return;
         }
