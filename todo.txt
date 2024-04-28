@@ -48,13 +48,14 @@ JOIN + 1 1
 
 JOIN + 1 2
 QUIT - 1 1
+
 QUIT - 1 0
 = REDIS SERVER =
 JOIN SERVER: SERVERNAME
 ###
-
 #In StaffList, show players from Redis.
-In staff list, show the server the players are in.
+#In staff list, show the server the players are in.
+
 Staff joined/left message (global communication, once)
 
 Database system for infractions (warnings/reports)
