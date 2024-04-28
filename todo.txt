@@ -20,7 +20,7 @@
 #Staff Chat (Recibe los Freeze MSG) (staffmode.staffchat)
 #Title y subtitle de que no se desconecte al frozear y al desfrozear.
 #Actualizar miner gui
-Al salir no teletransporta
+#Al salir no teletransporta
 Efecto night vision, speed 2 y jump
 Prevenir muerte del jugador frozeado.
 Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
