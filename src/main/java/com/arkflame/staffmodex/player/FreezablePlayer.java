@@ -34,6 +34,8 @@ public class FreezablePlayer extends UUIDPlayer {
             player.sendMessage(msg.getText("messages.freeze.no_permission"));
         } else if (target.hasPermission("staffmodex.freeze.bypass")) {
             player.sendMessage(msg.getText("messages.freeze.has_bypass"));
+        } else if (!StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+            player.sendMessage(msg.getText("messages.freeze.not-staff"));
         } else if (isFrozen()) {
             player.sendMessage(msg.getText("messages.freeze.unfreeze"));
             Sounds.play(player, 1.0F, 1.0F, "ENDERMAN_TELEPORT", "ENTITY_ENDERMAN_TELEPORT");

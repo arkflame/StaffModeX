@@ -19,11 +19,6 @@ public class VanishCommand extends ModernCommand {
             Player player = (Player) sender;
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
             staffPlayer.toggleVanish();
-            if (staffPlayer.isVanished()) {
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("hotbar.vanish.vanished"));
-            } else {
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("hotbar.vanish.unvanished"));
-            }
         } else {
             sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
         }

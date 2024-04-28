@@ -24,13 +24,9 @@ public class VanishHotbarItem extends HotbarItem {
         if (staffPlayer.isVanished()) {
             setType(Materials.get("LIME_DYE", "INK_SACK"));
             setDurability((short) 10);
-            player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.vanish.vanished")));
-            Effects.play(player, "FIREWORK_ROCKET_BLAST");
         } else {
             setType(Materials.get("GRAY_DYE", "INK_SACK"));
             setDurability((short) 8);
-            player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.vanish.unvanished")));
-            Effects.play(player, "FIREWORK_ROCKET_BLAST_FAR");
         }
         player.getInventory().setItem(2, this);
     }

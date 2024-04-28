@@ -24,12 +24,20 @@ messages:
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
 
+  vanish:
+    not-staff: "&cYou have to be in staff mode to use vanish."
+    no-permission: "&cYou do not have permission to vanish."
+    vanished: "&aYou are now vanished."
+    unvanished: "&aYou are no longer vanished."
+
   staffchat:
     chat: "&8[&aStaffChat&8] &e{player}&8: &f{message}"
     enabled: "&aStaff chat enabled"
     disabled: "&cStaff chat disabled"
 
   freeze:
+    not-staff: "&cYou have to be in staff mode to freeze players."
+    no_permission: "&cYou do not have permission to freeze players."
     usage: "&c/freeze <target>\n&cFreeze the target player to review him."
     player-not-online: "&cThe player '&b{player}&c' is not online."
     action_bar: "&cUnder Review &7(&e{countdown}&7)"
@@ -42,7 +50,6 @@ messages:
     staff_msg: "&8[&6Freeze&8] [&cStaff&8] &c{player}&8: &r{message}"
     frozen_msg: "&8[&6Freeze&8] &b{player}&8: &7{message}"
     quit_msg: "&8&m---------------------------&r\n&b{player}&c left while frozen.\n&8&m---------------------------&r"
-    no_permission: "&cYou do not have permission to freeze players."
     has_bypass: "&cThis player has bypassed freezing."
     unfreeze: "&7The player has been &aunfrozen&r&7."
     freeze: "&7The player has been &cfrozen&r&7. Please review the player for &csuspicious activity&r&7."
@@ -69,8 +76,6 @@ hotbar:
     name: "&bVanish"
     lore:
     - "&7Toggle invisibility on/off; observe players without influencing their behavior."
-    vanished: "&aYou are now vanished."
-    unvanished: "&aYou are no longer vanished."
   players:
     name: "&3Players"
     lore:

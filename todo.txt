@@ -3,33 +3,34 @@
 #Add PlaceholderAPI hooks for staffmodex.
 #Modify vanish to hide disconnect/join messages.
 #Hide from all players on tablist while vanishing.
-#Allow bypass to reveal hidden players. (staffmode.vanish.bypass)
-#Ensure fly remains active in staffmode.
+#Allow bypass to reveal hidden players. (staffmodex.vanish.bypass)
+#Ensure fly remains active in staffmodex.
 #Prevent mobs from targeting staffmode players.
-#Permission to prevent staffmode players from freezing you. (staffmode.freeze.bypass)
-#Permission to freeze players. (staffmode.freeze)
+#Permission to prevent staffmode players from freezing you. (staffmodex.freeze.bypass)
+#Permission to freeze players. (staffmodex.freeze)
 #Develop vanish command.
 #Implement freeze messages.
 #Retain inventory when dying in staff mode.
 #Teleport staff back to old location. Save location.
 #Send messages to console when writing player only cmds.
-#Permission to have the force vanish. (staffmode.vanish.force)
+#Permission to have the force vanish. (staffmodex.vanish.force)
 # placeholders: staffmode_enabled staffmode_freeze_time
 #Placeholder of time passed since frozen.
 #Chat Mod-Freze.
-#Staff Chat (Recibe los Freeze MSG) (staffmode.staffchat)
+#Staff Chat (Recibe los Freeze MSG) (staffmodex.staffchat)
 #Title y subtitle de que no se desconecte al frozear y al desfrozear.
 #Actualizar miner gui
 #Al salir no teletransporta
 #Efecto night vision, speed 2 y jump
 #Prevenir muerte del jugador frozeado.
-#Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
+#Actionbar for staffmodex Vanished (V) StaffChat (X) TPS: 20
 #PRIORIDAD => Action-bar tiempo restante hasta ser baneado freeze. (Tanto el frezeador como el frezeado) #Se congela en cero y el staff debe tomar accion manualmente.
 
-StaffMode Alias /staff /mod
-Freeze Alias /ss
-Force admin to be in staffmode to use freeze
+#StaffMode Alias /staff /mod
+#Freeze Alias /ss
+#Force admin to be in staffmode to use freeze
 Force admin to be in staffmode to vanish
+Permission to vanish (staffmodex.vanish)
 Command to invsee (you have to be in staffmode)
 Implement examine commmand.
 Implement command to check infractions.

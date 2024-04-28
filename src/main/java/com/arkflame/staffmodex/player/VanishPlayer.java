@@ -5,6 +5,9 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
+
 public class VanishPlayer extends UUIDPlayer {
     private boolean vanished = false;
 
@@ -13,7 +16,13 @@ public class VanishPlayer extends UUIDPlayer {
     }
 
     public void toggleVanish() {
-        if (isVanished()) {
+        ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+        Player player = getPlayer();
+        if (!player.hasPermission("staffmodex.vanish")) {
+            player.sendMessage(msg.getText("messages.vanish.no-permission"));
+        } else if (!StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+            player.sendMessage(msg.getText("messages.freeze.not-staff"));
+        } else if (isVanished()) {
             makeVisible();
         } else {
             makeInvisible();
@@ -30,6 +39,7 @@ public class VanishPlayer extends UUIDPlayer {
             }
         }
         vanished = true;
+        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.vanish.vanished"));
     }
 
     public void makeVisible() {
@@ -38,6 +48,7 @@ public class VanishPlayer extends UUIDPlayer {
             otherPlayer.showPlayer(player);
         }
         vanished = false;
+        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.vanish.unvanished"));
     }
 
     public boolean isVanished() {
