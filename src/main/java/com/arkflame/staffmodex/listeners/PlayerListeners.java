@@ -1,5 +1,8 @@
 package com.arkflame.staffmodex.listeners;
 
+import java.util.List;
+
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +24,7 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.cps.CpsTestingManager;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.player.FreezablePlayer;
 import com.arkflame.staffmodex.player.StaffNote;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
@@ -112,9 +116,22 @@ public class PlayerListeners implements Listener {
             event.setQuitMessage(null);
         }
         if (staffPlayer.isFrozen()) {
-            staffPlayer.getWhoFroze().sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg",
+            FreezablePlayer whoFroze = staffPlayer.getWhoFroze();
+            whoFroze.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg",
                     "{player}", player.getName()));
             staffPlayer.unfreeze();
+            List<String> disconnectCmds = StaffModeX.getInstance().getCfg().getTextList("freeze.commands.disconnect", "{player}", player.getName(), "{staff}", whoFroze.getName());
+            if (disconnectCmds != null && !disconnectCmds.isEmpty()) {
+                Player whoFrozePlayer = whoFroze.getPlayer();
+                Server server = StaffModeX.getInstance().getServer();
+                if (whoFrozePlayer != null) {
+                    for (String cmd : disconnectCmds) {
+                        if (cmd != null && !cmd.isEmpty()) {
+                            server.dispatchCommand(whoFrozePlayer, cmd);
+                        }
+                    }
+                }
+            }
         }
         StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
     }

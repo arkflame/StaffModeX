@@ -1,1 +1,6 @@
 infraction_cooldown: 60
+freeze:
+  commands:
+    disconnect:
+    #- 'ban {player} Testinggg from {staff}'
+    - ''

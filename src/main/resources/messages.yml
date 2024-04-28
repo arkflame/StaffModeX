@@ -1,4 +1,4 @@
-# You can use hex colors on any message
+# You can use hexadecimal colors on any message
 # Format: #000000
 messages:
   only-players: "&cThis command cannot be used from the console."

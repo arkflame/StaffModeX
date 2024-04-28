@@ -37,7 +37,8 @@
 #Reload no quita freeze
 #Block actions while frozen cannot-drop-items cannot-take-items #cannot-interact cannnot-drag-iventory cannot-click-inventory
 #Implement command to check infractions.
-Disconnet during freeze, freeze, and unfreeze commands.
+#Disconnet during freeze, freeze, and unfreeze commands.
+#Hexadecimal colors
 Check how this works when changing worlds.
 Redis database to sync staffmode status between servers join=+1 quit=-1 timeout=30s
 Redis database read list of staffs to list all staff in all servers (and able to get their server)
