@@ -10,7 +10,7 @@ public class PlayerItem extends MenuItem {
     public PlayerItem(Player miner) {
         super(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
                 StaffModeX.getInstance().getMsg().getText("hotbar.playerItem.title", "{playerName}", miner.getName()),
-                StaffModeX.getInstance().getMsg().getText("hotbar.playerItem.description",
+                StaffModeX.getInstance().getMsg().getTextList("hotbar.playerItem.description",
                         "{blockX}", String.valueOf(miner.getLocation().getBlockX()),
                         "{blockY}", String.valueOf(miner.getLocation().getBlockY()),
                         "{blockZ}", String.valueOf(miner.getLocation().getBlockZ()),
@@ -22,7 +22,7 @@ public class PlayerItem extends MenuItem {
                         "{level}", String.valueOf(miner.getLevel()),
                         "{gameMode}", miner.getGameMode().name(),
                         "{ip}", miner.getAddress().getAddress().getHostAddress() + ":" + miner.getAddress().getPort(),
-                        "{uuid}", miner.getUniqueId().toString()));
+                        "{uuid}", miner.getUniqueId().toString()).toArray(new String[0]));
     }
 
     @Override

@@ -30,6 +30,12 @@ messages:
     disabled: "&cStaff chat disabled"
 
   freeze:
+    frozen_action: "&bYou have been frozen!"
+    frozen_title: "&bFrozen"
+    frozen_subtitle: "&7You are frozen!"
+    unfrozen_action: "&aYou are no longer frozen!"
+    unfrozen_title: "&aUnfrozen"
+    unfrozen_subtitle: "&7You are no longer frozen!"
     staff_msg: "&8[&6Freeze&8] [&cStaff&8] &c{player}&8: &r{message}"
     frozen_msg: "&8[&6Freeze&8] &b{player}&8: &7{message}"
     quit_msg: "&8&m---------------------------&r\n&b{player}&c left while frozen.\n&8&m---------------------------&r"
@@ -61,11 +67,11 @@ hotbar:
     - "&7Toggle invisibility on/off; observe players without influencing their behavior."
     vanished: "&aYou are now vanished."
     unvanished: "&aYou are no longer vanished."
-  minergui:
-    name: "&3Miner GUI"
+  players:
+    name: "&3Players"
     lore:
     - "&7Open the GUI to see players that are currently mining."
-    menu_title: "&3Miner GUI"
+    menu_title: "&3Players"
     close: "&bClose"
     teleport: "&aYou have been teleported to {player}."
   stafflist:
@@ -100,7 +106,15 @@ hotbar:
     success: "&aYou are now following {player}."
   playerItem:
     title: "&b{playerName}"
-    description: "&bLocation: &7{blockX}, {blockY}, {blockZ}\n&bHealth: &7{health}/{maxHealth}\n&bFood: &7{foodLevel}\n&bXP: &7{exp}/{expToLevel}\n&bLevel: &7{level}\n&bGamemode: &7{gameMode}\n&bIP: &7{ip}\n&bUUID: &7{uuid}"
+    description:
+      - "&bLocation: &7{blockX}, {blockY}, {blockZ}"
+      - "&bHealth: &7{health}/{maxHealth}"
+      - "&bFood: &7{foodLevel}"
+      - "&bXP: &7{exp}/{expToLevel}"
+      - "&bLevel: &7{level}"
+      - "&bGamemode: &7{gameMode}"
+      - "&bIP: &7{ip}"
+      - "&bUUID: &7{uuid}"
 
 menus:
   warnPlayer:

@@ -18,7 +18,10 @@
 #Placeholder of time passed since frozen.
 #Chat Mod-Freze.
 #Staff Chat (Recibe los Freeze MSG) (staffmode.staffchat)
-Title y subtitle de que no se desconecte al frozear y al desfrozear.
+#Title y subtitle de que no se desconecte al frozear y al desfrozear.
+#Actualizar miner gui
+Al salir no teletransporta
+Efecto night vision, speed 2 y jump
 Prevenir muerte del jugador frozeado.
 Actionbar for staffmode. Vanished (V) StaffChat (X) TPS: 20
 PRIORIDAD => Action-bar tiempo restante hasta ser baneado freeze. (Tanto el frezeador como el frezeado) Se congela en cero y el staff debe tomar accion manualmente.

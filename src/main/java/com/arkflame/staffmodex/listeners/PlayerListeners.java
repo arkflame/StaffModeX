@@ -99,9 +99,6 @@ public class PlayerListeners implements Listener {
             staffPlayer.getWhoFroze().sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg", "{player}", player.getName()));
             staffPlayer.unfreeze();
         }
-        StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
-        StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
-        StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
         StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
     }
 

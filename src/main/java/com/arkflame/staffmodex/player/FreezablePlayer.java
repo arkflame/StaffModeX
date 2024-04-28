@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
-import com.arkflame.staffmodex.modernlib.utils.Players;
+import com.arkflame.staffmodex.modernlib.utils.Titles;
 
 public class FreezablePlayer extends UUIDPlayer {
     // Are you frozen? Save status
@@ -67,7 +67,9 @@ public class FreezablePlayer extends UUIDPlayer {
         freezeStatus = new FreezeStatus(origin, this);
         origin.addFrozenPlayerByMe(this);
         player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen", "{player}", origin.getPlayer().getName()));
-    
+        Titles.sendActionBar(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_action"));
+        Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_title"), StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_subtitle"), 20, 60, 20);
+        
         // Set the player's helmet to the ice cube
         freezeStatus.setHelmet(player.getEquipment().getHelmet());
         player.getEquipment().setHelmet(new ItemStack(Material.PACKED_ICE));
@@ -78,7 +80,9 @@ public class FreezablePlayer extends UUIDPlayer {
         Player player = getPlayer();
         freezeStatus.getStaff().removeFrozenPlayerByMe(this);
         player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen"));
-    
+        Titles.sendActionBar(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen_action"));
+        Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen_title"), StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen_subtitle"), 20, 60, 20);
+        
         // Set the player's helmet back to air and clear for packed ice
         player.getEquipment().setHelmet(freezeStatus.getHelmet());
         freezeStatus = null;
