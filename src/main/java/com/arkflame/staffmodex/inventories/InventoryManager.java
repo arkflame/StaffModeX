@@ -37,14 +37,18 @@ public class InventoryManager {
         if (player == null) {
             return;
         }
-        inventoryConfig.createSection(player.getUniqueId().toString());
+        inventoryConfig.createSection(player.getUniqueId().toString() + ".inventory");
         Inventory inventory = player.getInventory();
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = inventory.getItem(i);
             if (item != null) {
-                inventoryConfig.set(player.getUniqueId().toString() + "." + i, item);
+                inventoryConfig.set(player.getUniqueId().toString() + ".inventory" + "." + i, item);
             }
         }
+
+        // Health and food
+        inventoryConfig.set(player.getUniqueId().toString() + ".health", player.getHealth());
+        inventoryConfig.set(player.getUniqueId().toString() + ".food", player.getFoodLevel());
         try {
             inventoryConfig.save(inventoryFile);
         } catch (IOException e) {
@@ -57,16 +61,15 @@ public class InventoryManager {
             return;
         }
 
-        if (!inventoryConfig.contains(player.getUniqueId().toString())) {
+        if (!inventoryConfig.contains(player.getUniqueId().toString() + ".inventory")) {
             return;
         }
 
         Inventory inventory = player.getInventory();
         inventory.clear();
 
-        ConfigurationSection invSection = inventoryConfig.getConfigurationSection(player.getUniqueId().toString());
+        ConfigurationSection invSection = inventoryConfig.getConfigurationSection(player.getUniqueId().toString() + ".inventory");
         if (invSection == null) {
-            player.sendMessage("Inv section is null!!!");
             return;
         }
         for (String key : invSection.getKeys(false)) {
@@ -74,6 +77,10 @@ public class InventoryManager {
             ItemStack value = invSection.getItemStack(key);
             inventory.setItem(slot, value);
         }
+
+        // Health and food
+        player.setHealth(inventoryConfig.getDouble(player.getUniqueId().toString() + ".health", player.getHealth()));
+        player.setFoodLevel(inventoryConfig.getInt(player.getUniqueId().toString() + ".food", player.getFoodLevel()));
     }
 
     public void deletePlayerInventory(Player player) {

@@ -5,10 +5,12 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -273,10 +275,22 @@ public class PlayerListeners implements Listener {
         Player player = event.getEntity();
         if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
             event.setKeepInventory(true);
+        } else {
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
+            if (staffPlayer.isFrozen()) {
+                event.setKeepInventory(true);
+            }
         }
-        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
-        if (staffPlayer.isFrozen()) {
-            event.setKeepInventory(true);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        HumanEntity entity = event.getEntity();
+        if (entity instanceof Player) {
+            Player player = (Player) entity;
+            if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+                event.setCancelled(true);
+            }
         }
     }
 }

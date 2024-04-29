@@ -20,14 +20,14 @@ messages:
     receive-self: "&cYou were warned by &b{staff}&c because of &f{reason}&c."
     receive: "&b{staff} &cwarned &e{player}&c for &f{reason}&c."
     success: "&aYou have successfully warned {player}. Thank you for maintaining server standards."
-    usage: "&cIncorrect usage! Please use: /warn <playerName> <reason>"
+    usage: "&cIncorrect usage! Please use: /warn <player> <reason>"
     started: "&aYou have started writing a warning to {player}."
     title: "&cWarning"
 
   report:
     receive: "&b{staff} &creported &e{player}&c for &f{reason}&c."
     success: "&aYour report has been successfully filed against {player}. Thank you for your vigilance."
-    usage: "&cIncorrect usage! Please use: /report <playerName> <reason>"
+    usage: "&cIncorrect usage! Please use: /report <player> <reason>"
     title: "&9Report"
 
   helpop:
@@ -54,6 +54,7 @@ messages:
     unvanished: "&aYou are no longer vanished."
 
   staffchat:
+    no-permission: "&cYou do not have permission to use the staff chat."
     chat: "&8[&aStaffChat&8] &e{player}&8: &f{message}"
     enabled: "&aStaff chat enabled"
     disabled: "&cStaff chat disabled"

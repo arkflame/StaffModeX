@@ -23,4 +23,9 @@ public class Players {
             player.sendMessage(text);
         }
     }
+
+    public static void heal(Player player) {
+        player.setHealth(20D);
+        player.setFoodLevel(20);
+    }
 }

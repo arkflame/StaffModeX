@@ -43,6 +43,7 @@ public class StaffModeManager {
         }
         StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
         Players.clearInventory(player);
+        Players.heal(player);
         hotbarManager.setHotbar(player, new StaffHotbar());
         Players.setFlying(player, true);
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
