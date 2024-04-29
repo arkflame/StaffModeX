@@ -1,0 +1,56 @@
+### BRIEF DESCRIPTION ###
+
+The best moderation tool for Minecraft Server administrators. HEX, Redis & MySQL support.
+
+### DESCRIPTION ###
+
+StaffModeX is a moderation tool for Minecraft Server administrators to silently investigate players with vanish and apply warns and reports with an intuitive GUI menu.
+
+StaffModeX saves and restores your moderators inventories, food, health and location, making it impossible to abuse and keeping everyone and track, both your players and administrators.
+
+StaffModeX has the ability to sync with Redis for multi-server support, allowing it to be activated automatically when switching servers.
+
+StaffModeX can connect to MySQL to synchronize warnings and reports between multiple servers and achieve higher performance with async data requests.
+
+### TAGS ###
+
+staff, moderate, plugin, administration, placeholder, mysql, hex, redis, tool, minecraft, server
+
+### COMMANDS ###
+
+/examine <player> - Examine the indicated player.
+/freeze <player> - Freeze the indicated player.
+/helpop <message> - Ask help from operators.
+/report <player> <reason> - Report a player from the server.
+/warn <player> <reason> - Warn a player from the server.
+/infractions <player> - Check the infractions a player has.
+/staffchat (/sc) - Toggle the staffchat mode.
+/staffmode (/staff) - Activate staffmode.
+/vanish - Completely hide yourself from everyone.
+
+### PERMISSIONS ###
+
+staffmodex.vanish
+staffmodex.vanish.force
+staffmodex.vanish.bypass
+
+staffmodex.freeze
+staffmodex.freeze.bypass
+
+staffmodex.staffchat
+staffmodex.helpop
+staffmodex.helpop.receive
+staffmodex.report
+staffmodex.report.receive
+staffmodex.warning
+staffmodex.warning.receive
+
+staffmodex.staffmode
+
+### PLACEHOLDERS ###
+
+%staffmode_enabled%: This placeholder indicates whether the player is currently in staff mode or not. It returns "true" if the player is in staff mode and "false" otherwise.
+
+%staffmode_freeze_countdown%: This placeholder displays the remaining time until the player is automatically unfrozen if they are currently frozen. It shows the countdown timer in a formatted string indicating minutes and seconds.
+
+%staffmode_freeze_time%: This placeholder shows the total duration for which the player has been frozen. It displays the elapsed time since the player was frozen in a formatted string indicating minutes and seconds.

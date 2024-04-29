@@ -59,3 +59,10 @@ JOIN SERVER: SERVERNAME
 #Database system for infractions (warnings/reports)
 #Convert super jump to Phase Wall
 staffmodex.bypass.cooldown
+staffmodex.helpop
+staffmodex.helpop.receive
+staffmodex.report
+staffmodex.warning.receive
+staffmodex.report.receive
+
+CHAT SPY que puedan ver los mensajes de los jugadores

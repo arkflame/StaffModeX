@@ -19,6 +19,6 @@
 - PlaceholderAPI
 
 - No Bugs
-- Effects
+- HEX Support
 - CPS Check
 - Keeps Inventory
