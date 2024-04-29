@@ -2,6 +2,8 @@ package com.arkflame.staffmodex.infractions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.arkflame.staffmodex.StaffModeX;
@@ -23,23 +25,27 @@ public class InfractionList {
     }
 
     public void load(ConfigurationSection infractionsSection) {
+        this.infractions.clear();
         if (infractionsSection != null) {
-            StaffModeX.getInstance().getLogger().info("Loading infractions...");
             infractionsSection.getKeys(false).forEach(id -> {
-                ConfigurationSection infractionSection = infractionsSection.getConfigurationSection(id);
-                if (infractionSection != null) {
-                    StaffModeX.getInstance().getLogger().info("Loading infraction with ID: " + id);
-                    String timestamp = infractionSection.getString("timestamp");
-                    String reporter = infractionSection.getString("reporter");
-                    String reason = infractionSection.getString("reason");
-                    addInfraction(new Infraction(id, timestamp, reporter, reason));
+                try {
+                    ConfigurationSection infractionSection = infractionsSection.getConfigurationSection(id);
+                    if (infractionSection != null) {
+                        String timestamp = infractionSection.getString("timestamp");
+                        String reporterUUID = infractionSection.getString("reporter_uuid");
+                        String reason = infractionSection.getString("reason");
+                        String accusedUUID = infractionSection.getString("accused_uuid");
+                        String type = infractionSection.getString("type");
+                        addInfraction(new Infraction(id, timestamp, reporterUUID, reason, UUID.fromString(accusedUUID),
+                                UUID.fromString(reporterUUID), InfractionType.valueOf(type)));
+                    }
+                } catch (Exception ex) {
+                    StaffModeX.getInstance().getLogger().severe("Error while loading infraction from config");
+                    ex.printStackTrace();
                 }
             });
-            StaffModeX.getInstance().getLogger().info("Infractions loaded successfully.");
-        } else {
-            StaffModeX.getInstance().getLogger().warning("Infractions section is null. No infractions to load.");
         }
-    }    
+    }
 
     public int count() {
         return infractions.size();

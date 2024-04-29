@@ -31,7 +31,7 @@ public class InfractionsViewerMenu extends Menu {
             Infraction infraction = infractions.get(i);
             Material material = type == InfractionType.REPORT ? Material.BOOK : Material.REDSTONE;
             String itemName = type == InfractionType.REPORT ? StaffModeX.getInstance().getMsg().getText("messages.report-title") : StaffModeX.getInstance().getMsg().getText("messages.warning-title");
-            setItem(slot, new MenuItem(material, itemName, StaffModeX.getInstance().getMsg().getText("messages.reason-label", "{reason}", infraction.getReason()), StaffModeX.getInstance().getMsg().getText("messages.reporter-label", "{reporter}", infraction.getReporter()), StaffModeX.getInstance().getMsg().getText("messages.time-label", "{time}", infraction.getTimestamp())));
+            setItem(slot, new MenuItem(material, itemName, StaffModeX.getInstance().getMsg().getText("messages.reason-label", "{reason}", infraction.getReason()), StaffModeX.getInstance().getMsg().getText("messages.reporter-label", "{reporter}", infraction.getReporterName()), StaffModeX.getInstance().getMsg().getText("messages.time-label", "{time}", infraction.getTimestamp())));
             slot++;
         }
 

@@ -57,8 +57,7 @@ public class WarningProcess {
 
     public void complete(String reason) {
         inProgress = false;
-        staffPlayerTarget.infraction(InfractionType.WARNING, player.getName(), reason);
-        staffPlayerTarget.save();
+        staffPlayerTarget.infraction(InfractionType.WARNING, staffPlayer, reason);
         target.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.you-are-warned").replace("{staff}", player.getDisplayName()).replace("{reason}", reason));
     }
 

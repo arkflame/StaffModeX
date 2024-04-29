@@ -4,6 +4,7 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
+import com.arkflame.staffmodex.player.StaffPlayer;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
@@ -13,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class StaffListHotbarItem extends HotbarItem {
     public StaffListHotbarItem() {
@@ -45,6 +47,14 @@ public class StaffListHotbarItem extends HotbarItem {
         // Set items async
         Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
             Collection<String> online = StaffModeX.getInstance().getRedisManager().getOnline();
+            if (online == null) {
+                online = new HashSet<>();
+                for (Player ply : Bukkit.getOnlinePlayers()) {
+                    if (ply.hasPermission("staffmodex.staffmode")) {
+                        online.add(ply.getName());
+                    }
+                }
+            }
 
             int i = 0;
             for (String playerName : online) {

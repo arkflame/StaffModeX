@@ -3,6 +3,8 @@ package com.arkflame.staffmodex.player;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.infractions.Infraction;
+import com.arkflame.staffmodex.managers.DatabaseManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class StaffPlayerLoader {
@@ -15,36 +17,42 @@ public class StaffPlayerLoader {
     }
 
     public void load() {
-        StaffModeX.getInstance().getLogger().info("Loading configuration...");
+        DatabaseManager mySQLManager = StaffModeX.getInstance().getMySQLManager();
+    
+        if (mySQLManager.isInitializedSuccessfully()) {
+            StaffModeX.getInstance().getLogger().info("Using MySQL for data loading.");
+            mySQLManager.loadInfractions(staffPlayer);
+            return;
+        } else {
+            StaffModeX.getInstance().getLogger().info("MySQL not initialized. Using local configuration.");
+        }
+    
+        StaffModeX.getInstance().getLogger().info("Loading data from configuration file.");
+    
         config.load();
     
         ConfigurationSection warningsSection = config.getConfig().getConfigurationSection("warnings");
         if (warningsSection != null) {
-            StaffModeX.getInstance().getLogger().info("Loading warnings...");
+            StaffModeX.getInstance().getLogger().info("Loading warnings from configuration file.");
             staffPlayer.getWarnings().load(warningsSection);
-            StaffModeX.getInstance().getLogger().info("Warnings loaded successfully.");
-        } else {
-            StaffModeX.getInstance().getLogger().warning("No warnings section found. Skipping loading of warnings.");
         }
     
         ConfigurationSection reportsSection = config.getConfig().getConfigurationSection("reports");
         if (reportsSection != null) {
-            StaffModeX.getInstance().getLogger().info("Loading reports...");
+            StaffModeX.getInstance().getLogger().info("Loading reports from configuration file.");
             staffPlayer.getReports().load(reportsSection);
-            StaffModeX.getInstance().getLogger().info("Reports loaded successfully.");
-        } else {
-            StaffModeX.getInstance().getLogger().warning("No reports section found. Skipping loading of reports.");
         }
-        StaffModeX.getInstance().getLogger().info("Configuration loaded successfully.");
-    }
-    
+    }    
 
-    public void save() {
-        ConfigurationSection warningsSection = config.getConfig().createSection("warnings");
-        staffPlayer.getWarnings().getInfractions().forEach(infraction -> infraction.save(warningsSection));
+    public void save(Infraction infraction) {
+        DatabaseManager mySQLManager = StaffModeX.getInstance().getMySQLManager();
 
-        ConfigurationSection reportsSection = config.getConfig().createSection("reports");
-        staffPlayer.getReports().getInfractions().forEach(infraction -> infraction.save(reportsSection));
+        if (mySQLManager.isInitializedSuccessfully()) {
+            mySQLManager.saveInfraction(infraction);
+            return;
+        }
+
+        infraction.save(config.getConfig());
 
         config.save();
     }

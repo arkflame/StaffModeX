@@ -107,16 +107,19 @@ public class PlayerListeners implements Listener {
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
 
-        if (player.hasPermission("staffmodex.staffmode")) {
             Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
-                StaffModeX.getInstance().getRedisManager().incrementOnlineStatus(player.getName(), StaffModeX.getInstance().getCfg().getString("server_name"));
+                staffPlayer.load();
 
-                if (StaffModeX.getInstance().getRedisManager().isStaffMode(player.getName())) {
-                    Bukkit.getScheduler().runTask(StaffModeX.getInstance(),
-                            () -> StaffModeX.getInstance().getStaffModeManager().addStaff(player));
+                if (player.hasPermission("staffmodex.staffmode") && !StaffModeX.getInstance().getRedisManager().isClosed()) {
+                    StaffModeX.getInstance().getRedisManager().incrementOnlineStatus(player.getName(),
+                            StaffModeX.getInstance().getCfg().getString("server_name"));
+
+                    if (StaffModeX.getInstance().getRedisManager().isStaffMode(player.getName())) {
+                        Bukkit.getScheduler().runTask(StaffModeX.getInstance(),
+                                () -> StaffModeX.getInstance().getStaffModeManager().addStaff(player));
+                    }
                 }
             });
-        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -150,6 +153,7 @@ public class PlayerListeners implements Listener {
         }
 
         StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
+        StaffModeX.getInstance().getStaffPlayerManager().removeStaffPlayer(player.getUniqueId());
 
         Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(),
                 () -> StaffModeX.getInstance().getRedisManager().decrementOnlineStatus(player.getName()));

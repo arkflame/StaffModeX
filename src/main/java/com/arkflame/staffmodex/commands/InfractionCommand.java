@@ -27,59 +27,58 @@ public abstract class InfractionCommand extends ModernCommand {
 
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
-        // Check for permission
         if (!sender.hasPermission("staffmodex." + getName())) {
             sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
             return;
         }
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            long currentTime = System.currentTimeMillis();
-
-            // Check if player is on cooldown
-            if (!player.hasPermission("staffmodex.bypass.cooldown")) {
-                if (cooldowns.containsKey(player.getName()) && cooldowns.get(player.getName()) > currentTime) {
-                    long remainingTime = (cooldowns.get(player.getName()) - currentTime) / 1000;
-                    player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.cooldown")
-                            .replace("{time}", String.valueOf(remainingTime)));
-                    return;
-                }
-            }
-
-            if (!args.hasArg(1)) {
-                player.sendMessage(StaffModeX.getInstance().getMsg()
-                        .getText("messages." + infractionType.name().toLowerCase() + "-usage"));
+    
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+            return;
+        }
+    
+        Player player = (Player) sender;
+        long currentTime = System.currentTimeMillis();
+    
+        // Handle command cooldown
+        if (!player.hasPermission("staffmodex.bypass.cooldown")) {
+            Long playerCooldown = cooldowns.get(player.getName());
+            if (playerCooldown != null && playerCooldown > currentTime) {
+                long remainingTime = (playerCooldown - currentTime) / 1000;
+                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.cooldown")
+                        .replace("{time}", String.valueOf(remainingTime)));
                 return;
             }
-
-            String playerName = args.getText(0);
-            // Gather all arguments past the first one to form the reason string
-            String[] argsArray = args.getArgs();
-            String reason = String.join(" ", Arrays.copyOfRange(argsArray, 1, argsArray.length));
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                            .getOrCreateStaffPlayer(Bukkit.getOfflinePlayer(playerName).getUniqueId());
-
-                    if (staffPlayer != null) {
-                        staffPlayer.infraction(infractionType, player.getName(), reason);
-                        String successMessage = StaffModeX.getInstance().getMsg()
-                                .getText("messages." + infractionType.name().toLowerCase() + "-success")
-                                .replace("{player}", playerName);
-                        player.sendMessage(successMessage);
-                        // Set cooldown for player
-                        long cooldown = StaffModeX.getInstance().getConfig().getLong("infraction_cooldown", 60) * 1000;
-                        cooldowns.put(player.getName(), currentTime + cooldown);
-                    } else {
-                        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.player-not-found"));
-                    }
-                }
-            }.runTaskAsynchronously(StaffModeX.getInstance());
-        } else {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
         }
-    }
+    
+        // Require at least one argument
+        if (!args.hasArg(1)) {
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + "-usage"));
+            return;
+        }
+    
+        String targetPlayerName = args.getText(0);
+        String reason = String.join(" ", Arrays.copyOfRange(args.getArgs(), 1, args.getArgs().length));
+    
+        // Process infraction asynchronously
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Player target = Bukkit.getPlayer(targetPlayerName);
+                if (target == null) {
+                    player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.player-not-found"));
+                    return;
+                }
+    
+                StaffPlayer targetStaffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
+                StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
+                targetStaffPlayer.infraction(infractionType, staffPlayer, reason);
+                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + "-success")
+                        .replace("{player}", targetPlayerName));
+    
+                long cooldown = StaffModeX.getInstance().getConfig().getLong("infraction_cooldown", 60) * 1000;
+                cooldowns.put(player.getName(), currentTime + cooldown);
+            }
+        }.runTaskAsynchronously(StaffModeX.getInstance());
+    }    
 }

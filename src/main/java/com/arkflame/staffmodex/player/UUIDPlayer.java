@@ -6,7 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class UUIDPlayer {
-    private UUID uuid;
+    private final UUID uuid;
+    private String name = null;
 
     public UUIDPlayer(UUID uuid) {
         this.uuid = uuid;
@@ -28,9 +29,13 @@ public class UUIDPlayer {
     }
 
     public String getName() {
+        if (name != null) {
+            return name;
+        } 
         Player player = getPlayer();
         if (player != null) {
-            return player.getName();
+            name = player.getName();
+            return name;
         }
         return "N/A";
     }

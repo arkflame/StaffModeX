@@ -3,6 +3,7 @@ package com.arkflame.staffmodex.player;
 import java.util.Collection;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -76,25 +77,20 @@ public class StaffPlayer extends UUIDPlayer {
         vanishPlayer.toggleVanish();
     }
 
-    public StaffPlayer save() {
-        staffPlayerLoader.save();
-        return this;
-    }
-
     public StaffPlayer load() {
         staffPlayerLoader.load();
         return this;
     }
 
-    public void infraction(InfractionType type, String reporter, String reason) {
+    public void infraction(InfractionType type, StaffPlayer reporter, String reason) {
         String timestamp = DateUtils.getCurrentTimestamp();
-        Infraction infraction = new Infraction(timestamp, reporter, reason);
+        Infraction infraction = new Infraction(timestamp, reporter.getName(), reason, getUUID(), reporter.getUUID(), type);
         if (type == InfractionType.WARNING) {
             warnings.addInfraction(infraction);
         } else if (type == InfractionType.REPORT) {
             reports.addInfraction(infraction);
         }
-        save();
+        staffPlayerLoader.save(infraction);
     }
 
     public InfractionList getWarnings() {
@@ -196,6 +192,7 @@ public class StaffPlayer extends UUIDPlayer {
                 staffPlayer.sendMessage(message);
             }
         }
+        Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> StaffModeX.getInstance().getRedisManager().sendStaffChatMessage(getName(), message));
     }
 
     public void toggleStaffChat() {

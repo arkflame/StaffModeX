@@ -2,7 +2,6 @@ package com.arkflame.staffmodex;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +20,7 @@ import com.arkflame.staffmodex.listeners.BlockListeners;
 import com.arkflame.staffmodex.listeners.EntityListeners;
 import com.arkflame.staffmodex.listeners.InventoryListeners;
 import com.arkflame.staffmodex.listeners.PlayerListeners;
+import com.arkflame.staffmodex.managers.DatabaseManager;
 import com.arkflame.staffmodex.managers.RedisManager;
 import com.arkflame.staffmodex.managers.StaffModeManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
@@ -35,6 +35,7 @@ public class StaffModeX extends JavaPlugin {
     private StaffModeManager staffModeManager = new StaffModeManager();
     private StaffPlayerManager staffPlayerManager = new StaffPlayerManager();
     private RedisManager redisManager;
+    private DatabaseManager mySQLManager;
 
     private ConfigWrapper config;
     private ConfigWrapper messages;
@@ -78,7 +79,13 @@ public class StaffModeX extends JavaPlugin {
 
         // Initialize Redis
         redisManager = new RedisManager(this);
-        redisManager.connectToRedis();
+
+        // Initialize MySQL
+        mySQLManager = new DatabaseManager(
+                config.getConfig().getBoolean("mysql.enabled"),
+                config.getString("mysql.url"),
+                config.getString("mysql.username"),
+                config.getString("mysql.password"));
 
         // Register Listeners
         PluginManager pluginManager = this.getServer().getPluginManager();
@@ -134,5 +141,9 @@ public class StaffModeX extends JavaPlugin {
 
     public static StaffModeX getInstance() {
         return StaffModeX.instance;
+    }
+
+    public DatabaseManager getMySQLManager() {
+        return mySQLManager;
     }
 }
