@@ -3,26 +3,39 @@
 messages:
   only-players: "&cThis command cannot be used from the console."
 
-  report-usage: "&cIncorrect usage! Please use: /report <playerName> <reason>"
-  warn-usage: "&cIncorrect usage! Please use: /warn <playerName> <reason>"
   player-not-found: "&cPlayer not found. Please check the name and try again."
-  report-success: "&aYour report has been successfully filed against {player}. Thank you for your vigilance."
-  warning-success: "&aYou have successfully warned {player}. Thank you for maintaining server standards."
   note-writing-success: "&aYou have successfully added a note to {player}."
   note-started: "&aYou have started writing a note to {player}."
-  warn-started: "&aYou have started writing a warning to {player}."
-  you-are-warned: "&cYou were warned by &b{staff}&c because of &f{reason}&c."
   no-permission: "&cYou do not have permission to use this command."
   
   # Infractions Viewer Menu
   infractions-menu-title: "&cInfractions"
-  report-title: "&9Report"
-  warning-title: "&cWarning"
   reason-label: "&bReason: &7{reason}"
   reporter-label: "&bReporter: &7{reporter}"
   time-label: "&bTime: &7{time}"
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
+
+  warning:
+    receive-self: "&cYou were warned by &b{staff}&c because of &f{reason}&c."
+    receive: "&b{staff} &cwarned &e{player}&c for &f{reason}&c."
+    success: "&aYou have successfully warned {player}. Thank you for maintaining server standards."
+    usage: "&cIncorrect usage! Please use: /warn <playerName> <reason>"
+    started: "&aYou have started writing a warning to {player}."
+    title: "&cWarning"
+
+  report:
+    receive: "&b{staff} &creported &e{player}&c for &f{reason}&c."
+    success: "&aYour report has been successfully filed against {player}. Thank you for your vigilance."
+    usage: "&cIncorrect usage! Please use: /report <playerName> <reason>"
+    title: "&9Report"
+
+  helpop:
+    no-permission: "&cYou do not have permission to use HelpOp."
+    cooldown: "&cYou must wait {time} seconds before using HelpOp again."
+    usage: "&cUsage: /helpop <message>"
+    sent: "&8[&4HelpOp&8] &e{player}&8:&7 {message}"
+    receive: "&8[&4HelpOp&8] &e{player}&8:&7 {message}"
 
   infractions:
     no-permission: "&cNo permission to see infractions for this player."

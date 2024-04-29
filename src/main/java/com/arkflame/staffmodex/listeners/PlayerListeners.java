@@ -82,7 +82,7 @@ public class PlayerListeners implements Listener {
             }.runTask(StaffModeX.getInstance());
             staffPlayer.getWarningProcess().clear();
             event.setCancelled(true);
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning-success").replace("{player}",
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning.success").replace("{player}",
                     warnedName));
         } // Freeze Chat
         else if (staffPlayer.sendFreezeChat(event.getMessage())) {

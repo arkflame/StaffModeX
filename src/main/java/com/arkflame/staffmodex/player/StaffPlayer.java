@@ -87,8 +87,21 @@ public class StaffPlayer extends UUIDPlayer {
         Infraction infraction = new Infraction(timestamp, reporter.getName(), reason, getUUID(), reporter.getUUID(), type);
         if (type == InfractionType.WARNING) {
             warnings.addInfraction(infraction);
+
+            sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning.receive-self", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
+            for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+                if (staffPlayer.hasPermission("staffmodex.warning.receive")) {
+                    staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning.receive", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
+                }
+            }
         } else if (type == InfractionType.REPORT) {
             reports.addInfraction(infraction);
+            
+            for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+                if (staffPlayer.hasPermission("staffmodex.report.receive")) {
+                    staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.report.receive", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
+                }
+            }
         }
         staffPlayerLoader.save(infraction);
     }

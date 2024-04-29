@@ -1,4 +1,5 @@
 infraction_cooldown: 60
+helpop_cooldown: 60
 server_name: Server
 redis:
   enabled: false

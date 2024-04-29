@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.arkflame.staffmodex.commands.ExamineCommand;
 import com.arkflame.staffmodex.commands.FreezeCommand;
+import com.arkflame.staffmodex.commands.HelpopCommand;
 import com.arkflame.staffmodex.commands.InfractionsCommand;
 import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffChatCommand;
@@ -99,6 +100,7 @@ public class StaffModeX extends JavaPlugin {
         // Register Commands
         new ExamineCommand().register();
         new FreezeCommand().register();
+        new HelpopCommand().register();
         new InfractionsCommand().register();
         new ReportCommand().register();
         new StaffChatCommand().register();

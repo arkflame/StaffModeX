@@ -53,7 +53,7 @@ public abstract class InfractionCommand extends ModernCommand {
     
         // Require at least one argument
         if (!args.hasArg(1)) {
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + "-usage"));
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + ".usage"));
             return;
         }
     
@@ -73,8 +73,7 @@ public abstract class InfractionCommand extends ModernCommand {
                 StaffPlayer targetStaffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
                 StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
                 targetStaffPlayer.infraction(infractionType, staffPlayer, reason);
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + "-success")
-                        .replace("{player}", targetPlayerName));
+                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + ".success", "{player}", targetPlayerName, "{reason}", reason));
     
                 long cooldown = StaffModeX.getInstance().getConfig().getLong("infraction_cooldown", 60) * 1000;
                 cooldowns.put(player.getName(), currentTime + cooldown);

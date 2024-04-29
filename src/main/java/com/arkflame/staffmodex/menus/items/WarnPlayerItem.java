@@ -42,7 +42,7 @@ public class WarnPlayerItem extends MenuItem {
 
         player.closeInventory();
         staffPlayer.getWarningProcess().startWarning(infractionItem, player, target, staffPlayer, staffPlayerTarget);
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warn-started").replace("{player}", target.getName()));
+        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning.started").replace("{player}", target.getName()));
     }
 
     public StaffPlayer getStaffPlayerTarget() {

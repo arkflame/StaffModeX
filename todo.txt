@@ -58,3 +58,4 @@ JOIN SERVER: SERVERNAME
 #Staff joined/left message (global communication, once)
 #Database system for infractions (warnings/reports)
 #Convert super jump to Phase Wall
+staffmodex.bypass.cooldown
