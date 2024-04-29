@@ -77,10 +77,11 @@ staffmode:
   leave: "&aYou have left staff mode!"
 
 hotbar:
-  launcher:
-    name: "&6Launcher"
+  phase:
+    no_safe_location: "&cNo safe location found."
+    name: "&6Phase"
     lore:
-    - "&7Launches you towards the direction you are looking."
+    - "&7Phase through walls to enter houses and bases."
   random_teleport:
     name: "&aRandom Teleport"
     lore:

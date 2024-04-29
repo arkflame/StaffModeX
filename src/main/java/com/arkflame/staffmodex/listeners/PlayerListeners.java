@@ -55,6 +55,7 @@ public class PlayerListeners implements Listener {
             return;
         }
 
+        // Note
         if (staffPlayer.isWritingNote()) {
             String text = event.getMessage();
             new BukkitRunnable() {
@@ -67,9 +68,8 @@ public class PlayerListeners implements Listener {
             event.setCancelled(true);
             player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.note-writing-success")
                     .replace("{player}", note.getName()));
-        }
-
-        if (staffPlayer.getWarningProcess().isInProgress()) {
+        } // Warning
+        else if (staffPlayer.getWarningProcess().isInProgress()) {
             String text = event.getMessage();
             String warnedName = staffPlayer.getWarningProcess().getTarget().getName();
             staffPlayer.getWarningProcess().complete(text);
@@ -83,10 +83,8 @@ public class PlayerListeners implements Listener {
             event.setCancelled(true);
             player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning-success").replace("{player}",
                     warnedName));
-        }
-
-        // Freeze Chat
-        if (staffPlayer.sendFreezeChat(event.getMessage())) {
+        } // Freeze Chat
+        else if (staffPlayer.sendFreezeChat(event.getMessage())) {
             event.setCancelled(true);
         } // Staff Chat
         else if (staffPlayer.isStaffChat()) {
@@ -217,6 +215,7 @@ public class PlayerListeners implements Listener {
                 HotbarItem hotbarItem = hotbar.getItem(slot);
                 if (hotbarItem != null) {
                     hotbarItem.onInteract(player);
+                    hotbarItem.onInteract(player, event.getClickedBlock());
                     event.setCancelled(true);
                 }
             }
