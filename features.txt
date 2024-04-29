@@ -16,7 +16,7 @@
 - Freeze
 - Multi-World
 - Player List
-- Phase Tool
+- PlaceholderAPI
 
 - No Bugs
 - Effects

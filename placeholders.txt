@@ -1,0 +1,5 @@
+%staffmode_enabled%: This placeholder indicates whether the player is currently in staff mode or not. It returns "true" if the player is in staff mode and "false" otherwise.
+
+%staffmode_freeze_countdown%: This placeholder displays the remaining time until the player is automatically unfrozen if they are currently frozen. It shows the countdown timer in a formatted string indicating minutes and seconds.
+
+%staffmode_freeze_time%: This placeholder shows the total duration for which the player has been frozen. It displays the elapsed time since the player was frozen in a formatted string indicating minutes and seconds.

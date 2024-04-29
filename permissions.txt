@@ -1,0 +1,24 @@
+Vanish:
+
+staffmodex.vanish
+staffmodex.vanish.force
+staffmodex.vanish.bypass
+
+Freeze:
+
+staffmodex.freeze
+staffmodex.freeze.bypass
+
+Communication:
+
+staffmodex.staffchat
+staffmodex.helpop
+staffmodex.helpop.receive
+staffmodex.report
+staffmodex.report.receive
+staffmodex.warning
+staffmodex.warning.receive
+
+Staff Mode:
+
+staffmodex.staffmode
