@@ -57,8 +57,7 @@ JOIN SERVER: SERVERNAME
 #In staff list, show the server the players are in.
 #Staff joined/left message (global communication, once)
 #Database system for infractions (warnings/reports)
-
-Convert super jump to Phase Wall
+#Convert super jump to Phase Wall
 
 = MARKETING =
 REDDIT POSTS
