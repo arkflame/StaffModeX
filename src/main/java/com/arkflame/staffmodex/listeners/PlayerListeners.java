@@ -3,6 +3,7 @@ package com.arkflame.staffmodex.listeners;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -101,23 +102,29 @@ public class PlayerListeners implements Listener {
         if (staffPlayer.isVanished()) {
             event.setJoinMessage(null);
         }
+        for (StaffPlayer toVanish : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+            if (toVanish.isVanished()) {
+                staffPlayer.hidePlayer(toVanish.isForceVanish(), toVanish.getPlayer());
+            }
+        }
         StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
 
-            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
-                staffPlayer.load();
+        Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
+            staffPlayer.load();
 
-                if (player.hasPermission("staffmodex.staffmode") && !StaffModeX.getInstance().getRedisManager().isClosed()) {
-                    StaffModeX.getInstance().getRedisManager().incrementOnlineStatus(player.getName(),
-                            StaffModeX.getInstance().getCfg().getString("server_name"));
+            if (player.hasPermission("staffmodex.staffmode")
+                    && !StaffModeX.getInstance().getRedisManager().isClosed()) {
+                StaffModeX.getInstance().getRedisManager().incrementOnlineStatus(player.getName(),
+                        StaffModeX.getInstance().getCfg().getString("server_name"));
 
-                    if (StaffModeX.getInstance().getRedisManager().isStaffMode(player.getName())) {
-                        Bukkit.getScheduler().runTask(StaffModeX.getInstance(),
-                                () -> StaffModeX.getInstance().getStaffModeManager().addStaff(player));
-                    }
+                if (StaffModeX.getInstance().getRedisManager().isStaffMode(player.getName())) {
+                    Bukkit.getScheduler().runTask(StaffModeX.getInstance(),
+                            () -> StaffModeX.getInstance().getStaffModeManager().addStaff(player));
                 }
-            });
+            }
+        });
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -216,6 +223,11 @@ public class PlayerListeners implements Listener {
                 if (hotbarItem != null) {
                     hotbarItem.onInteract(player);
                     hotbarItem.onInteract(player, event.getClickedBlock());
+
+                    Material clickedMaterial = hotbarItem.getType();
+                    if (clickedMaterial.isSolid()) {
+                        player.updateInventory();
+                    }
                     event.setCancelled(true);
                 }
             }

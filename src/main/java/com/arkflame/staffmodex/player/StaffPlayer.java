@@ -201,4 +201,16 @@ public class StaffPlayer extends UUIDPlayer {
         String toggleMessage = staffChat ? msg.getText("messages.staffchat.enabled") : msg.getText("messages.staffchat.disabled");
         sendMessage(toggleMessage); // Send a message to the player indicating the toggle status
     }
+
+    public boolean hasPermission(String permission) {
+        return getPlayer().hasPermission(permission);
+    }
+
+    public void hidePlayer(boolean force, Player player) {
+        vanishPlayer.hidePlayer(force, player);
+    }
+
+    public boolean isForceVanish() {
+        return vanishPlayer.isForceVanish();
+    }
 }

@@ -20,26 +20,19 @@ public class StaffPlayerLoader {
         DatabaseManager mySQLManager = StaffModeX.getInstance().getMySQLManager();
     
         if (mySQLManager.isInitializedSuccessfully()) {
-            StaffModeX.getInstance().getLogger().info("Using MySQL for data loading.");
             mySQLManager.loadInfractions(staffPlayer);
             return;
-        } else {
-            StaffModeX.getInstance().getLogger().info("MySQL not initialized. Using local configuration.");
         }
-    
-        StaffModeX.getInstance().getLogger().info("Loading data from configuration file.");
     
         config.load();
     
         ConfigurationSection warningsSection = config.getConfig().getConfigurationSection("warnings");
         if (warningsSection != null) {
-            StaffModeX.getInstance().getLogger().info("Loading warnings from configuration file.");
             staffPlayer.getWarnings().load(warningsSection);
         }
     
         ConfigurationSection reportsSection = config.getConfig().getConfigurationSection("reports");
         if (reportsSection != null) {
-            StaffModeX.getInstance().getLogger().info("Loading reports from configuration file.");
             staffPlayer.getReports().load(reportsSection);
         }
     }    

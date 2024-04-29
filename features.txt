@@ -1,0 +1,24 @@
+- Redis
+- MySQL
+- Configurable
+- Modern
+
+- StaffMode
+- Vanish
+- StaffChat
+- RandomTP
+
+- Warnings
+- Reports
+- Invsee
+- High Performance
+
+- Freeze
+- Multi-World
+- Player List
+- Phase Tool
+
+- No Bugs
+- Effects
+- CPS Check
+- Keeps Inventory

@@ -31,14 +31,28 @@ public class VanishPlayer extends UUIDPlayer {
         }
     }
 
+    public boolean isForceVanish() {
+        return getPlayer().hasPermission("staffmodex.vanish.force");
+    }
+
+    public void hidePlayer(boolean force, Player toBeHidden) {
+        Player player = getPlayer();
+
+        if (player == toBeHidden) {
+            return;
+        }
+
+        if (force || !player.hasPermission("staffmodex.vanish.bypass")) {
+            player.hidePlayer(toBeHidden);
+        }
+    }
+
     public void makeInvisible() {
         Player player = getPlayer();
-        boolean force = player.hasPermission("staffmodex.vanish.force");
+        boolean force = isForceVanish();
 
-        for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
-            if (force || !otherPlayer.hasPermission("staffmodex.vanish.bypass")) {
-                otherPlayer.hidePlayer(player);
-            }
+        for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+            staffPlayer.hidePlayer(force, player);
         }
         vanished = true;
     }
