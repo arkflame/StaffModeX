@@ -1,5 +1,6 @@
 package com.arkflame.staffmodex.menus.items;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class PlayerInventoryItem extends MenuItem {
         Collection<PotionEffect> effects = target.getActivePotionEffects();
 
         // Item that shows effect names duration and amplifier in lore
-        List<String> loreEffects = effects.isEmpty() ? List.of(StaffModeX.getInstance().getMsg().getText("menus.playerInventory.noEffects"))
+        List<String> loreEffects = effects.isEmpty() ? Arrays.asList(StaffModeX.getInstance().getMsg().getText("menus.playerInventory.noEffects"))
                 : effects.stream().map(this::formatEffect).toList();
         menu.setItem(5 * 9 - 5, new MenuItem(Material.WATER_BUCKET, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.effects"), loreEffects.toArray(new String[0])));
 
