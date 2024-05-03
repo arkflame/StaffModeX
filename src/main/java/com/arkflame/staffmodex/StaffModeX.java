@@ -24,11 +24,15 @@ import com.arkflame.staffmodex.listeners.PlayerListeners;
 import com.arkflame.staffmodex.managers.DatabaseManager;
 import com.arkflame.staffmodex.managers.RedisManager;
 import com.arkflame.staffmodex.managers.StaffModeManager;
+import com.arkflame.staffmodex.modernlib.commands.ModernCommand;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
 import com.arkflame.staffmodex.player.StaffPlayer;
 import com.arkflame.staffmodex.player.StaffPlayerManager;
 import com.arkflame.staffmodex.tasks.StaffActionBarTask;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
@@ -40,6 +44,8 @@ public class StaffModeX extends JavaPlugin {
 
     private ConfigWrapper config;
     private ConfigWrapper messages;
+
+    private Collection<ModernCommand> commands = new HashSet<>();
 
     public ConfigWrapper getCfg() {
         return config;
@@ -98,18 +104,39 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new MenuListener(), this);
 
         // Register Commands
-        new ExamineCommand().register();
-        new FreezeCommand().register();
-        new HelpopCommand().register();
-        new InfractionsCommand().register();
-        new ReportCommand().register();
-        new StaffChatCommand().register();
-        new StaffModeCommand().register();
-        new WarnCommand().register();
-        new VanishCommand().register();
+        if (StaffModeX.getInstance().getConfig().getBoolean("examine.enabled")) {
+            registerCommand(new ExamineCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("freeze.enabled")) {
+            registerCommand(new FreezeCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("helpop.enabled")) {
+            registerCommand(new HelpopCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("report.enabled") ||
+                StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
+                    registerCommand(new InfractionsCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("report.enabled")) {
+            registerCommand(new ReportCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("staffchat.enabled")) {
+            registerCommand(new StaffChatCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("staffmode.enabled")) {
+            registerCommand(new StaffModeCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
+            registerCommand(new WarnCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled")) {
+            registerCommand(new VanishCommand());
+        }
 
-        // Register tasks
-        new StaffActionBarTask().register();
+        if (StaffModeX.getInstance().getConfig().getBoolean("action_bar.enabled")) {
+            // Register tasks
+            new StaffActionBarTask().register();
+        }
 
         // Small check to make sure that PlaceholderAPI is installed
         if (pluginManager.getPlugin("PlaceholderAPI") != null) {
@@ -132,6 +159,19 @@ public class StaffModeX extends JavaPlugin {
         // Close everyone's inventory
         for (Player player : this.getServer().getOnlinePlayers()) {
             player.closeInventory();
+        }
+
+        unregisterCommands();
+    }
+
+    public void registerCommand(ModernCommand command) {
+        commands.add(command);
+        command.register();
+    }
+
+    public void unregisterCommands() {
+        for (ModernCommand command : commands) {
+            command.unregisterBukkitCommand();
         }
     }
 

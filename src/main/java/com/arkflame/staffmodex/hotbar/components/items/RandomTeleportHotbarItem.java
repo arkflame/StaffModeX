@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class RandomTeleportHotbarItem extends HotbarItem {
     public RandomTeleportHotbarItem() {
-        super(Materials.get("ENDER_EYE", "EYE_OF_ENDER"),
+        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.r-teleport.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.random_teleport.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.random_teleport.lore"));

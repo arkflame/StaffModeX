@@ -32,10 +32,10 @@ public class HelpopCommand extends ModernCommand {
         }
 
         Player player = (Player) sender;
+        long currentTime = System.currentTimeMillis();
         
         // Handle command cooldown
         if (!player.hasPermission("staffmodex.bypass.cooldown")) {
-            long currentTime = System.currentTimeMillis();
             Long playerCooldown = cooldowns.get(player.getName());
             if (playerCooldown != null && playerCooldown > currentTime) {
                 long remainingTime = (playerCooldown - currentTime) / 1000;
@@ -50,6 +50,10 @@ public class HelpopCommand extends ModernCommand {
             player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.helpop.usage"));
             return;
         }
+
+        // Update cooldown based on config
+        long cooldown = StaffModeX.getInstance().getConfig().getLong("helpop.cooldown", 60) * 1000;
+                cooldowns.put(player.getName(), currentTime + cooldown);
 
         String playerName = player.getName();
         String message = String.join(" ", args.getArgs());

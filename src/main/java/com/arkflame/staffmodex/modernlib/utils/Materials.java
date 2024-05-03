@@ -2,6 +2,8 @@ package com.arkflame.staffmodex.modernlib.utils;
 
 import org.bukkit.Material;
 
+import java.util.List;
+
 public class Materials {
     private Materials() {}
 
@@ -21,5 +23,9 @@ public class Materials {
         }
         // Return Material.AIR as a default if no valid Material was found
         return Material.AIR;
+    }
+
+    public static Material get(List<String> names) {
+        return get(names.toArray(new String[0]));
     }
 }

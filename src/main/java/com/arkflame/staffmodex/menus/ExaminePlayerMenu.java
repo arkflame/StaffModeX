@@ -23,11 +23,22 @@ public class ExaminePlayerMenu extends Menu {
         setItem(9 + 0, new FoodItem(target));
         setItem(9 + 1, new ConnectionItem(target));
         setItem(9 + 2, new GameModeItem(target));
-        setItem(9 + 3, infractionItem);
+        
+        if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled") || StaffModeX.getInstance().getConfig().getBoolean("report.enabled")) {
+            setItem(9 + 3, infractionItem);
+        }
+
         setItem(9 + 4, new LocationItem(target.getLocation()));
         setItem(9 + 5, new PlayerNotesItem(player, target));
-        setItem(9 + 6, new FreezePlayerItem(player, target));
-        setItem(9 + 7, new WarnPlayerItem(infractionItem, player, target));
+        
+        if (StaffModeX.getInstance().getConfig().getBoolean("freeze.enabled")) {
+            setItem(9 + 6, new FreezePlayerItem(player, target));
+        }
+        
+        if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
+            setItem(9 + 7, new WarnPlayerItem(infractionItem, player, target));
+        }
+        
         setItem(9 + 8, new PlayerInventoryItem(player, target, this));
 
         setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");

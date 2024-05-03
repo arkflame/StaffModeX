@@ -21,10 +21,12 @@ public class StaffModeManager {
     public void toggleStaff(Player player) {
         if (isStaff(player)) {
             removeStaff(player);
-            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> StaffModeX.getInstance().getRedisManager().removePlayerFromStaffMode(player.getName()));
+            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(),
+                    () -> StaffModeX.getInstance().getRedisManager().removePlayerFromStaffMode(player.getName()));
         } else {
             addStaff(player);
-            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> StaffModeX.getInstance().getRedisManager().addPlayerToStaffMode(player.getName()));
+            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(),
+                    () -> StaffModeX.getInstance().getRedisManager().addPlayerToStaffMode(player.getName()));
         }
     }
 
@@ -38,13 +40,20 @@ public class StaffModeManager {
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         if (staffPlayer != null) {
             staffPlayer.setOldLocation(player.getLocation());
-            staffPlayer.makeInvisible();
-            staffPlayer.setStaffChat(true);
+            if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
+                    StaffModeX.getInstance().getConfig().getBoolean("vanish.on_staff_mode")) {
+                staffPlayer.makeInvisible();
+            }
+
+            if (StaffModeX.getInstance().getConfig().getBoolean("staffchat.enabled") &&
+                    StaffModeX.getInstance().getConfig().getBoolean("staffchat.on_staff_mode")) {
+                staffPlayer.setStaffChat(true);
+            }
         }
         StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
         Players.clearInventory(player);
         Players.heal(player);
-        hotbarManager.setHotbar(player, new StaffHotbar());
+        hotbarManager.setHotbar(player, new StaffHotbar(staffPlayer));
         Players.setFlying(player, true);
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
         player.sendMessage(ChatColors.color(msg.getText("staffmode.enter")));
@@ -64,13 +73,16 @@ public class StaffModeManager {
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         if (staffPlayer != null) {
             staffPlayer.restoreOldLocation();
-            staffPlayer.makeVisible();
+
+            if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
+                    StaffModeX.getInstance().getConfig().getBoolean("vanish.on_staff_mode")) {
+                staffPlayer.makeVisible();
+            }
         }
         hotbarManager.setHotbar(player, null);
         Players.clearInventory(player);
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
-        Players.setFlying(player, false);
         // Reset fall distance
         player.setFallDistance(0F);
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();

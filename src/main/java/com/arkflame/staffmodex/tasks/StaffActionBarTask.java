@@ -20,21 +20,27 @@ public class StaffActionBarTask extends ModernTask {
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
 
             if (!staffPlayer.getFrozenPlayersByMe().isEmpty()) {
-                for (FreezeStatus freezeStatus : staffPlayer.getFrozenPlayersByMe()) {
-                    Player otherPlayer = freezeStatus.getTarget().getPlayer();
-                    String msg = StaffModeX.getInstance().getMsg().getText("messages.freeze.action_bar", "{countdown}", freezeStatus.getCountdownFormatted());
-                
-                    Titles.sendActionBar(player, msg);
-                    Titles.sendActionBar(otherPlayer, msg);
+                if (StaffModeX.getInstance().getConfig().getBoolean("action_bar.on_freeze")) {
+                    for (FreezeStatus freezeStatus : staffPlayer.getFrozenPlayersByMe()) {
+                        Player otherPlayer = freezeStatus.getTarget().getPlayer();
+                        String msg = StaffModeX.getInstance().getMsg().getText("messages.freeze.action_bar",
+                                "{countdown}", freezeStatus.getCountdownFormatted());
+
+                        Titles.sendActionBar(player, msg);
+                        Titles.sendActionBar(otherPlayer, msg);
+                    }
                 }
             } else {
-                String vanished = staffPlayer.isVanished() ? "&a✔" : "&c✖";
-                String staffChat = staffPlayer.isStaffChat() ? "&a✔" : "&c✖";
-                String tps = ServerUtils.getTPSFormatted(0);
-                String msg = StaffModeX.getInstance().getMsg().getText("staffmode.action_bar", "{vanished}", vanished,
-                        "{staffchat}", staffChat, "{tps}", tps);
+                if (StaffModeX.getInstance().getConfig().getBoolean("action_bar.on_staff")) {
+                    String vanished = staffPlayer.isVanished() ? "&a✔" : "&c✖";
+                    String staffChat = staffPlayer.isStaffChat() ? "&a✔" : "&c✖";
+                    String tps = ServerUtils.getTPSFormatted(0);
+                    String msg = StaffModeX.getInstance().getMsg().getText("staffmode.action_bar", "{vanished}",
+                            vanished,
+                            "{staffchat}", staffChat, "{tps}", tps);
 
-                Titles.sendActionBar(player, msg);
+                    Titles.sendActionBar(player, msg);
+                }
             }
         }
     }

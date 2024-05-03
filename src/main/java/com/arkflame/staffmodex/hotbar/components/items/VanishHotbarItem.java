@@ -5,13 +5,33 @@ import com.arkflame.staffmodex.hotbar.HotbarItem;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class VanishHotbarItem extends HotbarItem {
-    public VanishHotbarItem() {
-        super(Materials.get("LIME_DYE", "INK_SACK"),
+    private static Material getEnabledMaterial() {
+        return Materials
+                .get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.vanish.turned_on.material"));
+    }
+
+    private static Material getDisabledMaterial() {
+        return Materials
+                .get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.vanish.turned_off.material"));
+    }
+
+    private static short getEnabledDamage() {
+        return (short) StaffModeX.getInstance().getConfig().getInt("items.hotbar.vanish.turned_on.damage");
+    }
+
+    private static short getDisabledDamage() {
+        return (short) StaffModeX.getInstance().getConfig().getInt("items.hotbar.vanish.turned_off.damage");
+    }
+
+    public VanishHotbarItem(StaffPlayer staffPlayer) {
+        super(staffPlayer.isVanished() ? getEnabledMaterial() : getDisabledMaterial(),
                 StaffModeX.getInstance().getMsg().getText("hotbar.vanish.name"),
-                1, (short) 10,
+                1,
+                staffPlayer.isVanished() ? getEnabledDamage() : getDisabledDamage(),
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.vanish.lore"));
     }
 
@@ -20,11 +40,11 @@ public class VanishHotbarItem extends HotbarItem {
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         staffPlayer.toggleVanish();
         if (staffPlayer.isVanished()) {
-            setType(Materials.get("LIME_DYE", "INK_SACK"));
-            setDurability((short) 10);
+            setType(getEnabledMaterial());
+            setDurability(getEnabledDamage());
         } else {
-            setType(Materials.get("GRAY_DYE", "INK_SACK"));
-            setDurability((short) 8);
+            setType(getDisabledMaterial());
+            setDurability(getDisabledDamage());
         }
         player.getInventory().setItem(2, this);
     }

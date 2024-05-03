@@ -4,7 +4,6 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
-import com.arkflame.staffmodex.player.StaffPlayer;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
@@ -18,7 +17,7 @@ import java.util.HashSet;
 
 public class StaffListHotbarItem extends HotbarItem {
     public StaffListHotbarItem() {
-        super(Materials.get("SKULL_ITEM", "SKELETON_SKULL"),
+        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.stafflist.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.stafflist.lore"));

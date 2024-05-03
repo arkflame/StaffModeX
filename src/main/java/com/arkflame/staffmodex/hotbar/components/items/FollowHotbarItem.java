@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class FollowHotbarItem extends HotbarItem {
     public FollowHotbarItem() {
-        super(Materials.get("LEAD", "LEASH"),
+        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.follow.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.follow.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.follow.lore"));

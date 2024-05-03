@@ -1,6 +1,88 @@
-infraction_cooldown: 60
-helpop_cooldown: 60
 server_name: Server
+
+action_bar:
+  enabled: true
+  on_freeze: true
+  on_staff: true
+
+vanish:
+  enabled: true
+  on_staff_mode: true
+
+staffchat:
+  enabled: true
+  on_staff_mode: true
+
+staffmode:
+  enabled: true
+
+report:
+  enabled: true
+
+warning:
+  enabled: true
+
+helpop:
+  cooldown: 60
+  enabled: true
+
+freeze:
+  enabled: true
+
+examine:
+  enabled: true
+
+items:
+  hotbar:
+    cps:
+      enabled: true
+      material:
+      - CLOCK
+      - WATCH
+    examine:
+      enabled: true
+      material:
+      - CHEST
+    follow:
+      enabled: true
+      material:
+      - LEAD
+      - LEASH
+    freeze:
+      enabled: true
+      material:
+      - ICE
+    phase:
+      enabled: true
+      material:
+      - COMPASS
+    players:
+      enabled: true
+      material:
+      - PAPER
+    r-teleport:
+      enabled: true
+      material:
+      - ENDER_EYE
+      - EYE_OF_ENDER
+    stafflist:
+      enabled: true
+      material:
+      - SKULL_ITEM
+      - SKELETON_SKULL
+    vanish:
+      enabled: true
+      turned_on:
+        damage: 10
+        material:
+        - LIME_DYE
+        - INK_SACK
+      turned_off:
+        damage: 8
+        material:
+        - GRAY_DYE
+        - INK_SACK
+
 redis:
   enabled: false
   scheme: redis
@@ -8,12 +90,9 @@ redis:
   password: dbscyoBwv4Qe1EgUw9CEKCGkMEIXfnyM
   ip: redis-13955.c274.us-east-1-3.ec2.redns.redis-cloud.com
   port: 13955
+
 mysql:
   enabled: false
   url: jdbc:mysql://localhost:3306/database
   username: root
   password: password
-freeze:
-  commands:
-    disconnect:
-    - ''

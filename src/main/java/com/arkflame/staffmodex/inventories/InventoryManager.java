@@ -2,8 +2,6 @@ package com.arkflame.staffmodex.inventories;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -49,6 +47,10 @@ public class InventoryManager {
         // Health and food
         inventoryConfig.set(player.getUniqueId().toString() + ".health", player.getHealth());
         inventoryConfig.set(player.getUniqueId().toString() + ".food", player.getFoodLevel());
+
+        // Flying status
+        inventoryConfig.set(player.getUniqueId().toString() + ".flying", player.isFlying());
+        inventoryConfig.set(player.getUniqueId().toString() + ".allow-flight", player.getAllowFlight());
         try {
             inventoryConfig.save(inventoryFile);
         } catch (IOException e) {
@@ -81,6 +83,10 @@ public class InventoryManager {
         // Health and food
         player.setHealth(inventoryConfig.getDouble(player.getUniqueId().toString() + ".health", player.getHealth()));
         player.setFoodLevel(inventoryConfig.getInt(player.getUniqueId().toString() + ".food", player.getFoodLevel()));
+
+        // Flying status
+        player.setFlying(inventoryConfig.getBoolean(player.getUniqueId().toString() + ".flying", player.isFlying()));
+        player.setAllowFlight(inventoryConfig.getBoolean(player.getUniqueId().toString() + ".allow-flight", player.getAllowFlight()));
     }
 
     public void deletePlayerInventory(Player player) {

@@ -101,7 +101,7 @@ hotbar:
     lore:
     - "&7Teleport to a random player location; useful for random integrity checks or monitoring player activity."
     no_players: "&cThere are no other players to teleport to."
-    success: "&aYou have been teleported to {player}."
+    success: "&aYou have been randomly teleported to {player}."
   vanish:
     name: "&bVanish"
     lore:

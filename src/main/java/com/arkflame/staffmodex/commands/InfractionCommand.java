@@ -75,7 +75,7 @@ public abstract class InfractionCommand extends ModernCommand {
                 targetStaffPlayer.infraction(infractionType, staffPlayer, reason);
                 player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + ".success", "{player}", targetPlayerName, "{reason}", reason));
     
-                long cooldown = StaffModeX.getInstance().getConfig().getLong("infraction_cooldown", 60) * 1000;
+                long cooldown = StaffModeX.getInstance().getConfig().getLong(infractionType.name().toLowerCase() + ".cooldown", 60) * 1000;
                 cooldowns.put(player.getName(), currentTime + cooldown);
             }
         }.runTaskAsynchronously(StaffModeX.getInstance());
