@@ -71,6 +71,8 @@ public class StaffModeManager {
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
         Players.setFlying(player, false);
+        // Reset fall distance
+        player.setFallDistance(0F);
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
         player.sendMessage(ChatColors.color(msg.getText("staffmode.leave")));
         staffPlayers.remove(player);
