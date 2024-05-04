@@ -1,5 +1,9 @@
 server_name: Server
 
+diamond-finder:
+  enabled: true
+  min-streak: 3
+
 ip:
   enabled: true
 

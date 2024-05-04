@@ -25,6 +25,7 @@ import com.arkflame.staffmodex.listeners.PlayerListeners;
 import com.arkflame.staffmodex.managers.DatabaseManager;
 import com.arkflame.staffmodex.managers.RedisManager;
 import com.arkflame.staffmodex.managers.StaffModeManager;
+import com.arkflame.staffmodex.managers.VeinManager;
 import com.arkflame.staffmodex.modernlib.commands.ModernCommand;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.listeners.MenuListener;
@@ -34,6 +35,7 @@ import com.arkflame.staffmodex.tasks.StaffActionBarTask;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class StaffModeX extends JavaPlugin {
     private HotbarManager hotbarManager = new HotbarManager();
@@ -95,10 +97,12 @@ public class StaffModeX extends JavaPlugin {
                 config.getString("mysql.username"),
                 config.getString("mysql.password"));
 
+        VeinManager veinManager = new VeinManager();
+
         // Register Listeners
         PluginManager pluginManager = this.getServer().getPluginManager();
 
-        pluginManager.registerEvents(new BlockListeners(), this);
+        pluginManager.registerEvents(new BlockListeners(veinManager), this);
         pluginManager.registerEvents(new EntityListeners(), this);
         pluginManager.registerEvents(new InventoryListeners(), this);
         pluginManager.registerEvents(new PlayerListeners(), this);
@@ -116,7 +120,7 @@ public class StaffModeX extends JavaPlugin {
         }
         if (StaffModeX.getInstance().getConfig().getBoolean("report.enabled") ||
                 StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
-                    registerCommand(new InfractionsCommand());
+            registerCommand(new InfractionsCommand());
         }
         if (StaffModeX.getInstance().getConfig().getBoolean("ip.enabled")) {
             registerCommand(new IPCommand());
@@ -146,6 +150,13 @@ public class StaffModeX extends JavaPlugin {
         if (pluginManager.getPlugin("PlaceholderAPI") != null) {
             new StaffModePlaceholderExpansion().register();
         }
+
+        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            // Load everyone's data
+            for (Player player : this.getServer().getOnlinePlayers()) {
+                getStaffPlayerManager().getOrCreateStaffPlayer(player).load();
+            }
+        });
     }
 
     @Override
@@ -157,11 +168,11 @@ public class StaffModeX extends JavaPlugin {
             if (staffPlayer != null) {
                 staffPlayer.unfreeze();
             }
-            getStaffModeManager().removeStaff(player);
-        }
 
-        // Close everyone's inventory
-        for (Player player : this.getServer().getOnlinePlayers()) {
+            // Remove from staff
+            getStaffModeManager().removeStaff(player);
+
+            // Close everyone's inventory
             player.closeInventory();
         }
 
@@ -191,5 +202,13 @@ public class StaffModeX extends JavaPlugin {
 
     public DatabaseManager getMySQLManager() {
         return mySQLManager;
+    }
+
+    public void sendMessageToStaffPlayers(String message, UUID playerToSkip) {
+        for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+            if (staffPlayer.isStaffChatReceiver() && !staffPlayer.getUUID().equals(playerToSkip)) {
+                staffPlayer.sendMessage(message);
+            }
+        }
     }
 }

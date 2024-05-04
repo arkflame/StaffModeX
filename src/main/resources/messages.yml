@@ -16,6 +16,9 @@ messages:
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
 
+  diamond-finder:
+    found: "&b{player}&c found &b{size}&c diamonds. &7x{streak}"
+
   ip:
     message: "&aThe IP of &b{player}&a is &e{ip}"
     usage: "&cUsage: /ip <player>"

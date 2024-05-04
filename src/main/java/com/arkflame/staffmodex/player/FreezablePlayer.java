@@ -137,20 +137,12 @@ public class FreezablePlayer extends UUIDPlayer {
         return false;
     }
     
-    private void sendMessageToStaffPlayers(String message, UUID playerToSkip) {
-        for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
-            if (staffPlayer.isStaffChatReceiver() && !staffPlayer.getUUID().equals(playerToSkip)) {
-                staffPlayer.sendMessage(message);
-            }
-        }
-    }
-    
     private void sendFrozenChatMessage(Player player, String msg) {
         String message = StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_msg", "{player}", player.getName(), "{message}", msg);
         FreezablePlayer whoFroze = getWhoFroze();
         whoFroze.sendMessage(message);
         player.sendMessage(message);
-        sendMessageToStaffPlayers(message, whoFroze.getUUID());
+        StaffModeX.getInstance().sendMessageToStaffPlayers(message, whoFroze.getUUID());
     }
     
     private void sendStaffChatMessage(Player player, String msg) {
@@ -159,7 +151,7 @@ public class FreezablePlayer extends UUIDPlayer {
             frozenByMe.getTarget().sendMessage(message);
         }
         player.sendMessage(message);
-        sendMessageToStaffPlayers(message, player.getUniqueId());
+        StaffModeX.getInstance().sendMessageToStaffPlayers(message, player.getUniqueId());
     }
 
     public FreezablePlayer getWhoFroze() {
