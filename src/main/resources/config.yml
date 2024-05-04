@@ -1,5 +1,8 @@
 server_name: Server
 
+ip:
+  enabled: true
+
 action_bar:
   enabled: true
   on_freeze: true

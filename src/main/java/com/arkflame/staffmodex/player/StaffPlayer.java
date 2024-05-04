@@ -32,6 +32,8 @@ public class StaffPlayer extends UUIDPlayer {
 
     private boolean staffChat = false;
 
+    private String ip = null;
+
     public StaffPlayerLoader getStaffPlayerLoader() {
         return staffPlayerLoader;
     }
@@ -44,13 +46,13 @@ public class StaffPlayer extends UUIDPlayer {
         return freezablePlayer;
     }
 
-    public StaffPlayer(UUID uuid, ConfigWrapper config) {
+    public StaffPlayer(UUID uuid, ConfigWrapper infractionsConfig, ConfigWrapper ipsConfig) {
         super(uuid);
         this.warnings = new InfractionList();
         this.reports = new InfractionList();
         this.notes = new StaffNotes();
         this.warningProcess = new WarningProcess();
-        this.staffPlayerLoader = new StaffPlayerLoader(this, config);
+        this.staffPlayerLoader = new StaffPlayerLoader(this, infractionsConfig, ipsConfig);
         this.vanishPlayer = new VanishPlayer(uuid);
         this.freezablePlayer = new FreezablePlayer(uuid);
     }
@@ -225,5 +227,13 @@ public class StaffPlayer extends UUIDPlayer {
 
     public boolean isForceVanish() {
         return vanishPlayer.isForceVanish();
+    }
+
+    public void setIP(String ip) {
+        this.ip = ip;
+    }
+
+    public String getIP() {
+        return ip;
     }
 }

@@ -9,11 +9,13 @@ import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class StaffPlayerLoader {
     private final StaffPlayer staffPlayer;
-    private final ConfigWrapper config;
+    private final ConfigWrapper infractionsConfig;
+    private final ConfigWrapper ipsConfig;
 
-    public StaffPlayerLoader(StaffPlayer staffPlayer, ConfigWrapper config) {
+    public StaffPlayerLoader(StaffPlayer staffPlayer, ConfigWrapper infractionsConfig, ConfigWrapper ipsConfig) {
         this.staffPlayer = staffPlayer;
-        this.config = config;
+        this.infractionsConfig = infractionsConfig;
+        this.ipsConfig = ipsConfig;
     }
 
     public void load() {
@@ -24,14 +26,14 @@ public class StaffPlayerLoader {
             return;
         }
     
-        config.load();
+        infractionsConfig.load();
     
-        ConfigurationSection warningsSection = config.getConfig().getConfigurationSection("warnings");
+        ConfigurationSection warningsSection = infractionsConfig.getConfig().getConfigurationSection("warnings");
         if (warningsSection != null) {
             staffPlayer.getWarnings().load(warningsSection);
         }
     
-        ConfigurationSection reportsSection = config.getConfig().getConfigurationSection("reports");
+        ConfigurationSection reportsSection = infractionsConfig.getConfig().getConfigurationSection("reports");
         if (reportsSection != null) {
             staffPlayer.getReports().load(reportsSection);
         }
@@ -45,8 +47,43 @@ public class StaffPlayerLoader {
             return;
         }
 
-        infraction.save(config.getConfig());
+        infraction.save(infractionsConfig.getConfig());
+        infractionsConfig.save();
+    }
 
-        config.save();
+    public void saveIP() {
+        if (!StaffModeX.getInstance().getConfig().getBoolean("ip.enabled")) {
+            return;
+        }
+
+        DatabaseManager mySQLManager = StaffModeX.getInstance().getMySQLManager();
+        String ip = staffPlayer.getIP();
+
+        if (mySQLManager.isInitializedSuccessfully()) {
+            mySQLManager.saveIP(staffPlayer.getUUID(), ip);
+            return;
+        }
+
+        System.out.println("Saved ip " + ip);
+        ipsConfig.load();
+        ipsConfig.getConfig().set("ip", ip);
+        ipsConfig.save();
+    }
+
+    public void loadIP() {
+        if (!StaffModeX.getInstance().getConfig().getBoolean("ip.enabled")) {
+            return;
+        }
+
+        DatabaseManager mySQLManager = StaffModeX.getInstance().getMySQLManager();
+
+        if (mySQLManager.isInitializedSuccessfully()) {
+            mySQLManager.loadIP(staffPlayer);
+            return;
+        }
+
+        ipsConfig.load();
+        System.out.println("Loaded ip " + ipsConfig.getConfig().getString("ip"));
+        staffPlayer.setIP(ipsConfig.getConfig().getString("ip"));
     }
 }

@@ -1,5 +1,7 @@
 package com.arkflame.staffmodex.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,30 +18,31 @@ public class InfractionsCommand extends ModernCommand {
 
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
-            return;
-        }
-
-        Player player = (Player) sender;
-        Player target = null;
-
-        String targetName = args.getText(0);
-        if (targetName != null && !targetName.isEmpty()) {
-            target = StaffModeX.getInstance().getServer().getPlayer(targetName);
-            if (target == null) {
-                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.player-not-online", "{player}", targetName));
+        Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
                 return;
             }
-        }
-
-        if (target == null) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.usage"));
-            return;
-        }
-
-        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
-
-        new InfractionsMenu(null, player, staffPlayer).openInventory(player);
+    
+            Player player = (Player) sender;
+            OfflinePlayer target = null;
+    
+            String targetName = args.getText(0);
+            if (targetName != null && !targetName.isEmpty()) {
+                target = StaffModeX.getInstance().getServer().getOfflinePlayer(targetName);
+            }
+    
+            if (target == null) {
+                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.usage"));
+                return;
+            }
+    
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
+            
+            if (!target.isOnline()) {
+                staffPlayer.load();
+            }
+            new InfractionsMenu(null, player, staffPlayer).openInventory(player);
+        });
     }
 }

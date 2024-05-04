@@ -16,6 +16,11 @@ messages:
   back-button: "&7Back"
   return-to-previous-menu: "&eReturn to previous menu"
 
+  ip:
+    message: "&aThe IP of &b{player}&a is &e{ip}"
+    usage: "&cUsage: /ip <player>"
+    no-ip: "&cThe player {player} has no IP associated."
+
   warning:
     receive-self: "&cYou were warned by &b{staff}&c because of &f{reason}&c."
     receive: "&b{staff} &cwarned &e{player}&c for &f{reason}&c."

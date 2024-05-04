@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.arkflame.staffmodex.commands.ExamineCommand;
 import com.arkflame.staffmodex.commands.FreezeCommand;
 import com.arkflame.staffmodex.commands.HelpopCommand;
+import com.arkflame.staffmodex.commands.IPCommand;
 import com.arkflame.staffmodex.commands.InfractionsCommand;
 import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffChatCommand;
@@ -116,6 +117,9 @@ public class StaffModeX extends JavaPlugin {
         if (StaffModeX.getInstance().getConfig().getBoolean("report.enabled") ||
                 StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
                     registerCommand(new InfractionsCommand());
+        }
+        if (StaffModeX.getInstance().getConfig().getBoolean("ip.enabled")) {
+            registerCommand(new IPCommand());
         }
         if (StaffModeX.getInstance().getConfig().getBoolean("report.enabled")) {
             registerCommand(new ReportCommand());

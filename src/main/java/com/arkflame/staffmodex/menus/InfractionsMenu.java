@@ -61,7 +61,7 @@ public class InfractionsMenu extends Menu {
 
     @Override
     public void openInventory(Player player) {
-        if (!player.hasPermission("staffmode.infractions")) {
+        if (!player.hasPermission("staffmodex.infractions")) {
             player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.no-permission"));
             return;
         }

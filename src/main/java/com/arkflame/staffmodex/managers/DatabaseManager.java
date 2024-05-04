@@ -60,7 +60,16 @@ public class DatabaseManager {
                 "reporter_name VARCHAR(16) NOT NULL," +
                 "reason VARCHAR(255) NOT NULL)";
 
+        // Create the 'ips' table if it doesn't exist
+        String createIpsQuery = "CREATE TABLE IF NOT EXISTS ips (" +
+                "id VARCHAR(36) PRIMARY KEY," +
+                "ip VARCHAR(45) NOT NULL)";
+
         try (PreparedStatement stmt = conn.prepareStatement(createInfractionsTableQuery)) {
+            stmt.executeUpdate();
+        }
+
+        try (PreparedStatement stmt = conn.prepareStatement(createIpsQuery)) {
             stmt.executeUpdate();
         }
     }
@@ -139,6 +148,45 @@ public class DatabaseManager {
         if (dataSource != null) {
             dataSource.close();
             dataSource = null;
+        }
+    }
+
+    public void saveIP(UUID uuid, String ip) {
+        String query = "INSERT INTO ips (id, ip) VALUES (?, ?)";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            // Debug: Check if the database connection is successful
+
+            stmt.setString(1, uuid.toString());
+            stmt.setString(2, ip);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            close();
+            // Debug: Print the SQL exception
+            e.printStackTrace();
+        }
+    }
+
+    public void loadIP(StaffPlayer staffPlayer) {
+        String query = "SELECT id, ip FROM ips WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, staffPlayer.getUUID().toString());
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    try {
+                        String ip = resultSet.getString("ip");
+                        staffPlayer.setIP(ip);
+                    } catch (Exception ex) {
+                        StaffModeX.getInstance().getLogger().severe("Error while loading infraction from config");
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            close();
+            // Debug: Print the SQL exception
+            e.printStackTrace();
         }
     }
 }

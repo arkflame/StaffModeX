@@ -33,8 +33,9 @@ public class StaffPlayerManager {
     }
 
     public StaffPlayer getOrCreateStaffPlayer(UUID uuid) {
-        ConfigWrapper config = new ConfigWrapper("infractions/" + uuid + ".yml");
-        return staffPlayers.computeIfAbsent(uuid, (k) -> new StaffPlayer(k, config).load());
+        ConfigWrapper infractionsConfig = new ConfigWrapper("infractions/" + uuid + ".yml");
+        ConfigWrapper ipsConfig = new ConfigWrapper("ips/" + uuid + ".yml");
+        return staffPlayers.computeIfAbsent(uuid, (k) -> new StaffPlayer(k, infractionsConfig, ipsConfig));
     }
 
     public StaffPlayer getOrCreateStaffPlayer(OfflinePlayer player) {

@@ -103,19 +103,25 @@ public class PlayerListeners implements Listener {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getOrCreateStaffPlayer(player);
+
         if (staffPlayer.isVanished()) {
             event.setJoinMessage(null);
         }
+
         for (StaffPlayer toVanish : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
             if (toVanish.isVanished()) {
                 staffPlayer.hidePlayer(toVanish.isForceVanish(), toVanish.getPlayer());
             }
         }
+
         StaffModeX.getInstance().getHotbarManager().setHotbar(player, null);
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
 
         Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
+            // Update player's IP
+            staffPlayer.setIP(player.getAddress().getAddress().getHostAddress());
+
             staffPlayer.load();
 
             if (player.hasPermission("staffmodex.staffmode")
@@ -136,6 +142,11 @@ public class PlayerListeners implements Listener {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getOrCreateStaffPlayer(player);
+
+        // Save player's IP
+        Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
+            staffPlayer.getStaffPlayerLoader().saveIP();
+        });
 
         if (staffPlayer.isVanished()) {
             event.setQuitMessage(null);
@@ -296,8 +307,7 @@ public class PlayerListeners implements Listener {
         }
 
         if (staffPlayer.isFrozen()) {
-            staffPlayer
-                    .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
+            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
             event.setCancelled(true);
         }
     }
