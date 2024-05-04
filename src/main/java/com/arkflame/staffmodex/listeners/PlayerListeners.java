@@ -267,51 +267,6 @@ public class PlayerListeners implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onBlockBreak(final BlockBreakEvent event) {
-        Player player = event.getPlayer();
-
-        if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
-            event.setCancelled(true);
-            return;
-        }
-
-        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                .getOrCreateStaffPlayer(player);
-
-        if (staffPlayer == null) {
-            return;
-        }
-
-        if (staffPlayer.isFrozen()) {
-            staffPlayer
-                    .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onBlockPlace(final BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-
-        if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
-            event.setCancelled(true);
-            return;
-        }
-
-        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                .getOrCreateStaffPlayer(player);
-
-        if (staffPlayer == null) {
-            return;
-        }
-
-        if (staffPlayer.isFrozen()) {
-            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
-            event.setCancelled(true);
-        }
-    }
-
     @EventHandler
     public void onPlayerInteractEntity(final PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
