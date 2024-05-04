@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -241,11 +243,62 @@ public class PlayerListeners implements Listener {
                 return;
             }
 
+            if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+                event.setCancelled(true);
+                return;
+            }
+
             if (staffPlayer.isFrozen()) {
                 staffPlayer
                         .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockBreak(final BlockBreakEvent event) {
+        Player player = event.getPlayer();
+
+        if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player);
+
+        if (staffPlayer == null) {
+            return;
+        }
+
+        if (staffPlayer.isFrozen()) {
+            staffPlayer
+                    .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockPlace(final BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+
+        if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                .getOrCreateStaffPlayer(player);
+
+        if (staffPlayer == null) {
+            return;
+        }
+
+        if (staffPlayer.isFrozen()) {
+            staffPlayer
+                    .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
+            event.setCancelled(true);
         }
     }
 
