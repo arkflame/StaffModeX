@@ -47,8 +47,9 @@ public class IPCommand extends ModernCommand {
         }
 
         if (target instanceof Player) {
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
             sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.ip.message", "{player}", targetName,
-                    "{ip}", ((Player) target).getAddress().getAddress().getHostName()));
+                    "{ip}", staffPlayer.getIP()));
         }
     }
 }
