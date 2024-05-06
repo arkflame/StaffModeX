@@ -6,6 +6,7 @@ import com.arkflame.staffmodex.hotbar.components.items.CpsHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.ExamineHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.FollowHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.FreezeHotbarItem;
+import com.arkflame.staffmodex.hotbar.components.items.KnockbackHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.PhaseHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.PlayersHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.RandomTeleportHotbarItem;
@@ -27,5 +28,6 @@ public class StaffHotbar extends Hotbar {
         if (config.getBoolean("items.hotbar.cps.enabled")) setItem(config.getInt("items.hotbar.cps.slot"), new CpsHotbarItem());
         if (config.getBoolean("items.hotbar.examine.enabled")) setItem(config.getInt("items.hotbar.examine.slot"), new ExamineHotbarItem());
         if (config.getBoolean("items.hotbar.follow.enabled")) setItem(config.getInt("items.hotbar.follow.slot"), new FollowHotbarItem());
+        if (config.getBoolean("items.hotbar.knockback.enabled")) setItem(config.getInt("items.hotbar.knockback.slot"), new KnockbackHotbarItem());
     }
 }

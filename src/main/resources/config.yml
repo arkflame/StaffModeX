@@ -98,6 +98,11 @@ items:
         material:
         - GRAY_DYE
         - INK_SACK
+    knockback:
+      slot: 8
+      enabled: false
+      material:
+      - BLAZE_ROD
 
 redis:
   enabled: false

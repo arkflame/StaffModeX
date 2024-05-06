@@ -10,8 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -30,6 +28,7 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.cps.CpsTestingManager;
 import com.arkflame.staffmodex.hotbar.Hotbar;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.hotbar.components.items.KnockbackHotbarItem;
 import com.arkflame.staffmodex.player.FreezablePlayer;
 import com.arkflame.staffmodex.player.StaffNote;
 import com.arkflame.staffmodex.player.StaffPlayer;
@@ -275,7 +274,7 @@ public class PlayerListeners implements Listener {
             PlayerInventory inventory = player.getInventory();
             int slot = inventory.getHeldItemSlot();
             HotbarItem hotbarItem = hotbar.getItem(slot);
-            if (hotbarItem != null) {
+            if (hotbarItem != null && !(hotbarItem instanceof KnockbackHotbarItem)) {
                 hotbarItem.onInteract(player, event.getRightClicked());
                 event.setCancelled(true);
             }

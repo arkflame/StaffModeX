@@ -9,6 +9,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.hotbar.Hotbar;
+import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.hotbar.components.items.KnockbackHotbarItem;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class EntityListeners implements Listener {
@@ -34,6 +37,18 @@ public class EntityListeners implements Listener {
             Player player = (Player) damager;
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
             if (staffPlayer.isFrozen() || StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+                Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
+
+                if (hotbar != null) {
+                    HotbarItem hotbarItem = hotbar.getItem(player.getInventory().getHeldItemSlot());
+
+                    if (hotbarItem != null) {
+                        if (hotbarItem instanceof KnockbackHotbarItem) {
+                            return;
+                        }
+                    }
+                }
+
                 event.setCancelled(true);
                 return;
             }

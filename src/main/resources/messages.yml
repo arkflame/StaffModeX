@@ -132,6 +132,10 @@ hotbar:
     lore:
     - "&7Immobilize a player; halt player movement for investigation or to address violations."
     invalid: "&cNo valid target found."
+  knockback:
+    name: "&6Knockback"
+    lore:
+    - "&7Hit the player to check his knockback."
   cps:
     name: "&eCPS"
     lore:
