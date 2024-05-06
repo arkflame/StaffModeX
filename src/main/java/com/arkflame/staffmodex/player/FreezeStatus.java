@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.bukkit.inventory.ItemStack;
 
+import com.arkflame.staffmodex.StaffModeX;
+
 public class FreezeStatus {
     private FreezablePlayer staff;
     private FreezablePlayer target;
@@ -16,7 +18,7 @@ public class FreezeStatus {
         this.staff = staff;
         this.target = target;
         this.startTime = System.currentTimeMillis();
-        this.duration = TimeUnit.MINUTES.toMillis(5);
+        this.duration = TimeUnit.MINUTES.toMillis(StaffModeX.getInstance().getCfg().getInt("freeze.time", 5));
     }
 
     public FreezablePlayer getStaff() {

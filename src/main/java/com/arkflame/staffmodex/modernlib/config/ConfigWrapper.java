@@ -167,10 +167,14 @@ public class ConfigWrapper {
         return config.getString(key, "");
     }
 
-    public int getInt(String key) {
+    public int getInt(String key, int def) {
         if (!isLoaded())
-            return 0;
+            return def;
         return config.getInt(key);
+    }
+
+    public int getInt(String key) {
+        return getInt(key, 0);
     }
 
     public boolean getBoolean(String key) {

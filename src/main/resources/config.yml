@@ -45,6 +45,7 @@ helpop:
 
 freeze:
   enabled: true
+  time: 5
 
 examine:
   enabled: true
