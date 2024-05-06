@@ -201,4 +201,12 @@ public class ConfigWrapper {
             parent.mkdirs();
         }
     }
+
+    public boolean isConfigurationSection(String path) {
+        return config.isConfigurationSection(path);
+    }
+
+    public ConfigurationSection getConfigurationSection(String path) {
+        return config.getConfigurationSection(path);
+    }
 }

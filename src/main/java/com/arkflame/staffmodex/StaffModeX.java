@@ -5,6 +5,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.arkflame.staffmodex.armor.ArmorManager;
 import com.arkflame.staffmodex.commands.ExamineCommand;
 import com.arkflame.staffmodex.commands.FreezeCommand;
 import com.arkflame.staffmodex.commands.HelpopCommand;
@@ -50,6 +51,8 @@ public class StaffModeX extends JavaPlugin {
 
     private Collection<ModernCommand> commands = new HashSet<>();
 
+    private ArmorManager armorManager;
+
     public ConfigWrapper getCfg() {
         return config;
     }
@@ -78,6 +81,10 @@ public class StaffModeX extends JavaPlugin {
         return redisManager;
     }
 
+    public ArmorManager getArmorManager() {
+        return armorManager;
+    }
+
     @Override
     public void onEnable() {
         // Set static instance
@@ -87,12 +94,15 @@ public class StaffModeX extends JavaPlugin {
         config = new ConfigWrapper("config.yml").saveDefault().load();
         messages = new ConfigWrapper("messages.yml").saveDefault().load();
 
+        // Armor MAnager
+        armorManager = new ArmorManager(config);
+
         // Initialize Redis
         redisManager = new RedisManager(this);
 
         // Initialize MySQL
         mySQLManager = new DatabaseManager(
-                config.getConfig().getBoolean("mysql.enabled"),
+                config.getBoolean("mysql.enabled"),
                 config.getString("mysql.url"),
                 config.getString("mysql.username"),
                 config.getString("mysql.password"));

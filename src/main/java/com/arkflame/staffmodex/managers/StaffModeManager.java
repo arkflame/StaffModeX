@@ -58,9 +58,14 @@ public class StaffModeManager {
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
         player.sendMessage(ChatColors.color(msg.getText("staffmode.enter")));
         staffPlayers.add(player);
+
+        // Potion Effects
         PotionEffects.add(player, 0, Integer.MAX_VALUE, "NIGHT_VISION");
-        PotionEffects.add(player, 0, Integer.MAX_VALUE, "JUMP", "JUMP_BOOST");
+        PotionEffects.add(player, 1, Integer.MAX_VALUE, "JUMP", "JUMP_BOOST");
         PotionEffects.add(player, 1, Integer.MAX_VALUE, "SPEED");
+
+        // Armor
+        StaffModeX.getInstance().getArmorManager().giveArmor(player);
     }
 
     public void removeStaff(Player player) {
@@ -69,16 +74,6 @@ public class StaffModeManager {
         }
 
         HotbarManager hotbarManager = StaffModeX.getInstance().getHotbarManager();
-        /* Restore old location */
-        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
-        if (staffPlayer != null) {
-            staffPlayer.restoreOldLocation();
-
-            if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
-                    StaffModeX.getInstance().getConfig().getBoolean("vanish.on_staff_mode")) {
-                staffPlayer.makeVisible();
-            }
-        }
         hotbarManager.setHotbar(player, null);
         Players.clearInventory(player);
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
@@ -91,6 +86,18 @@ public class StaffModeManager {
         PotionEffects.remove(player, "NIGHT_VISION");
         PotionEffects.remove(player, "JUMP", "JUMP_BOOST");
         PotionEffects.remove(player, "SPEED");
+
+        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
+        if (staffPlayer != null) {
+            // Restore location
+            staffPlayer.restoreOldLocation();
+
+            // Make visible
+            if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
+                    StaffModeX.getInstance().getConfig().getBoolean("vanish.on_staff_mode")) {
+                staffPlayer.makeVisible();
+            }
+        }
     }
 
     public boolean isStaff(Player player) {

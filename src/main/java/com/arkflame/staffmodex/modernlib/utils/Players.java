@@ -15,6 +15,7 @@ public class Players {
     }
 
     public static void clearInventory(Player player) {
+        player.getInventory().setArmorContents(null);
         player.getInventory().clear();
     }
 
