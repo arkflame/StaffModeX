@@ -1,6 +1,8 @@
 # You can use hexadecimal colors on any message
 # Format: #000000
 messages:
+  reloaded: "&7[&b&lStaffModeX&7] &aAll plugin data was reloaded from config."
+
   only-players: "&cThis command cannot be used from the console."
 
   player-not-found: "&cPlayer not found. Please check the name and try again."

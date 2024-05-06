@@ -26,7 +26,7 @@ public class StaffModeXCommand extends ModernCommand {
         if ("reload".equalsIgnoreCase(firstArg)) {
             StaffModeX.getInstance().onDisable();
             StaffModeX.getInstance().onEnable();
-            sender.sendMessage(ChatColor.GREEN + "You reloaded StaffModeX succesfuly.");
+            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.reloaded"));
         } else {
             sender.sendMessage(ChatColor.BLUE + "StaffModeX by LinsaFTW");
         }
