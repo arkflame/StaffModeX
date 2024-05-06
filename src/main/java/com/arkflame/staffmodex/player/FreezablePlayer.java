@@ -77,7 +77,7 @@ public class FreezablePlayer extends UUIDPlayer {
         Player player = getPlayer();
         freezeStatus = new FreezeStatus(origin, this);
         origin.addFrozenPlayerByMe(this);
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen", "{player}", origin.getPlayer().getName()));
+        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen", "{player}", origin.getPlayer().getName(), "{time}", String.valueOf(StaffModeX.getInstance().getCfg().getInt("freeze.time"))));
         Titles.sendActionBar(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_action"));
         Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_title"), StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_subtitle"), 20, 60, 20);
         

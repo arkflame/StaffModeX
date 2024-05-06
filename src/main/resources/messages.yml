@@ -90,7 +90,7 @@ messages:
     has_bypass: "&cThis player has bypassed freezing."
     unfreeze: "&7The player has been &aunfrozen&r&7."
     freeze: "&7The player has been &cfrozen&r&7. Please review the player for &csuspicious activity&r&7."
-    frozen: "&8&m---------------------------&r\n&7You have been frozen for &csuspicious activity&7.\n&7Please connect to the &9TS Server&r&7 for a review.\n&7You have &b5 minutes&7 to not be &cBANNED&7.\n&8&m---------------------------&r"
+    frozen: "&8&m---------------------------&r\n&7You have been frozen for &csuspicious activity&7.\n&7Please connect to the &9TS Server&r&7 for a review.\n&7You have &b{time} minutes&7 to not be &cBANNED&7.\n&8&m---------------------------&r"
     unfrozen: "&8&m---------------------------&r\n&7You have been reviewed and &aunfrozen&7.\n&7You can now play again. Stay safe.\n&8&m---------------------------&r"
 
 staffmode:
