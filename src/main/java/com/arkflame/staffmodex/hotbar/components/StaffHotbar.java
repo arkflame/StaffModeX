@@ -11,19 +11,21 @@ import com.arkflame.staffmodex.hotbar.components.items.PlayersHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.RandomTeleportHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.StaffListHotbarItem;
 import com.arkflame.staffmodex.hotbar.components.items.VanishHotbarItem;
+import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class StaffHotbar extends Hotbar {
     public StaffHotbar(StaffPlayer staffPlayer) {
         super();
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.phase.enabled")) setItem(0, new PhaseHotbarItem());
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.r-teleport.enabled")) setItem(1, new RandomTeleportHotbarItem());
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.vanish.enabled")) setItem(2, new VanishHotbarItem(staffPlayer));
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.players.enabled")) setItem(3, new PlayersHotbarItem());
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.stafflist.enabled")) setItem(4, new StaffListHotbarItem());
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.freeze.enabled")) setItem(5, new FreezeHotbarItem());
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.cps.enabled")) setItem(6, new CpsHotbarItem());
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.examine.enabled")) setItem(7, new ExamineHotbarItem());
-        if (StaffModeX.getInstance().getConfig().getBoolean("items.hotbar.follow.enabled")) setItem(8, new FollowHotbarItem());
+        ConfigWrapper config = StaffModeX.getInstance().getCfg();
+        if (config.getBoolean("items.hotbar.phase.enabled")) setItem(config.getInt("items.hotbar.phase.slot"), new PhaseHotbarItem());
+        if (config.getBoolean("items.hotbar.r-teleport.enabled")) setItem(config.getInt("items.hotbar.r-teleport.slot"), new RandomTeleportHotbarItem());
+        if (config.getBoolean("items.hotbar.vanish.enabled")) setItem(config.getInt("items.hotbar.vanish.slot"), new VanishHotbarItem(staffPlayer));
+        if (config.getBoolean("items.hotbar.players.enabled")) setItem(config.getInt("items.hotbar.players.slot"), new PlayersHotbarItem());
+        if (config.getBoolean("items.hotbar.stafflist.enabled")) setItem(config.getInt("items.hotbar.stafflist.slot"), new StaffListHotbarItem());
+        if (config.getBoolean("items.hotbar.freeze.enabled")) setItem(config.getInt("items.hotbar.freeze.slot"), new FreezeHotbarItem());
+        if (config.getBoolean("items.hotbar.cps.enabled")) setItem(config.getInt("items.hotbar.cps.slot"), new CpsHotbarItem());
+        if (config.getBoolean("items.hotbar.examine.enabled")) setItem(config.getInt("items.hotbar.examine.slot"), new ExamineHotbarItem());
+        if (config.getBoolean("items.hotbar.follow.enabled")) setItem(config.getInt("items.hotbar.follow.slot"), new FollowHotbarItem());
     }
 }

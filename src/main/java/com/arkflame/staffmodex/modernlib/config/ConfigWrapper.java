@@ -174,6 +174,12 @@ public class ConfigWrapper {
         return config.getInt(key);
     }
 
+    public boolean getBoolean(String key) {
+        if (!isLoaded())
+            return false;
+        return config.getBoolean(key);
+    }
+
     public ConfigWrapper getSection(String key) {
         if (!isLoaded())
             return null;

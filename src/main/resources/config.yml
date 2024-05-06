@@ -42,42 +42,51 @@ examine:
 items:
   hotbar:
     cps:
+      slot: 6
       enabled: true
       material:
       - CLOCK
       - WATCH
     examine:
+      slot: 7
       enabled: true
       material:
       - CHEST
     follow:
+      slot: 8
       enabled: true
       material:
       - LEAD
       - LEASH
     freeze:
+      slot: 5
       enabled: true
       material:
       - ICE
     phase:
+      slot: 0
       enabled: true
       material:
       - COMPASS
     players:
+      slot: 3
       enabled: true
       material:
       - PAPER
     r-teleport:
+      slot: 1
       enabled: true
       material:
       - ENDER_EYE
       - EYE_OF_ENDER
     stafflist:
+      slot: 4
       enabled: true
       material:
       - SKULL_ITEM
       - SKELETON_SKULL
     vanish:
+      slot: 2
       enabled: true
       turned_on:
         damage: 10
