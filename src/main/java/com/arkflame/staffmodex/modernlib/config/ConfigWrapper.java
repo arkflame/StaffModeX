@@ -49,7 +49,6 @@ public class ConfigWrapper {
 
     public ConfigWrapper saveDefault() {
         if (path != null) {
-            StaffModeX.getInstance().getLogger().info("Save default config for " + fileName + " on " + path);
             File configFile = new File(path);
             if (!configFile.exists()) {
                 try (InputStream inputStream = StaffModeX.getInstance().getResource(fileName)) {

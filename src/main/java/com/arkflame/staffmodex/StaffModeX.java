@@ -14,6 +14,7 @@ import com.arkflame.staffmodex.commands.InfractionsCommand;
 import com.arkflame.staffmodex.commands.ReportCommand;
 import com.arkflame.staffmodex.commands.StaffChatCommand;
 import com.arkflame.staffmodex.commands.StaffModeCommand;
+import com.arkflame.staffmodex.commands.StaffModeXCommand;
 import com.arkflame.staffmodex.commands.VanishCommand;
 import com.arkflame.staffmodex.commands.WarnCommand;
 import com.arkflame.staffmodex.expansion.StaffModePlaceholderExpansion;
@@ -144,6 +145,7 @@ public class StaffModeX extends JavaPlugin {
         if (StaffModeX.getInstance().getConfig().getBoolean("staffmode.enabled")) {
             registerCommand(new StaffModeCommand());
         }
+        registerCommand(new StaffModeXCommand());
         if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
             registerCommand(new WarnCommand());
         }
