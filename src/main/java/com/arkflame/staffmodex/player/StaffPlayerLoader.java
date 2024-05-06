@@ -64,7 +64,6 @@ public class StaffPlayerLoader {
             return;
         }
 
-        System.out.println("Saved ip " + ip);
         ipsConfig.load();
         ipsConfig.getConfig().set("ip", ip);
         ipsConfig.save();
@@ -83,7 +82,6 @@ public class StaffPlayerLoader {
         }
 
         ipsConfig.load();
-        System.out.println("Loaded ip " + ipsConfig.getConfig().getString("ip"));
         staffPlayer.setIP(ipsConfig.getConfig().getString("ip"));
     }
 }
