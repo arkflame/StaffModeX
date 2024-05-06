@@ -12,7 +12,7 @@ import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class IPCommand extends ModernCommand {
     public IPCommand() {
-        super("ip");
+        super("ip", "iplog");
     }
 
     @Override
