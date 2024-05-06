@@ -1,5 +1,15 @@
 server_name: Server
 
+armors:
+  enabled: true
+  sets:
+    administrator:
+      permission: staffmodex.armor.administrator
+      color: RED
+    moderator:
+      permission: staffmodex.armor.moderator
+      color: ORANGE
+
 diamond-finder:
   enabled: true
   min-streak: 3

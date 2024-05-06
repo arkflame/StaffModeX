@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 import java.util.HashMap;
@@ -48,6 +49,10 @@ public class ArmorManager {
     }
 
     public void giveArmor(Player player) {
+        if (!StaffModeX.getInstance().getCfg().getBoolean("armors.enabled")) {
+            return;
+        }
+
         Color color = getColorForPlayer(player);
         if (color == null) return; // No matching armor found
     
