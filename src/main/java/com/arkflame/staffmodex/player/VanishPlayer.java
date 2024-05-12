@@ -38,6 +38,10 @@ public class VanishPlayer extends UUIDPlayer {
     public void hidePlayer(boolean force, Player toBeHidden) {
         Player player = getPlayer();
 
+        if (player == null) {
+            return;
+        }
+
         if (player == toBeHidden) {
             return;
         }
