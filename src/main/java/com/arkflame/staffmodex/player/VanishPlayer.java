@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
+import de.myzelyam.api.vanish.VanishAPI;
+
 public class VanishPlayer extends UUIDPlayer {
     private boolean vanished = false;
 
@@ -35,6 +37,11 @@ public class VanishPlayer extends UUIDPlayer {
         return getPlayer().hasPermission("staffmodex.vanish.force");
     }
 
+    public boolean isPremiumVanishHook() {
+        return StaffModeX.getInstance().getCfg().getBoolean("vanish.hooks.premiumvanish")
+                && StaffModeX.getInstance().getServer().getPluginManager().isPluginEnabled("PremiumVanish");
+    }
+
     public void hidePlayer(boolean force, Player toBeHidden) {
         Player player = getPlayer();
 
@@ -47,7 +54,12 @@ public class VanishPlayer extends UUIDPlayer {
         }
 
         if (force || !player.hasPermission("staffmodex.vanish.bypass")) {
-            player.hidePlayer(toBeHidden);
+            boolean premiumVanishHook = isPremiumVanishHook();
+            if (premiumVanishHook) {
+                VanishAPI.hidePlayer(player);
+            } else {
+                player.hidePlayer(toBeHidden);
+            }
         }
     }
 
@@ -63,8 +75,13 @@ public class VanishPlayer extends UUIDPlayer {
 
     public void makeVisible() {
         Player player = getPlayer();
+        boolean premiumVanishHook = isPremiumVanishHook();
         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
-            otherPlayer.showPlayer(player);
+            if (premiumVanishHook) {
+                VanishAPI.showPlayer(player);
+            } else {
+                otherPlayer.showPlayer(player);
+            }
         }
         vanished = false;
     }

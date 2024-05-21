@@ -25,6 +25,8 @@ action_bar:
 vanish:
   enabled: true
   on_staff_mode: true
+  hooks:
+    premiumvanish: true
 
 staffchat:
   enabled: true
