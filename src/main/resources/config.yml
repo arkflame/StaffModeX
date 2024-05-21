@@ -31,6 +31,20 @@ staffchat:
   on_staff_mode: true
 
 staffmode:
+  # Effects given when activating Staff Mode
+  effects:
+    NIGHT_VISION:
+      amplifier: 0
+      duration: 2147483647
+      aliases: ["NIGHT_VISION"]
+    JUMP:
+      amplifier: 1
+      duration: 2147483647
+      aliases: ["JUMP", "JUMP_BOOST"]
+    SPEED:
+      amplifier: 1
+      duration: 2147483647
+      aliases: ["SPEED"]
   enabled: true
 
 report:
