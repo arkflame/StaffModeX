@@ -31,6 +31,8 @@ staffchat:
   on_staff_mode: true
 
 staffmode:
+  # Restore location when leaving staffmode
+  restore_location: true
   # Effects given when activating Staff Mode
   effects:
     NIGHT_VISION:

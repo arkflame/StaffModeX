@@ -137,7 +137,9 @@ public class StaffModeManager {
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         if (staffPlayer != null) {
             // Restore location
-            staffPlayer.restoreOldLocation();
+            if (StaffModeX.getInstance().getConfig().getBoolean("staffmode.restore_location")) {
+                staffPlayer.restoreOldLocation();
+            }
 
             // Make visible
             if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
