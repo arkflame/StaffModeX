@@ -1,6 +1,10 @@
 package com.arkflame.staffmodex.modernlib.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
+
+import com.arkflame.staffmodex.StaffModeX;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -16,10 +20,17 @@ public class ServerUtils {
         initializeServerUtils();
     }
 
+	public static String getVersion(Server server) {
+		String packageName = server.getClass().getPackage().getName();
+		String[] packageSplit = packageName.split("\\.");
+		String version = packageSplit.length > 3 ? packageSplit[3] : null;
+		return version;
+	}
+
     private static void initializeServerUtils() {
         try {
-            serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-            int majorVersion = Integer.parseInt(serverVersion.split("_")[1]);
+            serverVersion = getVersion(Bukkit.getServer());
+            int majorVersion = serverVersion == null ? 21 : Integer.parseInt(serverVersion.split("_")[1]);
 
             String className;
             if (majorVersion >= 17) {
@@ -34,7 +45,8 @@ public class ServerUtils {
             tpsField = minecraftServerClass.getDeclaredField("recentTps");
             tpsField.setAccessible(true);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize server utilities", e);
+            e.printStackTrace();
+            StaffModeX.getInstance().getLogger().severe("Failed to initialize server utilities");
         }
     }
 
@@ -42,7 +54,7 @@ public class ServerUtils {
         try {
             double[] tpsArray = (double[]) tpsField.get(serverInstance);
             return tpsArray[Math.min(time, tpsArray.length - 1)];
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | NullPointerException e) {
             // Failed to get TPS
         }
         return 20D;
