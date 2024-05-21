@@ -201,7 +201,7 @@ public class StaffPlayer extends UUIDPlayer {
     }
 
     public void sendStaffChat(String msg) {
-        String message = StaffModeX.getInstance().getMsg().getText("messages.staffchat.chat", "{player}", getPlayer().getName(), "{message}", msg);
+        String message = StaffModeX.getInstance().getMsg().getText("messages.staffchat.chat", "{player}", getPlayer().getName(), "{message}", msg, "{server}", StaffModeX.getInstance().getServerName());
         for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
             if (staffPlayer.isStaffChatReceiver()) {
                 staffPlayer.sendMessage(message);

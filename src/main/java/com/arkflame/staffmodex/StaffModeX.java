@@ -223,4 +223,8 @@ public class StaffModeX extends JavaPlugin {
             }
         }
     }
+
+    public String getServerName() {
+        return StaffModeX.getInstance().getCfg().getString("server_name");
+    }
 }

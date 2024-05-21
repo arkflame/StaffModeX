@@ -1,6 +1,9 @@
 package com.arkflame.staffmodex.listeners;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -34,6 +37,31 @@ import com.arkflame.staffmodex.player.StaffNote;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class PlayerListeners implements Listener {
+    // Map to store the UUID and the timestamp of the last execution
+    private final Map<UUID, Long> cooldowns = new HashMap<>();
+
+    /**
+     * Checks if time has passed since the last execution for the given UUID.
+     *
+     * @param uuid The UUID to check the cooldown for.
+     * @return true if the cooldown period has passed, false otherwise.
+     */
+    public boolean isCooldownOver(UUID uuid) {
+        long currentTime = System.currentTimeMillis();
+        long cooldownTime = 100;
+
+        if (cooldowns.containsKey(uuid)) {
+            long lastExecutionTime = cooldowns.get(uuid);
+            if ((currentTime - lastExecutionTime) < cooldownTime) {
+                return false; // Cooldown period has not passed
+            }
+        }
+
+        // Update the timestamp for the UUID
+        cooldowns.put(uuid, currentTime);
+        return true; // Cooldown period has passed
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
@@ -126,7 +154,7 @@ public class PlayerListeners implements Listener {
             if (player.hasPermission("staffmodex.staffmode")
                     && !StaffModeX.getInstance().getRedisManager().isClosed()) {
                 StaffModeX.getInstance().getRedisManager().incrementOnlineStatus(player.getName(),
-                        StaffModeX.getInstance().getCfg().getString("server_name"));
+                        StaffModeX.getInstance().getServerName());
 
                 if (StaffModeX.getInstance().getRedisManager().isStaffMode(player.getName())) {
                     Bukkit.getScheduler().runTask(StaffModeX.getInstance(),
@@ -219,9 +247,10 @@ public class PlayerListeners implements Listener {
 
     @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent event) {
-        boolean leftClick = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
-        boolean rightClick = event.getAction() == Action.RIGHT_CLICK_AIR
-                || event.getAction() == Action.RIGHT_CLICK_BLOCK;
+        Action action = event.getAction();
+        boolean leftClick = action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK;
+        boolean rightClick = action == Action.RIGHT_CLICK_AIR
+                || action == Action.RIGHT_CLICK_BLOCK;
 
         if (leftClick) {
             CpsTestingManager.click(event.getPlayer());
@@ -235,12 +264,14 @@ public class PlayerListeners implements Listener {
                 int slot = inventory.getHeldItemSlot();
                 HotbarItem hotbarItem = hotbar.getItem(slot);
                 if (hotbarItem != null) {
-                    hotbarItem.onInteract(player);
-                    hotbarItem.onInteract(player, event.getClickedBlock());
+                    if (isCooldownOver(player.getUniqueId())) {
+                        hotbarItem.onInteract(player);
+                        hotbarItem.onInteract(player, event.getClickedBlock());
 
-                    Material clickedMaterial = hotbarItem.getType();
-                    if (clickedMaterial.isSolid()) {
-                        player.updateInventory();
+                        Material clickedMaterial = hotbarItem.getType();
+                        if (clickedMaterial.isSolid()) {
+                            player.updateInventory();
+                        }
                     }
                     event.setCancelled(true);
                 }
