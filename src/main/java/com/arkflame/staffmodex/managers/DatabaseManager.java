@@ -51,7 +51,7 @@ public class DatabaseManager {
 
     private void createTables(Connection conn) throws SQLException {
         // Create the 'infractions' table if it doesn't exist
-        String createInfractionsTableQuery = "CREATE TABLE IF NOT EXISTS infractions (" +
+        String createInfractionsTableQuery = "CREATE TABLE IF NOT EXISTS staffmodex_infractions (" +
                 "id VARCHAR(36) PRIMARY KEY," +
                 "accused_uuid VARCHAR(36) NOT NULL," +
                 "type VARCHAR(10) NOT NULL," +
@@ -79,7 +79,7 @@ public class DatabaseManager {
     }
 
     public void saveInfraction(Infraction infraction) {
-        String query = "INSERT INTO infractions (accused_uuid, type, timestamp, reporter_uuid, reporter_name, reason, id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO staffmodex_infractions (accused_uuid, type, timestamp, reporter_uuid, reporter_name, reason, id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             // Debug: Check if the database connection is successful
@@ -100,7 +100,7 @@ public class DatabaseManager {
     }
 
     public void loadInfractions(StaffPlayer staffPlayer) {
-        String query = "SELECT id, type, timestamp, reporter_uuid, reporter_name, reason FROM infractions WHERE accused_uuid = ?";
+        String query = "SELECT id, type, timestamp, reporter_uuid, reporter_name, reason FROM staffmodex_infractions WHERE accused_uuid = ?";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, staffPlayer.getUUID().toString());
@@ -152,7 +152,7 @@ public class DatabaseManager {
     }
 
     public void saveIP(UUID uuid, String ip) {
-        String query = "INSERT INTO ips (id, ip) VALUES (?, ?)";
+        String query = "INSERT INTO staffmodex_ips (id, ip) VALUES (?, ?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             // Debug: Check if the database connection is successful
@@ -168,7 +168,7 @@ public class DatabaseManager {
     }
 
     public void loadIP(StaffPlayer staffPlayer) {
-        String query = "SELECT id, ip FROM ips WHERE id = ?";
+        String query = "SELECT id, ip FROM staffmodex_ips WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, staffPlayer.getUUID().toString());

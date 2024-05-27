@@ -85,8 +85,8 @@ public class InventoryManager {
         player.setFoodLevel(inventoryConfig.getInt(player.getUniqueId().toString() + ".food", player.getFoodLevel()));
 
         // Flying status
-        player.setFlying(inventoryConfig.getBoolean(player.getUniqueId().toString() + ".flying", player.isFlying()));
         player.setAllowFlight(inventoryConfig.getBoolean(player.getUniqueId().toString() + ".allow-flight", player.getAllowFlight()));
+        player.setFlying(inventoryConfig.getBoolean(player.getUniqueId().toString() + ".flying", player.isFlying()));
     }
 
     public void deletePlayerInventory(Player player) {

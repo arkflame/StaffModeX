@@ -20,6 +20,9 @@ public class InventoryListeners implements Listener {
         HumanEntity human = event.getWhoClicked();
         if (human instanceof Player) {
             Player player = (Player) human;
+            if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+                event.setCancelled(true);
+            }
             if (event.getClickedInventory() != player.getInventory()) {
                 return;
             }
@@ -47,6 +50,9 @@ public class InventoryListeners implements Listener {
         HumanEntity human = event.getWhoClicked();
         if (human instanceof Player) {
             Player player = (Player) human;
+            if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+                event.setCancelled(true);
+            }
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
             if (hotbar != null) {
                 Set<Integer> slots = event.getInventorySlots();

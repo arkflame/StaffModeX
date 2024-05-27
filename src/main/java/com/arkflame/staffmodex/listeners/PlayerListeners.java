@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -35,6 +37,7 @@ import com.arkflame.staffmodex.hotbar.components.items.KnockbackHotbarItem;
 import com.arkflame.staffmodex.player.FreezablePlayer;
 import com.arkflame.staffmodex.player.StaffNote;
 import com.arkflame.staffmodex.player.StaffPlayer;
+import com.arkflame.staffmodex.utils.Inventories;
 
 public class PlayerListeners implements Listener {
     // Map to store the UUID and the timestamp of the last execution
@@ -286,6 +289,19 @@ public class PlayerListeners implements Listener {
 
             if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
                 event.setCancelled(true);
+
+                if (rightClick) {
+                    Block block = event.getClickedBlock();
+
+                    if (block != null) {
+                        if (block.getState() instanceof InventoryHolder){
+                            InventoryHolder holder = (InventoryHolder) block.getState();
+                            player.closeInventory();
+                            player.openInventory(Inventories.copyInventory(holder.getInventory()));
+                        }
+                    }
+                }
+
                 return;
             }
 
