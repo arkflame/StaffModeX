@@ -26,7 +26,7 @@ public class Players {
     }
 
     public static void heal(Player player) {
-        player.setHealth(20D);
+        player.setHealth(player.getMaxHealth());
         player.setFoodLevel(20);
     }
 }

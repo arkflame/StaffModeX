@@ -111,8 +111,8 @@ public class InventoryManager {
         }
 
         // Health and food
-        player.setHealth(inventoryConfig.getDouble(uuidString + ".health", player.getHealth()));
-        player.setFoodLevel(inventoryConfig.getInt(player.getUniqueId().toString() + ".food", player.getFoodLevel()));
+        player.setHealth(Math.min(player.getMaxHealth(), inventoryConfig.getDouble(uuidString + ".health", player.getHealth())));
+        player.setFoodLevel(inventoryConfig.getInt(uuidString + ".food", player.getFoodLevel()));
 
         // Flying status
         player.setAllowFlight(
