@@ -11,7 +11,7 @@
     <!-- Plugin Information -->
     <name>StaffModeX</name>
     <description>The ultimate Staff administration tool</description>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <url>https://github.com/arkflame/Spigot-Boilerplate</url>
 
     <properties>
