@@ -99,6 +99,7 @@ public class StaffModeManager {
                 staffPlayer.setStaffChat(true);
             }
         }
+        // Save inventory
         StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
         Players.clearInventory(player);
         Players.heal(player);
@@ -123,6 +124,7 @@ public class StaffModeManager {
         HotbarManager hotbarManager = StaffModeX.getInstance().getHotbarManager();
         hotbarManager.setHotbar(player, null);
         Players.clearInventory(player);
+        // Restore inventory
         StaffModeX.getInstance().getInventoryManager().loadPlayerInventory(player);
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
         // Reset fall distance
