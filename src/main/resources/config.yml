@@ -33,8 +33,12 @@ staffchat:
   on_staff_mode: true
 
 staffmode:
+  enabled: true
   # Restore location when leaving staffmode
   restore_location: true
+  # Commands to block during staffmode
+  blocked_commands:
+  - "/sethome"
   # Effects given when activating Staff Mode
   effects:
     NIGHT_VISION:
@@ -49,7 +53,6 @@ staffmode:
       amplifier: 1
       duration: 2147483647
       aliases: ["SPEED"]
-  enabled: true
 
 report:
   enabled: true

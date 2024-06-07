@@ -68,6 +68,19 @@ public class PlayerListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
+
+        if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+            String message = event.getMessage();
+            String command = message.split(" ")[0];
+            List<String> blockedCommands = StaffModeX.getInstance().getCfg()
+                    .getStringList("staffmode.blocked_commands");
+            if (blockedCommands.contains(command)) {
+                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.staffmode.cannot-use-command"));
+                event.setCancelled(true);
+                return;
+            }
+        }
+
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getOrCreateStaffPlayer(player);
 
@@ -76,7 +89,7 @@ public class PlayerListeners implements Listener {
         }
 
         if (staffPlayer.isFrozen()) {
-            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-use-commands"));
+            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-use-commands"));
             event.setCancelled(true);
         }
     }
@@ -294,7 +307,7 @@ public class PlayerListeners implements Listener {
                     Block block = event.getClickedBlock();
 
                     if (block != null) {
-                        if (block.getState() instanceof InventoryHolder){
+                        if (block.getState() instanceof InventoryHolder) {
                             InventoryHolder holder = (InventoryHolder) block.getState();
                             player.closeInventory();
                             player.openInventory(Inventories.copyInventory(holder.getInventory()));

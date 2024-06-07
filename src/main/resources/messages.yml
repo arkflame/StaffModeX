@@ -96,6 +96,7 @@ messages:
     unfrozen: "&8&m---------------------------&r\n&7You have been reviewed and &aunfrozen&7.\n&7You can now play again. Stay safe.\n&8&m---------------------------&r"
 
 staffmode:
+  cannot-use-command: "&cYou cannot use that command."
   action_bar: "&bVanished&7 ({vanished}&7) &bStaffChat&7 ({staffchat}&7) &bTPS: {tps}"
   enter: "&aYou have entered staff mode!"
   leave: "&aYou have left staff mode!"
