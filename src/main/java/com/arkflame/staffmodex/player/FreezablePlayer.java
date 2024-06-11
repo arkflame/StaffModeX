@@ -32,7 +32,7 @@ public class FreezablePlayer extends UUIDPlayer {
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
         if (!player.hasPermission("staffmodex.freeze")) {
             player.sendMessage(msg.getText("messages.freeze.no_permission"));
-        } else if (target.hasPermission("staffmodex.freeze.bypass")) {
+        } else if (target != null && target.hasPermission("staffmodex.freeze.bypass")) {
             player.sendMessage(msg.getText("messages.freeze.has_bypass"));
         } else if (!StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
             player.sendMessage(msg.getText("messages.freeze.not-staff"));
@@ -77,17 +77,21 @@ public class FreezablePlayer extends UUIDPlayer {
         Player player = getPlayer();
         freezeStatus = new FreezeStatus(origin, this);
         origin.addFrozenPlayerByMe(this);
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen", "{player}", origin.getPlayer().getName(), "{time}", String.valueOf(StaffModeX.getInstance().getCfg().getInt("freeze.time"))));
-        Titles.sendActionBar(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_action"));
-        Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_title"), StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_subtitle"), 20, 60, 20);
-        
-        // Set the player's helmet to the ice cube
-        freezeStatus.setHelmet(player.getEquipment().getHelmet());
+        Player originPlayer = origin.getPlayer();
+        ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+        if (player != null) {
+            player.sendMessage(msg.getText("messages.freeze.frozen", "{player}", originPlayer == null ? "" : originPlayer.getName(), "{time}", String.valueOf(StaffModeX.getInstance().getCfg().getInt("freeze.time"))));
+            Titles.sendActionBar(player, msg.getText("messages.freeze.frozen_action"));
+            Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_title"), msg.getText("messages.freeze.frozen_subtitle"), 20, 60, 20);
+            
+            // Set the player's helmet to the ice cube
+            freezeStatus.setHelmet(player.getEquipment().getHelmet());
 
-        PotionEffects.add(player, 0, 20 * 60 * 20, "BLINDNESS");
-        Sounds.play(player, 1.0F, 1.0F, "ANVIL_LAND", "BLOCK_ANVIL_LAND");
+            PotionEffects.add(player, 0, 20 * 60 * 20, "BLINDNESS");
+            Sounds.play(player, 1.0F, 1.0F, "ANVIL_LAND", "BLOCK_ANVIL_LAND");
 
-        player.getEquipment().setHelmet(new ItemStack(Material.PACKED_ICE));
+            player.getEquipment().setHelmet(new ItemStack(Material.PACKED_ICE));
+        }
     }
     
 
@@ -98,15 +102,18 @@ public class FreezablePlayer extends UUIDPlayer {
 
         Player player = getPlayer();
         freezeStatus.getStaff().removeFrozenPlayerByMe(this);
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen"));
-        Titles.sendActionBar(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen_action"));
-        Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen_title"), StaffModeX.getInstance().getMsg().getText("messages.freeze.unfrozen_subtitle"), 20, 60, 20);
-        
-        // Set the player's helmet back to air and clear for packed ice
-        player.getEquipment().setHelmet(freezeStatus.getHelmet());
+        if (player != null) {
+            ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+            player.sendMessage(msg.getText("messages.freeze.unfrozen"));
+            Titles.sendActionBar(player, msg.getText("messages.freeze.unfrozen_action"));
+            Titles.sendTitle(player, msg.getText("messages.freeze.unfrozen_title"), msg.getText("messages.freeze.unfrozen_subtitle"), 20, 60, 20);
+            
+            // Set the player's helmet back to air and clear for packed ice
+            player.getEquipment().setHelmet(freezeStatus.getHelmet());
 
-        PotionEffects.remove(player, "BLINDNESS");
-        Sounds.play(player, 1.0F, 1.0F, "SUCCESSFUL_HIT", "ENTITY_ARROW_HIT_PLAYER");
+            PotionEffects.remove(player, "BLINDNESS");
+            Sounds.play(player, 1.0F, 1.0F, "SUCCESSFUL_HIT", "ENTITY_ARROW_HIT_PLAYER");
+        }
 
         freezeStatus = null;
     }

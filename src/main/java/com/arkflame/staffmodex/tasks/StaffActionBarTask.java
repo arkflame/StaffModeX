@@ -27,7 +27,9 @@ public class StaffActionBarTask extends ModernTask {
                                 "{countdown}", freezeStatus.getCountdownFormatted());
 
                         Titles.sendActionBar(player, msg);
-                        Titles.sendActionBar(otherPlayer, msg);
+                        if (otherPlayer != null) {
+                            Titles.sendActionBar(otherPlayer, msg);
+                        }
                     }
                 }
             } else {

@@ -184,39 +184,42 @@ public class PlayerListeners implements Listener {
     public void onPlayerQuit(final PlayerQuitEvent event) {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                .getOrCreateStaffPlayer(player);
+                .getStaffPlayer(player);
 
-        // Save player's IP
-        Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
-            staffPlayer.getStaffPlayerLoader().saveIP();
-        });
+        if (staffPlayer != null) {
+            // Save player's IP
+            Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
+                staffPlayer.getStaffPlayerLoader().saveIP();
+            });
 
-        if (staffPlayer.isVanished()) {
-            event.setQuitMessage(null);
-        }
+            if (staffPlayer.isVanished()) {
+                event.setQuitMessage(null);
+            }
 
-        if (staffPlayer.isFrozen()) {
-            FreezablePlayer whoFroze = staffPlayer.getWhoFroze();
-            whoFroze.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg",
-                    "{player}", player.getName()));
-            staffPlayer.unfreeze();
-            List<String> disconnectCmds = StaffModeX.getInstance().getCfg().getTextList("freeze.commands.disconnect",
-                    "{player}", player.getName(), "{staff}", whoFroze.getName());
-            if (disconnectCmds != null && !disconnectCmds.isEmpty()) {
-                Player whoFrozePlayer = whoFroze.getPlayer();
-                Server server = StaffModeX.getInstance().getServer();
-                if (whoFrozePlayer != null) {
-                    for (String cmd : disconnectCmds) {
-                        if (cmd != null && !cmd.isEmpty()) {
-                            server.dispatchCommand(whoFrozePlayer, cmd);
+            if (staffPlayer.isFrozen()) {
+                FreezablePlayer whoFroze = staffPlayer.getWhoFroze();
+                whoFroze.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg",
+                        "{player}", player.getName()));
+                staffPlayer.unfreeze();
+                List<String> disconnectCmds = StaffModeX.getInstance().getCfg().getTextList(
+                        "freeze.commands.disconnect",
+                        "{player}", player.getName(), "{staff}", whoFroze.getName());
+                if (disconnectCmds != null && !disconnectCmds.isEmpty()) {
+                    Player whoFrozePlayer = whoFroze.getPlayer();
+                    Server server = StaffModeX.getInstance().getServer();
+                    if (whoFrozePlayer != null) {
+                        for (String cmd : disconnectCmds) {
+                            if (cmd != null && !cmd.isEmpty()) {
+                                server.dispatchCommand(whoFrozePlayer, cmd);
+                            }
                         }
                     }
                 }
             }
+            StaffModeX.getInstance().getStaffPlayerManager().removeStaffPlayer(player.getUniqueId());
         }
 
         StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
-        StaffModeX.getInstance().getStaffPlayerManager().removeStaffPlayer(player.getUniqueId());
 
         Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(),
                 () -> StaffModeX.getInstance().getRedisManager().decrementOnlineStatus(player.getName()));

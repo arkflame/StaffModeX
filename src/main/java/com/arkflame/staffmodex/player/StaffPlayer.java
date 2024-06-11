@@ -197,7 +197,8 @@ public class StaffPlayer extends UUIDPlayer {
     }
 
     public boolean isStaffChatReceiver() {
-        return getPlayer().hasPermission("staffmodex.staffchat");
+        Player player = getPlayer();
+        return player != null ? player.hasPermission("staffmodex.staffchat") : false;
     }
 
     public void sendStaffChat(String msg) {
@@ -218,7 +219,8 @@ public class StaffPlayer extends UUIDPlayer {
     }
 
     public boolean hasPermission(String permission) {
-        return getPlayer().hasPermission(permission);
+        Player player = getPlayer();
+        return player != null ? player.hasPermission(permission) : false;
     }
 
     public void hidePlayer(boolean force, Player player) {
