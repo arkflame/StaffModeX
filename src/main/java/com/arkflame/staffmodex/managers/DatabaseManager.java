@@ -63,7 +63,7 @@ public class DatabaseManager {
         // Create the 'ips' table if it doesn't exist
         String createIpsQuery = "CREATE TABLE IF NOT EXISTS staffmodex_ips (" +
                 "id VARCHAR(36) PRIMARY KEY," +
-                "ip VARCHAR(45) NOT NULL)";
+                "ip VARCHAR(45))";
 
         try (PreparedStatement stmt = conn.prepareStatement(createInfractionsTableQuery)) {
             stmt.executeUpdate();
@@ -152,7 +152,7 @@ public class DatabaseManager {
     }
 
     public void saveIP(UUID uuid, String ip) {
-        String query = "INSERT INTO staffmodex_ips (id, ip) VALUES (?, ?)";
+        String query = "INSERT INTO staffmodex_ips (id, ip) VALUES (?, ?) ON DUPLICATE KEY UPDATE";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             // Debug: Check if the database connection is successful
