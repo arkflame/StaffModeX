@@ -152,7 +152,7 @@ public class DatabaseManager {
     }
 
     public void saveIP(UUID uuid, String ip) {
-        String query = "INSERT INTO staffmodex_ips (id, ip) VALUES (?, ?) ON DUPLICATE KEY UPDATE";
+        String query = "INSERT INTO staffmodex_ips ON DUPLICATE KEY UPDATE (id, ip) VALUES (?, ?)";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             // Debug: Check if the database connection is successful
