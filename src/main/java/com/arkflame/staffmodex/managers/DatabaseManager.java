@@ -61,7 +61,7 @@ public class DatabaseManager {
                 "reason VARCHAR(255) NOT NULL)";
 
         // Create the 'ips' table if it doesn't exist
-        String createIpsQuery = "CREATE TABLE IF NOT EXISTS ips (" +
+        String createIpsQuery = "CREATE TABLE IF NOT EXISTS staffmodex_ips (" +
                 "id VARCHAR(36) PRIMARY KEY," +
                 "ip VARCHAR(45) NOT NULL)";
 
