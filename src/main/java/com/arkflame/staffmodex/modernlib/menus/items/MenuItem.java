@@ -85,6 +85,8 @@ public class MenuItem extends ItemStack {
     }
 
     public void update() {
-        getMenu().setItem(getSlot(), this);
+        if (menu != null) {
+            menu.setItem(getSlot(), this);
+        }
     }
 }
