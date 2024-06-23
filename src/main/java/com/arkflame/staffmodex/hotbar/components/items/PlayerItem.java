@@ -24,9 +24,4 @@ public class PlayerItem extends MenuItem {
                         "{ip}", miner.getAddress().getAddress().getHostAddress() + ":" + miner.getAddress().getPort(),
                         "{uuid}", miner.getUniqueId().toString()));
     }
-
-    @Override
-    public void onClick() {
-        // Must be overridden
-    }
 }

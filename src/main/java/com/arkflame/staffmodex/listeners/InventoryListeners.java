@@ -20,9 +20,6 @@ public class InventoryListeners implements Listener {
         HumanEntity human = event.getWhoClicked();
         if (human instanceof Player) {
             Player player = (Player) human;
-            if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
-                event.setCancelled(true);
-            }
             if (event.getClickedInventory() != player.getInventory()) {
                 return;
             }

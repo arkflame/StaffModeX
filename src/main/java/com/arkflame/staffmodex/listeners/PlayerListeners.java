@@ -338,7 +338,10 @@ public class PlayerListeners implements Listener {
             int slot = inventory.getHeldItemSlot();
             HotbarItem hotbarItem = hotbar.getItem(slot);
             if (hotbarItem != null && !(hotbarItem instanceof KnockbackHotbarItem)) {
-                hotbarItem.onInteract(player, event.getRightClicked());
+                if (isCooldownOver(player.getUniqueId())) {
+                    hotbarItem.onInteract(player);
+                    hotbarItem.onInteract(player, event.getRightClicked());
+                }
                 event.setCancelled(true);
             }
         }
