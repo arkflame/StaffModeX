@@ -62,4 +62,4 @@ Welcome to StaffModeX, the ultimate staff management plugin for Minecraft server
 ### Conclusion:
 With StaffModeX, you'll have all the tools you need to effectively manage your Minecraft server staff and ensure a smooth and enjoyable experience for players. Stay tuned for updates and enhancements as we continue to develop and refine StaffModeX to meet the evolving needs of server administrators.
 
-For more information and updates, visit our [official website](https://staffmodex.com) and join our community forums. We look forward to serving you with the best staff management solution for Minecraft servers!
+For more information and updates, visit our [official website](https://builtbybit.com/resources/staffmodex.42976/) and join our community forums. We look forward to serving you with the best staff management solution for Minecraft servers!
