@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class StaffModeManager {
-    private final Collection<Player> staffPlayers = new HashSet<>();
+    private Collection<Player> staffPlayers = new HashSet<>();
 
     public void toggleStaff(Player player) {
         if (isStaff(player)) {
@@ -88,7 +88,8 @@ public class StaffModeManager {
         /* Save this location */
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         if (staffPlayer != null) {
-            staffPlayer.setOldLocation(player.getLocation());
+            staffPlayer.setRestoreLocation(player.getLocation());
+            staffPlayer.setRestoreGameMode(player.getGameMode());
             if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
                     StaffModeX.getInstance().getConfig().getBoolean("vanish.on_staff_mode")) {
                 staffPlayer.makeInvisible();
@@ -103,6 +104,9 @@ public class StaffModeManager {
         StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
         Players.clearInventory(player);
         Players.heal(player);
+        if (StaffModeX.getInstance().getConfig().getBoolean("gamemode.enabled")) {
+            Players.setGameMode(player, StaffModeX.getInstance().getConfig().getString("gamemode.mode"));
+        }
         hotbarManager.setHotbar(player, new StaffHotbar(staffPlayer));
         Players.setFlying(player, true);
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
@@ -140,7 +144,12 @@ public class StaffModeManager {
         if (staffPlayer != null) {
             // Restore location
             if (StaffModeX.getInstance().getConfig().getBoolean("staffmode.restore_location")) {
-                staffPlayer.restoreOldLocation();
+                staffPlayer.restoreLocation();
+            }
+
+            // Restore gamemode
+            if (StaffModeX.getInstance().getConfig().getBoolean("gamemode.enabled")) {
+                staffPlayer.restoreGameMode();
             }
 
             // Make visible

@@ -6,6 +6,7 @@ import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import com.arkflame.staffmodex.modernlib.utils.Sounds;
 
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public class RandomTeleportHotbarItem extends HotbarItem {
 
     @Override
     public void onInteract(Player player) {
-        List<Player> otherPlayers = player.getWorld().getPlayers().stream()
-                .filter(p -> !p.equals(player))
+        Server server = player.getServer();
+        List<Player> otherPlayers = server.getOnlinePlayers().stream()
+                .filter(p -> !p.equals(player) && p.isOnline())
                 .collect(Collectors.toList());
         if (otherPlayers.isEmpty()) {
             player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.random_teleport.no_players")));

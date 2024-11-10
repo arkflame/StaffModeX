@@ -8,8 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ChatColors {
-    public static final char COLOR_CHAR = '\u00A7';
-    public static final Pattern HEX_PATTERN = Pattern.compile("#([A-Fa-f0-9]{6})");
+    public static char COLOR_CHAR = '\u00A7';
+    public static Pattern HEX_PATTERN = Pattern.compile("#([A-Fa-f0-9]{6})");
 
     public static String color(String text) {
         if (text == null) {

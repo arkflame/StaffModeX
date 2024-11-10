@@ -9,7 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.arkflame.staffmodex.StaffModeX;
 
 public class InfractionList {
-    private final List<Infraction> infractions = new ArrayList<>();
+    private List<Infraction> infractions = new ArrayList<>();
 
     public List<Infraction> getInfractions() {
         return infractions;

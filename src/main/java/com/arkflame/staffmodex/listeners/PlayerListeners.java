@@ -25,6 +25,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,7 +42,7 @@ import com.arkflame.staffmodex.utils.Inventories;
 
 public class PlayerListeners implements Listener {
     // Map to store the UUID and the timestamp of the last execution
-    private final Map<UUID, Long> cooldowns = new HashMap<>();
+    private Map<UUID, Long> cooldowns = new HashMap<>();
 
     /**
      * Checks if time has passed since the last execution for the given UUID.
@@ -66,7 +67,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
 
         if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
@@ -95,7 +96,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onAsyncPlayerChat(final AsyncPlayerChatEvent event) {
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
 
@@ -142,7 +143,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerJoin(final PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getOrCreateStaffPlayer(player);
@@ -181,7 +182,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerQuit(final PlayerQuitEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getStaffPlayer(player);
@@ -216,17 +217,17 @@ public class PlayerListeners implements Listener {
                     }
                 }
             }
-            StaffModeX.getInstance().getStaffPlayerManager().removeStaffPlayer(player.getUniqueId());
         }
 
         StaffModeX.getInstance().getStaffModeManager().removeStaff(player);
+        StaffModeX.getInstance().getStaffPlayerManager().removeStaffPlayer(player.getUniqueId());
 
         Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(),
                 () -> StaffModeX.getInstance().getRedisManager().decrementOnlineStatus(player.getName()));
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerDropItem(final PlayerDropItemEvent event) {
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         if (StaffModeX.getInstance().getHotbarManager().getHotbar(player) != null) {
             event.setCancelled(true);
@@ -246,9 +247,9 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerPickupItem(final PlayerPickupItemEvent event) {
+    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
-        if (StaffModeX.getInstance().getHotbarManager().getHotbar(player) != null) {
+        if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
             event.setCancelled(true);
         }
 
@@ -265,7 +266,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerInteract(final PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
         boolean leftClick = action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK;
         boolean rightClick = action == Action.RIGHT_CLICK_AIR
@@ -313,7 +314,10 @@ public class PlayerListeners implements Listener {
                         if (block.getState() instanceof InventoryHolder) {
                             InventoryHolder holder = (InventoryHolder) block.getState();
                             player.closeInventory();
-                            player.openInventory(Inventories.copyInventory(holder.getInventory()));
+                            Inventory copy = Inventories.copyInventory(holder.getInventory());
+                            if (copy != null) {
+                                player.openInventory(copy);
+                            }
                         }
                     }
                 }
@@ -330,7 +334,7 @@ public class PlayerListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerInteractEntity(final PlayerInteractEntityEvent event) {
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
         if (hotbar != null) {

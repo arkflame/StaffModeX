@@ -3,6 +3,7 @@ package com.arkflame.staffmodex.menus.items;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,9 +16,9 @@ import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 
 public class PlayerInventoryItem extends MenuItem {
-    private final Player player;
-    private final Player target;
-    private final Menu examinePlayerMenu;
+    private Player player;
+    private Player target;
+    private Menu examinePlayerMenu;
 
     public PlayerInventoryItem(Player player, Player target, Menu examinePlayerMenu) {
         super(Material.CHEST, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.title"),
@@ -55,8 +56,9 @@ public class PlayerInventoryItem extends MenuItem {
         Collection<PotionEffect> effects = target.getActivePotionEffects();
 
         // Item that shows effect names duration and amplifier in lore
-        List<String> loreEffects = effects.isEmpty() ? Arrays.asList(StaffModeX.getInstance().getMsg().getText("menus.playerInventory.noEffects"))
-                : effects.stream().map(this::formatEffect).toList();
+        List<String> loreEffects = effects.isEmpty() 
+                ? Arrays.asList(StaffModeX.getInstance().getMsg().getText("menus.playerInventory.noEffects"))
+                : effects.stream().map(this::formatEffect).collect(Collectors.toList());
         menu.setItem(5 * 9 - 5, new MenuItem(Material.WATER_BUCKET, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.effects"), loreEffects.toArray(new String[0])));
 
         // Populate armor

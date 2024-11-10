@@ -23,7 +23,7 @@ public class BlockListeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onBlockBreak(final BlockBreakEvent event) {
+    public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
         if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
@@ -67,7 +67,7 @@ public class BlockListeners implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onBlockPlace(final BlockPlaceEvent event) {
+    public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
         if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {

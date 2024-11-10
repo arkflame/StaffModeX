@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CpsTestingManager {
-    private static final Map<Player, CpsTesting> testingPlayers = new HashMap<>();
+    private static Map<Player, CpsTesting> testingPlayers = new HashMap<>();
 
     public static void startCpsTesting(Player player) {
         testingPlayers.put(player, new CpsTesting());

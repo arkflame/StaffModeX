@@ -17,7 +17,7 @@ import redis.clients.jedis.JedisPubSub;
 
 public class RedisManager {
 
-    private final JavaPlugin plugin;
+    private JavaPlugin plugin;
     private JedisPool jedisPool;
 
     private boolean closed = true;

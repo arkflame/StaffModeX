@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Titles {
-    private static final Map<String, Class<?>> NMS_CLASS_CACHE = new HashMap<>();
-    private static final Map<Class<?>, Method> CHAT_COMPONENT_METHOD_CACHE = new HashMap<>();
-    private static final Map<Class<?>, Constructor<?>> CHAT_PACKET_CONSTRUCTOR_CACHE = new HashMap<>();
+    private static Map<String, Class<?>> NMS_CLASS_CACHE = new HashMap<>();
+    private static Map<Class<?>, Method> CHAT_COMPONENT_METHOD_CACHE = new HashMap<>();
+    private static Map<Class<?>, Constructor<?>> CHAT_PACKET_CONSTRUCTOR_CACHE = new HashMap<>();
     
     private static Class<?> getNMSClass(String name) throws ClassNotFoundException {
         Class<?> cachedClass = NMS_CLASS_CACHE.get(name);

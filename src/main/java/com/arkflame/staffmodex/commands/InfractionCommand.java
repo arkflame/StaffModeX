@@ -16,8 +16,8 @@ import com.arkflame.staffmodex.modernlib.commands.ModernCommand;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
 public abstract class InfractionCommand extends ModernCommand {
-    private final InfractionType infractionType;
-    private final Map<String, Long> cooldowns;
+    private InfractionType infractionType;
+    private Map<String, Long> cooldowns;
 
     public InfractionCommand(String name, InfractionType infractionType) {
         super(name);

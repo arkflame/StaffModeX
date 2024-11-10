@@ -14,7 +14,7 @@ public class ServerUtils {
     private static Method getServerMethod;
     private static Field tpsField;
     private static Object serverInstance;
-    private static final DecimalFormat format = new DecimalFormat("##.##");
+    private static DecimalFormat format = new DecimalFormat("##.##");
 
     static {
         initializeServerUtils();

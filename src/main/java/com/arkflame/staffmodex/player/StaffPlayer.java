@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -17,14 +18,17 @@ import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.utils.DateUtils;
 
 public class StaffPlayer extends UUIDPlayer {
-    private final InfractionList warnings;
-    private final InfractionList reports;
+    private InfractionList warnings;
+    private InfractionList reports;
 
     private StaffNotes notes;
     private WarningProcess warningProcess;
 
-    // This saves the old location of the staff
-    private Location oldLocation = null;
+    // This saves the old location
+    private Location restoreLocation = null;
+
+    // This saves the old gamemode
+    private GameMode restoreGameMode = null;
 
     private StaffPlayerLoader staffPlayerLoader;
     private VanishPlayer vanishPlayer;
@@ -58,20 +62,35 @@ public class StaffPlayer extends UUIDPlayer {
     }
 
     // Get old location of the staff
-    public Location getOldLocation() {
-        return oldLocation;
+    public Location getRestoreLocation() {
+        return restoreLocation;
     }
 
     // Set old location of the staff
-    public void setOldLocation(Location oldLocation) {
-        this.oldLocation = oldLocation;
+    public void setRestoreLocation(Location restoreLocation) {
+        this.restoreLocation = restoreLocation;
     }
 
     // Teleport the player to the old location (check not null)
-    public void restoreOldLocation() {
+    public void restoreLocation() {
         Player player = getPlayer();
-        if (oldLocation != null) {
-            player.teleport(oldLocation);
+        if (restoreLocation != null) {
+            player.teleport(restoreLocation);
+        }
+    }
+
+    public GameMode getRestoreGameMode() {
+        return restoreGameMode;
+    }
+
+    public void setRestoreGameMode(GameMode gameMode) {
+        this.restoreGameMode = gameMode;
+    }
+
+    public void restoreGameMode() {
+        Player player = getPlayer();
+        if (restoreGameMode != null) {
+            player.setGameMode(restoreGameMode);
         }
     }
 

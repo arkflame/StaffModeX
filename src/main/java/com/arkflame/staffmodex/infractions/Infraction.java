@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class Infraction {
-    private final UUID id;
+    private UUID id;
     private String timestamp;
     private String reporterName;
     private String reason;

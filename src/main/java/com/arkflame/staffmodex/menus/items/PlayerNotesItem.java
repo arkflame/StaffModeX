@@ -9,8 +9,8 @@ import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class PlayerNotesItem extends MenuItem {
-    private final Player player;
-    private final Player target;
+    private Player player;
+    private Player target;
 
     public PlayerNotesItem(Player player, Player target) {
         super(Material.PAPER, StaffModeX.getInstance().getMsg().getText("menus.playerNotes.title"), "&bNotes: &7" + StaffModeX.getInstance().getMsg().getText("menus.playerNotes.loading"));

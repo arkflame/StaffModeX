@@ -61,7 +61,7 @@ public class StaffListHotbarItem extends HotbarItem {
                     break;
                 }
                 if (playerName != null) {
-                    final int currentIndex = i++;
+                    int currentIndex = i++;
                     String serverName = StaffModeX.getInstance().getRedisManager().getConnectedServer(playerName);
                     Bukkit.getScheduler().runTask(StaffModeX.getInstance(), () -> {
                         ConfigWrapper msg = StaffModeX.getInstance().getMsg();

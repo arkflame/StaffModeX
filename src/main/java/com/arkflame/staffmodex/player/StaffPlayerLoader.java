@@ -8,9 +8,9 @@ import com.arkflame.staffmodex.managers.DatabaseManager;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class StaffPlayerLoader {
-    private final StaffPlayer staffPlayer;
-    private final ConfigWrapper infractionsConfig;
-    private final ConfigWrapper ipsConfig;
+    private StaffPlayer staffPlayer;
+    private ConfigWrapper infractionsConfig;
+    private ConfigWrapper ipsConfig;
 
     public StaffPlayerLoader(StaffPlayer staffPlayer, ConfigWrapper infractionsConfig, ConfigWrapper ipsConfig) {
         this.staffPlayer = staffPlayer;

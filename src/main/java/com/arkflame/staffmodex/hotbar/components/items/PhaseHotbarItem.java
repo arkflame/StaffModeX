@@ -15,8 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class PhaseHotbarItem extends HotbarItem {
-    private static final int MAX_DISTANCE = 5;
-    private static final Set<Material> WALKABLE_MATERIALS = new HashSet<>();
+    private static int MAX_DISTANCE = 5;
+    private static Set<Material> WALKABLE_MATERIALS = new HashSet<>();
 
     static {
         WALKABLE_MATERIALS.add(Material.AIR);

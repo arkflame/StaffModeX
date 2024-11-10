@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class UUIDPlayer {
-    private final UUID uuid;
+    private UUID uuid;
     private String name = null;
 
     public UUIDPlayer(UUID uuid) {

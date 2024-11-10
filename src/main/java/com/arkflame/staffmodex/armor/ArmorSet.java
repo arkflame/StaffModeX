@@ -3,8 +3,8 @@ package com.arkflame.staffmodex.armor;
 import org.bukkit.Color;
 
 public class ArmorSet {
-    private final String permission;
-    private final Color color;
+    private String permission;
+    private Color color;
 
     public ArmorSet(String permission, Color color) {
         this.permission = permission;

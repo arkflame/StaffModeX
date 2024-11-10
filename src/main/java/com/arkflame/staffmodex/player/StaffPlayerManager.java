@@ -9,7 +9,7 @@ import org.bukkit.OfflinePlayer;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class StaffPlayerManager {
-    private final Map<UUID, StaffPlayer> staffPlayers = new ConcurrentHashMap<>();
+    private Map<UUID, StaffPlayer> staffPlayers = new ConcurrentHashMap<>();
 
     public StaffPlayer getStaffPlayer(UUID uuid) {
         return staffPlayers.getOrDefault(uuid, null);

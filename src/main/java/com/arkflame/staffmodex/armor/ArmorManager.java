@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ArmorManager {
-    private final Map<String, ArmorSet> armorSets;
+    private Map<String, ArmorSet> armorSets;
 
     public ArmorManager(ConfigWrapper config) {
         this.armorSets = new HashMap<>();

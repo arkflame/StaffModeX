@@ -1,5 +1,11 @@
 server_name: Server
 
+# Change gamemode when entering staffmode
+gamemode:
+  enabled: true
+  mode: SURVIVAL
+
+# Set armor for when entering staffmode
 armors:
   enabled: true
   sets:
@@ -10,6 +16,7 @@ armors:
       permission: staffmodex.armor.moderator
       color: ORANGE
 
+# Show diamond notification to staff members
 diamond-finder:
   enabled: true
   min-streak: 3

@@ -12,7 +12,7 @@ import com.arkflame.staffmodex.modernlib.commands.ModernCommand;
 import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class HelpopCommand extends ModernCommand {
-    private final Map<String, Long> cooldowns;
+    private Map<String, Long> cooldowns;
 
     public HelpopCommand() {
         super("helpop");
