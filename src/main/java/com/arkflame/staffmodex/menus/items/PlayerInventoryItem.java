@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
@@ -52,6 +53,13 @@ public class PlayerInventoryItem extends MenuItem {
                 examinePlayerMenu.openInventory(player);
             }
         });
+
+        try {
+            EquipmentSlot offHand = EquipmentSlot.valueOf("OFF_HAND");
+            menu.setItem(5 * 9 - 6, new MenuItem(player.getInventory().getItem(offHand)));
+        } catch (Exception ex) {
+            // Off-hand not available
+        }
 
         Collection<PotionEffect> effects = target.getActivePotionEffects();
 
