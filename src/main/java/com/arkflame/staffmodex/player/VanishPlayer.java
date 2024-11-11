@@ -56,7 +56,7 @@ public class VanishPlayer extends UUIDPlayer {
         if (force || !player.hasPermission("staffmodex.vanish.bypass")) {
             boolean premiumVanishHook = isPremiumVanishHook();
             if (premiumVanishHook) {
-                VanishAPI.hidePlayer(player);
+                VanishAPI.hidePlayer(toBeHidden);
             } else {
                 player.hidePlayer(toBeHidden);
             }

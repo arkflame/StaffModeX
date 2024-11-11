@@ -27,6 +27,9 @@ public class PlayersHotbarItem extends HotbarItem {
         int i = 0;
         // Add heads of players to menu
         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
+            if (i > 26) {
+                break;
+            }
             if (player != otherPlayer) {
                 menu.setItem(i++, new PlayerItem(player, otherPlayer) {
                     @Override
