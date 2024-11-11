@@ -49,6 +49,9 @@ public class StaffModePlaceholderExpansion extends PlaceholderExpansion {
                 }
                 return "0m 0s";
             }
+            case "playercount": {
+                return String.valueOf(StaffModeX.getInstance().getVisiblePlayerCount());
+            }
             default: {
                 break;
             }

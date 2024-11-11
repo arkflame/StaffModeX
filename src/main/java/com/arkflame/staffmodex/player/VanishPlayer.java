@@ -71,6 +71,7 @@ public class VanishPlayer extends UUIDPlayer {
             staffPlayer.hidePlayer(force, player);
         }
         vanished = true;
+        StaffModeX.getInstance().setVisible(player, false);
     }
 
     public void makeVisible() {
@@ -84,6 +85,7 @@ public class VanishPlayer extends UUIDPlayer {
             }
         }
         vanished = false;
+        StaffModeX.getInstance().setVisible(player, true);
     }
 
     public boolean isVanished() {

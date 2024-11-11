@@ -145,6 +145,7 @@ public class PlayerListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        StaffModeX.getInstance().setVisible(player, true);
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getOrCreateStaffPlayer(player);
 
@@ -184,6 +185,7 @@ public class PlayerListeners implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        StaffModeX.getInstance().setVisible(player, true);
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getStaffPlayer(player);
 

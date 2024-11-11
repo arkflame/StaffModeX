@@ -54,6 +54,8 @@ public class StaffModeX extends JavaPlugin {
 
     private ArmorManager armorManager;
 
+    private Collection<UUID> visiblePlayers = new HashSet<>();
+
     public ConfigWrapper getCfg() {
         return config;
     }
@@ -226,5 +228,19 @@ public class StaffModeX extends JavaPlugin {
 
     public String getServerName() {
         return StaffModeX.getInstance().getCfg().getString("server_name");
+    }
+
+    // Count of visible players
+    public int getVisiblePlayerCount() {
+        return visiblePlayers.size();
+    }
+
+    // Set player as visible or invisible
+    public void setVisible(Player player, boolean visible) {
+        if (visible) {
+            visiblePlayers.add(player.getUniqueId());
+        } else {
+            visiblePlayers.remove(player.getUniqueId());
+        }
     }
 }
