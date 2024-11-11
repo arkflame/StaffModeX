@@ -92,6 +92,9 @@ public class StaffModeX extends JavaPlugin {
     public void onEnable() {
         // Set static instance
         setInstance(this);
+        
+        // Reload config
+        reloadConfig();
 
         // Save default config
         config = new ConfigWrapper("config.yml").saveDefault().load();
