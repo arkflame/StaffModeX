@@ -31,7 +31,7 @@ public class FreezablePlayer extends UUIDPlayer {
         Player target = getPlayer();
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
         if (!player.hasPermission("staffmodex.freeze")) {
-            player.sendMessage(msg.getText("messages.freeze.no_permission"));
+            player.sendMessage(msg.getText("messages.freeze.no-permission"));
         } else if (target != null && target.hasPermission("staffmodex.freeze.bypass")) {
             player.sendMessage(msg.getText("messages.freeze.has_bypass"));
         } else if (!StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {

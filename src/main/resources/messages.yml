@@ -25,6 +25,7 @@ messages:
     message: "&aThe IP of &b{player}&a is &e{ip}"
     usage: "&cUsage: /ip <player>"
     no-ip: "&cThe player {player} has no IP associated."
+    no-permission: "&cNo permission to use this command."
 
   warning:
     receive-self: "&cYou were warned by &b{staff}&c because of &f{reason}&c."
@@ -76,7 +77,7 @@ messages:
     cannot-click-inventory: '&cYou cannot click items in the inventory.'
     cannot-use-commands: "&cYou cannot use commands while frozen!"
     not-staff: "&cYou have to be in staff mode to freeze players."
-    no_permission: "&cYou do not have permission to freeze players."
+    no-permission: "&cYou do not have permission to freeze players."
     usage: "&c/freeze <target>\n&cFreeze the target player to review him."
     player-not-online: "&cThe player '&b{player}&c' is not online."
     action_bar: "&cUnder Review &7(&e{countdown}&7)"

@@ -21,7 +21,7 @@ public class ExaminePlayerMenu extends Menu {
         super("&6Examining " + target.getName(), 3);
         InfractionItem infractionItem = new InfractionItem(player, target);
         setItem(9 + 0, new FoodItem(target));
-        setItem(9 + 1, new ConnectionItem(target));
+        setItem(9 + 1, new ConnectionItem(target, player));
         setItem(9 + 2, new GameModeItem(target));
         
         if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled") || StaffModeX.getInstance().getConfig().getBoolean("report.enabled")) {

@@ -42,4 +42,12 @@ public class Players {
     public static void setGameMode(Player player, GameMode gameMode) {
         player.setGameMode(gameMode);
     }
+
+    public static String getIP(Player target, Player player) {
+        if (player.hasPermission("staffmodex.ip")) {
+            return target.getAddress().getAddress().getHostAddress();
+        } else {
+            return "{...}";
+        }
+    }
 }

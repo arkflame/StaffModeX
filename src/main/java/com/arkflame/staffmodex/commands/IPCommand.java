@@ -17,6 +17,11 @@ public class IPCommand extends ModernCommand {
 
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
+        if (!sender.hasPermission("staffmodex.ip")) {
+            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.ip.no-permission"));
+            return;
+        }
+
         OfflinePlayer target = null;
         String targetName = args.getText(0);
 

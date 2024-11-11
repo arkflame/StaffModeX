@@ -4,10 +4,11 @@ import org.bukkit.entity.Player;
 
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
+import com.arkflame.staffmodex.modernlib.utils.Players;
 import com.arkflame.staffmodex.StaffModeX;
 
 public class PlayerItem extends MenuItem {
-    public PlayerItem(Player miner) {
+    public PlayerItem(Player player, Player miner) {
         super(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
                 StaffModeX.getInstance().getMsg().getText("hotbar.playerItem.title", "{playerName}", miner.getName()),
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.playerItem.description",
@@ -21,7 +22,7 @@ public class PlayerItem extends MenuItem {
                         "{expToLevel}", String.valueOf(miner.getExpToLevel()),
                         "{level}", String.valueOf(miner.getLevel()),
                         "{gameMode}", miner.getGameMode().name(),
-                        "{ip}", miner.getAddress().getAddress().getHostAddress() + ":" + miner.getAddress().getPort(),
+                        "{ip}", Players.getIP(miner, player),
                         "{uuid}", miner.getUniqueId().toString()));
     }
 }
