@@ -71,8 +71,10 @@ public class BlockListeners implements Listener {
         Player player = event.getPlayer();
 
         if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
-            event.setCancelled(true);
-            return;
+            if (!player.hasPermission("staffmodex.build")) {
+                event.setCancelled(true);
+                return;
+            }
         }
 
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
