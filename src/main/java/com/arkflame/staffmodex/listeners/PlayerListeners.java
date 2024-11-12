@@ -290,7 +290,7 @@ public class PlayerListeners implements Listener {
                         hotbarItem.onInteract(player);
                         hotbarItem.onInteract(player, event.getClickedBlock());
 
-                        Material clickedMaterial = hotbarItem.getType();
+                        Material clickedMaterial = hotbarItem.getItem().getType();
                         if (clickedMaterial.isSolid()) {
                             player.updateInventory();
                         }

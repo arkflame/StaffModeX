@@ -33,18 +33,23 @@ public class PlayerInventoryItem extends MenuItem {
     public void onClick() {
         Menu menu = new Menu(target.getName() + "'s inventory", 5);
         // Iterate target players inventory and add it to the menu
-        for (int i = 0; i < target.getInventory().getSize(); i++) {
+        for (int i = 0; i < 36; i++) {
             ItemStack stack = target.getInventory().getItem(i);
-            if (stack != null) {
+            if (stack != null && stack.getType() != Material.AIR) {
                 MenuItem item = new MenuItem(stack);
-                if (i < 9) {
-                    menu.setItem((3 * 9) + i, item);
-                } else {
-                    menu.setItem(i - 9, item);
-                }
+                menu.setItem(i, item);
             }
         }
-        menu.openInventory(player);
+
+        try {
+            EquipmentSlot offHand = EquipmentSlot.valueOf("OFF_HAND");
+            ItemStack offHandItem = player.getInventory().getItem(offHand);
+            if (offHandItem != null && offHandItem.getType() != Material.AIR) {
+                menu.setItem(5 * 9 - 6, new MenuItem(offHandItem));
+            }
+        } catch (Exception ex) {
+            // Off-hand not available
+        }
 
         // Item to return to the menu
         menu.setItem(4 * 9, new MenuItem(Material.ARROW, StaffModeX.getInstance().getMsg().getText("menus.playerInventory.back")) {
@@ -53,13 +58,8 @@ public class PlayerInventoryItem extends MenuItem {
                 examinePlayerMenu.openInventory(player);
             }
         });
-
-        try {
-            EquipmentSlot offHand = EquipmentSlot.valueOf("OFF_HAND");
-            menu.setItem(5 * 9 - 6, new MenuItem(player.getInventory().getItem(offHand)));
-        } catch (Exception ex) {
-            // Off-hand not available
-        }
+        
+        menu.openInventory(player);
 
         Collection<PotionEffect> effects = target.getActivePotionEffects();
 

@@ -40,12 +40,12 @@ public class VanishHotbarItem extends HotbarItem {
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         staffPlayer.toggleVanish();
         if (staffPlayer.isVanished()) {
-            setType(getEnabledMaterial());
-            setDurability(getEnabledDamage());
+            getItem().setType(getEnabledMaterial());
+            getItem().setDurability(getEnabledDamage());
         } else {
-            setType(getDisabledMaterial());
-            setDurability(getDisabledDamage());
+            getItem().setType(getDisabledMaterial());
+            getItem().setDurability(getDisabledDamage());
         }
-        player.getInventory().setItem(2, this);
+        player.getInventory().setItem(2, getItem());
     }
 }

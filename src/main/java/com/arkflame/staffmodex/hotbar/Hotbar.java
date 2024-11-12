@@ -24,7 +24,7 @@ public class Hotbar {
 
         for (Map.Entry<Integer, HotbarItem> entry : items.entrySet()) {
             HotbarItem item = entry.getValue();
-            inventory.setItem(entry.getKey(), item);
+            inventory.setItem(entry.getKey(), item.getItem());
         }
     }
 

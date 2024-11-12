@@ -14,7 +14,7 @@ public class KnockbackHotbarItem extends HotbarItem {
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.knockback.lore"));
 
         try {
-            addEnchantment(Enchantment.KNOCKBACK, 1);
+            getItem().addEnchantment(Enchantment.KNOCKBACK, 1);
         } catch (Exception ex) {
             // Catch for invalid enchantment in new versions
         }

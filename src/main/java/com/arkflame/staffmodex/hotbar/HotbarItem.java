@@ -11,7 +11,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 
-public class HotbarItem extends ItemStack {
+public class HotbarItem {
+    private ItemStack item = null;
+
+    public ItemStack getItem() {
+        return item;
+    }
+
     public void onInteract(Player player) {
         // Override to implement logic
     }
@@ -25,13 +31,13 @@ public class HotbarItem extends ItemStack {
     }
 
     public HotbarItem(Material material, String name, int amount, short damage, List<String> lore) {
-        super(material, amount, damage);
+        item = new ItemStack(material, amount, damage);
         
-        ItemMeta meta = getItemMeta();
+        ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.setDisplayName(ChatColors.color(name));
             meta.setLore(ChatColors.color(lore));
-            setItemMeta(meta);
+            item.setItemMeta(meta);
         }
     }
 }
