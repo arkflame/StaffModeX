@@ -23,26 +23,28 @@ public class InfractionsCommand extends ModernCommand {
                 sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
                 return;
             }
-    
+
             Player player = (Player) sender;
             OfflinePlayer target = null;
-    
+
             String targetName = args.getText(0);
             if (targetName != null && !targetName.isEmpty()) {
                 target = StaffModeX.getInstance().getServer().getOfflinePlayer(targetName);
             }
-    
+
             if (target == null) {
                 sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.usage"));
                 return;
             }
-    
+
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
-            
+
             if (!target.isOnline()) {
                 staffPlayer.load();
             }
-            new InfractionsMenu(null, player, staffPlayer).openInventory(player);
+            Bukkit.getScheduler().runTask(StaffModeX.getInstance(), () -> {
+                new InfractionsMenu(null, player, staffPlayer).openInventory(player);
+            });
         });
     }
 }
