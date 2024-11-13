@@ -79,6 +79,12 @@ examine:
   enabled: true
 
 items:
+  fill:
+    name: " "
+    material:
+    - STAINED_GLASS_PANE
+    - GRAY_STAINED_GLASS_PANE
+    damage: 7
   hotbar:
     cps:
       slot: 6

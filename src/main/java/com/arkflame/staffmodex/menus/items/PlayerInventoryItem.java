@@ -80,7 +80,7 @@ public class PlayerInventoryItem extends MenuItem {
             }
         }
 
-        menu.setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
+        menu.setBackground(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.fill.material")), (short) StaffModeX.getInstance().getCfg().getInt("items.fill.damage"), StaffModeX.getInstance().getCfg().getText("items.fill.name"));
     }
 
     private String toRomanNumber(int amplifier) {

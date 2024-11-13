@@ -6,6 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import com.arkflame.staffmodex.StaffModeX;
@@ -54,20 +55,21 @@ public class ArmorManager {
         }
 
         Color color = getColorForPlayer(player);
-        if (color == null) return; // No matching armor found
-    
+        if (color == null)
+            return; // No matching armor found
+
         ItemStack helmet = createColoredArmor(Material.LEATHER_HELMET, color);
         ItemStack chestplate = createColoredArmor(Material.LEATHER_CHESTPLATE, color);
         ItemStack leggings = createColoredArmor(Material.LEATHER_LEGGINGS, color);
         ItemStack boots = createColoredArmor(Material.LEATHER_BOOTS, color);
-    
+
         PlayerInventory inventory = player.getInventory();
         inventory.setHelmet(helmet);
         inventory.setChestplate(chestplate);
         inventory.setLeggings(leggings);
         inventory.setBoots(boots);
     }
-    
+
     private Color getColorForPlayer(Player player) {
         for (ArmorSet armorSet : armorSets.values()) {
             if (player.hasPermission(armorSet.getPermission())) {
@@ -76,15 +78,18 @@ public class ArmorManager {
         }
         return null;
     }
-    
+
     private ItemStack createColoredArmor(Material material, Color color) {
         ItemStack armorPiece = new ItemStack(material);
-        LeatherArmorMeta meta = (LeatherArmorMeta) armorPiece.getItemMeta();
-        if (color != null) {
-            meta.setColor(color);
+        ItemMeta originalMeta = armorPiece.getItemMeta();
+        if (originalMeta instanceof LeatherArmorMeta) {
+            LeatherArmorMeta meta = (LeatherArmorMeta) originalMeta;
+            if (color != null) {
+                meta.setColor(color);
+            }
+            armorPiece.setItemMeta(meta);
         }
-        armorPiece.setItemMeta(meta);
         return armorPiece;
     }
-    
+
 }

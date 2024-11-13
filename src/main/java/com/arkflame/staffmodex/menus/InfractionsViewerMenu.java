@@ -19,7 +19,7 @@ public class InfractionsViewerMenu extends Menu {
 
         addInfractionsItems(type, player, staffPlayer, oldMenu);
 
-        setBackground(Materials.get("STAINED_GLASS_PANE", "GRAY_STAINED_GLASS_PANE"), (short) 7, " ");
+        setBackground(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.fill.material")), (short) StaffModeX.getInstance().getCfg().getInt("items.fill.damage"), StaffModeX.getInstance().getCfg().getText("items.fill.name"));
     }
 
     private void addInfractionsItems(InfractionType type, Player player, StaffPlayer staffPlayer, Menu oldMenu) {
