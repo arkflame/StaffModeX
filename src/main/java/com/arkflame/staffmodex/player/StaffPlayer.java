@@ -30,6 +30,9 @@ public class StaffPlayer extends UUIDPlayer {
     // This saves the old gamemode
     private GameMode restoreGameMode = null;
 
+    // This saves the old staff chat
+    private boolean restoreStaffChat = false;
+
     private StaffPlayerLoader staffPlayerLoader;
     private VanishPlayer vanishPlayer;
     private FreezablePlayer freezablePlayer;
@@ -91,6 +94,16 @@ public class StaffPlayer extends UUIDPlayer {
         Player player = getPlayer();
         if (restoreGameMode != null) {
             player.setGameMode(restoreGameMode);
+        }
+    }
+
+    public void setRestoreStaffChat(boolean staffChat) {
+        this.restoreStaffChat = staffChat;
+    }
+
+    public void restoreStaffChat() {
+        if (staffChat) {
+            setStaffChat(restoreStaffChat);
         }
     }
 
