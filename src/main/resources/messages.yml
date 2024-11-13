@@ -164,6 +164,7 @@ hotbar:
     here: "&a"
     description:
       - "&bServer: &7{here}{serverName}"
+  # Supports PlaceholderAPI
   playerItem:
     title: "&b{playerName}"
     description:
