@@ -66,6 +66,7 @@ messages:
 
   staffchat:
     no-permission: "&cYou do not have permission to use the staff chat."
+    # Supports PlaceholderAPI
     chat: "&8[&aStaffChat&8] &8[&b{server}&8] &e{player}&8: &f{message}"
     enabled: "&aStaff chat enabled"
     disabled: "&cStaff chat disabled"

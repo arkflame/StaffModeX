@@ -17,6 +17,8 @@ import com.arkflame.staffmodex.menus.items.PlayerNotesItem;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.utils.DateUtils;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+
 public class StaffPlayer extends UUIDPlayer {
     private InfractionList warnings;
     private InfractionList reports;
@@ -235,6 +237,7 @@ public class StaffPlayer extends UUIDPlayer {
 
     public void sendStaffChat(String msg) {
         String message = StaffModeX.getInstance().getMsg().getText("messages.staffchat.chat", "{player}", getPlayer().getName(), "{message}", msg, "{server}", StaffModeX.getInstance().getServerName());
+        message = PlaceholderAPI.setPlaceholders(getPlayer(), message);
         for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
             if (staffPlayer.isStaffChatReceiver()) {
                 staffPlayer.sendMessage(message);
