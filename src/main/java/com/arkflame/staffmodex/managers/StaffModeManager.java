@@ -4,7 +4,6 @@ import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarManager;
 import com.arkflame.staffmodex.hotbar.components.StaffHotbar;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
-import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Players;
 import com.arkflame.staffmodex.modernlib.utils.PotionEffects;
 import com.arkflame.staffmodex.player.StaffPlayer;
@@ -110,8 +109,7 @@ public class StaffModeManager {
         }
         hotbarManager.setHotbar(player, new StaffHotbar(staffPlayer));
         Players.setFlying(player, true);
-        ConfigWrapper msg = StaffModeX.getInstance().getMsg();
-        player.sendMessage(ChatColors.color(msg.getText("staffmode.enter")));
+        player.sendMessage(StaffModeX.getInstance().getMessage("staffmode.enter"));
         staffPlayers.add(player);
 
         // Potion Effects
@@ -134,8 +132,7 @@ public class StaffModeManager {
         StaffModeX.getInstance().getInventoryManager().deletePlayerInventory(player);
         // Reset fall distance
         player.setFallDistance(0F);
-        ConfigWrapper msg = StaffModeX.getInstance().getMsg();
-        player.sendMessage(ChatColors.color(msg.getText("staffmode.leave")));
+        player.sendMessage(StaffModeX.getInstance().getMessage("staffmode.leave"));
         staffPlayers.remove(player);
 
         // Remove potion effects
