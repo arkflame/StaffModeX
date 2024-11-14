@@ -20,7 +20,7 @@ public class ExaminePlayerMenu extends Menu {
     public ExaminePlayerMenu(Player player, Player target) {
         super("&6Examining " + target.getName(), 3);
         InfractionItem infractionItem = new InfractionItem(player, target);
-        setItem(9 + 0, new FoodItem(target));
+        setItem(9 + 0, new FoodItem(target, player));
         setItem(9 + 1, new ConnectionItem(target, player));
         setItem(9 + 2, new GameModeItem(target));
         
@@ -28,7 +28,7 @@ public class ExaminePlayerMenu extends Menu {
             setItem(9 + 3, infractionItem);
         }
 
-        setItem(9 + 4, new LocationItem(target.getLocation()));
+        setItem(9 + 4, new LocationItem(target.getLocation(), target, player));
         setItem(9 + 5, new PlayerNotesItem(player, target));
         
         if (StaffModeX.getInstance().getCfg().getBoolean("freeze.enabled")) {

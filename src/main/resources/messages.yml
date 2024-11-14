@@ -197,7 +197,14 @@ menus:
     emptySlot: "&7Empty Slot"
   location:
     title: "&bLocation"
-    coordinates: "&bLocation: &7{world}, {x}, {y}, {z}"
+    lore:
+      - "&bWorld: &7{world}"
+      - "&bX: &7{x}"
+      - "&bY: &7{y}"
+      - "&bZ: &7{z}"
+      - "&aClick to teleport"
+    teleported: "&aTeleported to player."
+    no-permission-teleport: "&cYou do not have permission to teleport."
   infraction:
     title: "&bInfractions"
     loading: "&7Loading..."
