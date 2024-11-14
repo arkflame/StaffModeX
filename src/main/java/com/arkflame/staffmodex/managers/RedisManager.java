@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
-import com.arkflame.staffmodex.player.StaffPlayer;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
