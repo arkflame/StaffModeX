@@ -125,40 +125,40 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new MenuListener(), this);
 
         // Register Commands
-        if (StaffModeX.getInstance().getConfig().getBoolean("examine.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("examine.enabled")) {
             registerCommand(new ExamineCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("freeze.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("freeze.enabled")) {
             registerCommand(new FreezeCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("helpop.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("helpop.enabled")) {
             registerCommand(new HelpopCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("report.enabled") ||
-                StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("report.enabled") ||
+                StaffModeX.getInstance().getCfg().getBoolean("warning.enabled")) {
             registerCommand(new InfractionsCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("ip.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("ip.enabled")) {
             registerCommand(new IPCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("report.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("report.enabled")) {
             registerCommand(new ReportCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("staffchat.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("staffchat.enabled")) {
             registerCommand(new StaffChatCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("staffmode.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("staffmode.enabled")) {
             registerCommand(new StaffModeCommand());
         }
         registerCommand(new StaffModeXCommand());
-        if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("warning.enabled")) {
             registerCommand(new WarnCommand());
         }
-        if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("vanish.enabled")) {
             registerCommand(new VanishCommand());
         }
 
-        if (StaffModeX.getInstance().getConfig().getBoolean("action_bar.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("action_bar.enabled")) {
             // Register tasks
             new StaffActionBarTask().register();
         }

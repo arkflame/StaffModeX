@@ -11,20 +11,20 @@ import org.bukkit.entity.Player;
 public class VanishHotbarItem extends HotbarItem {
     private static Material getEnabledMaterial() {
         return Materials
-                .get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.vanish.turned_on.material"));
+                .get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.vanish.turned_on.material"));
     }
 
     private static Material getDisabledMaterial() {
         return Materials
-                .get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.vanish.turned_off.material"));
+                .get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.vanish.turned_off.material"));
     }
 
     private static short getEnabledDamage() {
-        return (short) StaffModeX.getInstance().getConfig().getInt("items.hotbar.vanish.turned_on.damage");
+        return (short) StaffModeX.getInstance().getCfg().getInt("items.hotbar.vanish.turned_on.damage");
     }
 
     private static short getDisabledDamage() {
-        return (short) StaffModeX.getInstance().getConfig().getInt("items.hotbar.vanish.turned_off.damage");
+        return (short) StaffModeX.getInstance().getCfg().getInt("items.hotbar.vanish.turned_off.damage");
     }
 
     public VanishHotbarItem(StaffPlayer staffPlayer) {

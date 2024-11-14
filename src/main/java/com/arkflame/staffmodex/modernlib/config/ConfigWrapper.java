@@ -212,4 +212,8 @@ public class ConfigWrapper {
     public ConfigurationSection getConfigurationSection(String path) {
         return config.getConfigurationSection(path);
     }
+
+    public long getLong(String path, long def) {
+        return config.getLong(path, def);
+    }
 }

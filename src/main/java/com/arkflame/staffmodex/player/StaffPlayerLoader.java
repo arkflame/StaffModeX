@@ -52,7 +52,7 @@ public class StaffPlayerLoader {
     }
 
     public void saveIP() {
-        if (!StaffModeX.getInstance().getConfig().getBoolean("ip.enabled")) {
+        if (!StaffModeX.getInstance().getCfg().getBoolean("ip.enabled")) {
             return;
         }
 
@@ -70,7 +70,7 @@ public class StaffPlayerLoader {
     }
 
     public void loadIP() {
-        if (!StaffModeX.getInstance().getConfig().getBoolean("ip.enabled")) {
+        if (!StaffModeX.getInstance().getCfg().getBoolean("ip.enabled")) {
             return;
         }
 

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class PlayersHotbarItem extends HotbarItem {
     public PlayersHotbarItem() {
-        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.players.material")),
+        super(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.players.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.players.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.players.lore"));

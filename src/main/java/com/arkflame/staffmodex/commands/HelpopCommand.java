@@ -52,7 +52,7 @@ public class HelpopCommand extends ModernCommand {
         }
 
         // Update cooldown based on config
-        long cooldown = StaffModeX.getInstance().getConfig().getLong("helpop.cooldown", 60) * 1000;
+        long cooldown = StaffModeX.getInstance().getCfg().getLong("helpop.cooldown", 60) * 1000;
                 cooldowns.put(player.getName(), currentTime + cooldown);
 
         String playerName = player.getName();

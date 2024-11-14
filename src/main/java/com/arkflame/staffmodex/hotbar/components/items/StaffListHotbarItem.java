@@ -16,7 +16,7 @@ import java.util.HashSet;
 
 public class StaffListHotbarItem extends HotbarItem {
     public StaffListHotbarItem() {
-        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.stafflist.material")),
+        super(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.stafflist.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.stafflist.lore"));

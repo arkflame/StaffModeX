@@ -24,18 +24,18 @@ public class ExaminePlayerMenu extends Menu {
         setItem(9 + 1, new ConnectionItem(target, player));
         setItem(9 + 2, new GameModeItem(target));
         
-        if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled") || StaffModeX.getInstance().getConfig().getBoolean("report.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("warning.enabled") || StaffModeX.getInstance().getCfg().getBoolean("report.enabled")) {
             setItem(9 + 3, infractionItem);
         }
 
         setItem(9 + 4, new LocationItem(target.getLocation()));
         setItem(9 + 5, new PlayerNotesItem(player, target));
         
-        if (StaffModeX.getInstance().getConfig().getBoolean("freeze.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("freeze.enabled")) {
             setItem(9 + 6, new FreezePlayerItem(player, target));
         }
         
-        if (StaffModeX.getInstance().getConfig().getBoolean("warning.enabled")) {
+        if (StaffModeX.getInstance().getCfg().getBoolean("warning.enabled")) {
             setItem(9 + 7, new WarnPlayerItem(infractionItem, player, target));
         }
         

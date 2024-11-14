@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class CpsHotbarItem extends HotbarItem {
     public CpsHotbarItem() {
-        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.cps.material")),
+        super(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.cps.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.cps.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.cps.lore"));

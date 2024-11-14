@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class ExamineHotbarItem extends HotbarItem {
     public ExamineHotbarItem() {
-        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.examine.material")),
+        super(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.examine.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.examine.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.examine.lore"));

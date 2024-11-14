@@ -108,7 +108,7 @@ public class PhaseHotbarItem extends HotbarItem {
     }
 
     public PhaseHotbarItem() {
-        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.phase.material")),
+        super(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.phase.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.phase.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.phase.lore"));

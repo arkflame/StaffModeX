@@ -91,13 +91,13 @@ public class StaffModeManager {
             staffPlayer.setRestoreLocation(player.getLocation());
             staffPlayer.setRestoreGameMode(player.getGameMode());
             staffPlayer.setRestoreStaffChat(staffPlayer.isStaffChat());
-            if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
-                    StaffModeX.getInstance().getConfig().getBoolean("vanish.on_staff_mode")) {
+            if (StaffModeX.getInstance().getCfg().getBoolean("vanish.enabled") &&
+                    StaffModeX.getInstance().getCfg().getBoolean("vanish.on_staff_mode")) {
                 staffPlayer.makeInvisible();
             }
 
-            if (StaffModeX.getInstance().getConfig().getBoolean("staffchat.enabled") &&
-                    StaffModeX.getInstance().getConfig().getBoolean("staffchat.on_staff_mode")) {
+            if (StaffModeX.getInstance().getCfg().getBoolean("staffchat.enabled") &&
+                    StaffModeX.getInstance().getCfg().getBoolean("staffchat.on_staff_mode")) {
                 staffPlayer.setStaffChat(true);
             }
         }
@@ -105,8 +105,8 @@ public class StaffModeManager {
         StaffModeX.getInstance().getInventoryManager().savePlayerInventory(player);
         Players.clearInventory(player);
         Players.heal(player);
-        if (StaffModeX.getInstance().getConfig().getBoolean("gamemode.enabled")) {
-            Players.setGameMode(player, StaffModeX.getInstance().getConfig().getString("gamemode.mode"));
+        if (StaffModeX.getInstance().getCfg().getBoolean("gamemode.enabled")) {
+            Players.setGameMode(player, StaffModeX.getInstance().getCfg().getString("gamemode.mode"));
         }
         hotbarManager.setHotbar(player, new StaffHotbar(staffPlayer));
         Players.setFlying(player, true);
@@ -144,12 +144,12 @@ public class StaffModeManager {
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
         if (staffPlayer != null) {
             // Restore location
-            if (StaffModeX.getInstance().getConfig().getBoolean("staffmode.restore_location")) {
+            if (StaffModeX.getInstance().getCfg().getBoolean("staffmode.restore_location")) {
                 staffPlayer.restoreLocation();
             }
 
             // Restore gamemode
-            if (StaffModeX.getInstance().getConfig().getBoolean("gamemode.enabled")) {
+            if (StaffModeX.getInstance().getCfg().getBoolean("gamemode.enabled")) {
                 staffPlayer.restoreGameMode();
             }
 
@@ -157,8 +157,8 @@ public class StaffModeManager {
             staffPlayer.restoreStaffChat();
 
             // Make visible
-            if (StaffModeX.getInstance().getConfig().getBoolean("vanish.enabled") &&
-                    StaffModeX.getInstance().getConfig().getBoolean("vanish.on_staff_mode")) {
+            if (StaffModeX.getInstance().getCfg().getBoolean("vanish.enabled") &&
+                    StaffModeX.getInstance().getCfg().getBoolean("vanish.on_staff_mode")) {
                 staffPlayer.makeVisible();
             }
         }

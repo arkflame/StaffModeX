@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class FreezeHotbarItem extends HotbarItem {
     public FreezeHotbarItem() {
-        super(Materials.get(StaffModeX.getInstance().getConfig().getStringList("items.hotbar.freeze.material")),
+        super(Materials.get(StaffModeX.getInstance().getCfg().getStringList("items.hotbar.freeze.material")),
                 StaffModeX.getInstance().getMsg().getText("hotbar.freeze.name"),
                 1, (short) 0,
                 StaffModeX.getInstance().getMsg().getTextList("hotbar.freeze.lore"));

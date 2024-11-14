@@ -20,7 +20,7 @@ public class StaffActionBarTask extends ModernTask {
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
 
             if (!staffPlayer.getFrozenPlayersByMe().isEmpty()) {
-                if (StaffModeX.getInstance().getConfig().getBoolean("action_bar.on_freeze")) {
+                if (StaffModeX.getInstance().getCfg().getBoolean("action_bar.on_freeze")) {
                     for (FreezeStatus freezeStatus : staffPlayer.getFrozenPlayersByMe()) {
                         Player otherPlayer = freezeStatus.getTarget().getPlayer();
                         String msg = StaffModeX.getInstance().getMsg().getText("messages.freeze.action_bar",
@@ -33,7 +33,7 @@ public class StaffActionBarTask extends ModernTask {
                     }
                 }
             } else {
-                if (StaffModeX.getInstance().getConfig().getBoolean("action_bar.on_staff")) {
+                if (StaffModeX.getInstance().getCfg().getBoolean("action_bar.on_staff")) {
                     String vanished = staffPlayer.isVanished() ? "&a✔" : "&c✖";
                     String staffChat = staffPlayer.isStaffChat() ? "&a✔" : "&c✖";
                     String tps = ServerUtils.getTPSFormatted(0);
