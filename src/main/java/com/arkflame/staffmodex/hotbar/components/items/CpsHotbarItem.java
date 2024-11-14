@@ -56,6 +56,6 @@ public class CpsHotbarItem extends HotbarItem {
                                 .replace("{player}", testedPlayer.getName())
                                 .replace("{cps}", averageCpsString)));
             }
-        }, 200L); // 10 seconds = 200 ticks
+        }, StaffModeX.getInstance().getCfg().getInt("cps.time") * 20L); // 10 seconds = 200 ticks
     }
 }

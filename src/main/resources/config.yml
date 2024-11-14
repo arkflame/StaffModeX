@@ -1,5 +1,9 @@
 server_name: Server
 
+cps:
+  # Time in seconds to test the player CPS
+  time: 10
+
 # Change gamemode when entering staffmode
 gamemode:
   enabled: true
