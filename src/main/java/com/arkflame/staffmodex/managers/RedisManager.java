@@ -224,12 +224,7 @@ public class RedisManager {
         Player player = Bukkit.getPlayer(sender);
 
         if (player == null) {
-            for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers()
-                    .values()) {
-                if (staffPlayer.isStaffChatReceiver()) {
-                    staffPlayer.sendMessage(message);
-                }
-            }
+            StaffModeX.getInstance().getStaffPlayerManager().sendStaffChat(message);
         }
     }
 }

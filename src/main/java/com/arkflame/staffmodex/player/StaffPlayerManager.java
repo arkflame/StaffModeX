@@ -4,8 +4,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
+import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
 public class StaffPlayerManager {
@@ -44,5 +46,14 @@ public class StaffPlayerManager {
 
     public StaffPlayer getStaffPlayer(OfflinePlayer player) {
         return getStaffPlayer(player.getUniqueId());
+    }
+
+    public void sendStaffChat(String message) {
+        for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+            if (staffPlayer.isStaffChatReceiver()) {
+                staffPlayer.sendMessage(message);
+            }
+        }
+        Bukkit.getConsoleSender().sendMessage(message);
     }
 }
