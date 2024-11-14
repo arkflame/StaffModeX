@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
+import com.arkflame.staffmodex.modernlib.utils.Materials;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,10 +34,11 @@ public class ArmorManager {
             ConfigurationSection setConfig = setsConfig.getConfigurationSection(key);
             String permission = setConfig.getString("permission");
             String colorName = setConfig.getString("color");
+            String typeName = setConfig.getString("type");
             Color color = getColorFromString(colorName);
 
             if (permission != null && color != null) {
-                armorSets.put(key, new ArmorSet(permission, color));
+                armorSets.put(key, new ArmorSet(permission, color, typeName));
             }
         }
     }
@@ -54,14 +56,16 @@ public class ArmorManager {
             return;
         }
 
-        Color color = getColorForPlayer(player);
-        if (color == null)
+        ArmorSet armor = getArmor(player);
+        if (armor == null)
             return; // No matching armor found
+        Color color = armor.getColor();
+        String type = armor.getType();
 
-        ItemStack helmet = createColoredArmor(Material.LEATHER_HELMET, color);
-        ItemStack chestplate = createColoredArmor(Material.LEATHER_CHESTPLATE, color);
-        ItemStack leggings = createColoredArmor(Material.LEATHER_LEGGINGS, color);
-        ItemStack boots = createColoredArmor(Material.LEATHER_BOOTS, color);
+        ItemStack helmet = createArmor(Materials.get(type + "_HELMET"), color);
+        ItemStack chestplate = createArmor(Materials.get(type + "_CHESTPLATE"), color);
+        ItemStack leggings = createArmor(Materials.get(type + "_LEGGINGS"), color);
+        ItemStack boots = createArmor(Materials.get(type + "_BOOTS"), color);
 
         PlayerInventory inventory = player.getInventory();
         inventory.setHelmet(helmet);
@@ -70,16 +74,19 @@ public class ArmorManager {
         inventory.setBoots(boots);
     }
 
-    private Color getColorForPlayer(Player player) {
+    private ArmorSet getArmor(Player player) {
         for (ArmorSet armorSet : armorSets.values()) {
             if (player.hasPermission(armorSet.getPermission())) {
-                return armorSet.getColor();
+                return armorSet;
             }
         }
         return null;
     }
 
-    private ItemStack createColoredArmor(Material material, Color color) {
+    private ItemStack createArmor(Material material, Color color) {
+        if (material == null) {
+            return null;
+        }
         ItemStack armorPiece = new ItemStack(material);
         ItemMeta originalMeta = armorPiece.getItemMeta();
         if (originalMeta instanceof LeatherArmorMeta) {

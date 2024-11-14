@@ -12,9 +12,11 @@ armors:
     administrator:
       permission: staffmodex.armor.administrator
       color: RED
+      type: LEATHER
     moderator:
       permission: staffmodex.armor.moderator
       color: ORANGE
+      type: LEATHER
 
 # Show diamond notification to staff members
 diamond-finder:
