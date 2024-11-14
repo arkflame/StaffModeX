@@ -20,7 +20,7 @@ public class InfractionsCommand extends ModernCommand {
     public void onCommand(CommandSender sender, ModernArguments args) {
         Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+                sender.sendMessage(StaffModeX.getInstance().getMessage("messages.only-players"));
                 return;
             }
 
@@ -33,7 +33,7 @@ public class InfractionsCommand extends ModernCommand {
             }
 
             if (target == null) {
-                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.usage"));
+                sender.sendMessage(StaffModeX.getInstance().getMessage("messages.infractions.usage"));
                 return;
             }
 

@@ -22,12 +22,12 @@ public class HelpopCommand extends ModernCommand {
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.only-players"));
             return;
         }
 
         if (!(sender.hasPermission("staffmodex.helpop"))) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.helpop.no-permission"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.helpop.no-permission"));
             return;
         }
 
@@ -39,7 +39,7 @@ public class HelpopCommand extends ModernCommand {
             Long playerCooldown = cooldowns.get(player.getName());
             if (playerCooldown != null && playerCooldown > currentTime) {
                 long remainingTime = (playerCooldown - currentTime) / 1000;
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.helpop.cooldown")
+                player.sendMessage(StaffModeX.getInstance().getMessage("messages.helpop.cooldown")
                         .replace("{time}", String.valueOf(remainingTime)));
                 return;
             }
@@ -47,7 +47,7 @@ public class HelpopCommand extends ModernCommand {
     
         // Require at least one argument
         if (!args.hasArg(0)) {
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.helpop.usage"));
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.helpop.usage"));
             return;
         }
 
@@ -58,8 +58,8 @@ public class HelpopCommand extends ModernCommand {
         String playerName = player.getName();
         String message = String.join(" ", args.getArgs());
 
-        String staffMessage = StaffModeX.getInstance().getMsg().getText("messages.helpop.receive", "{message}", message, "{player}", playerName);
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.helpop.sent", "{message}", message, "{player}", playerName));
+        String staffMessage = StaffModeX.getInstance().getMessage("messages.helpop.receive", "{message}", message, "{player}", playerName);
+        player.sendMessage(StaffModeX.getInstance().getMessage("messages.helpop.sent", "{message}", message, "{player}", playerName));
 
         for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
             if (staffPlayer.hasPermission("staffmodex.helpop.receive")) {

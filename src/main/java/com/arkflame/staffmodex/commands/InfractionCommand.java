@@ -28,12 +28,12 @@ public abstract class InfractionCommand extends ModernCommand {
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
         if (!sender.hasPermission("staffmodex." + getName())) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.no-permission"));
             return;
         }
     
         if (!(sender instanceof Player)) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.only-players"));
             return;
         }
     
@@ -45,7 +45,7 @@ public abstract class InfractionCommand extends ModernCommand {
             Long playerCooldown = cooldowns.get(player.getName());
             if (playerCooldown != null && playerCooldown > currentTime) {
                 long remainingTime = (playerCooldown - currentTime) / 1000;
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.cooldown")
+                player.sendMessage(StaffModeX.getInstance().getMessage("messages.cooldown")
                         .replace("{time}", String.valueOf(remainingTime)));
                 return;
             }
@@ -53,7 +53,7 @@ public abstract class InfractionCommand extends ModernCommand {
     
         // Require at least one argument
         if (!args.hasArg(1)) {
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + ".usage"));
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages." + infractionType.name().toLowerCase() + ".usage"));
             return;
         }
     
@@ -66,14 +66,14 @@ public abstract class InfractionCommand extends ModernCommand {
             public void run() {
                 Player target = Bukkit.getPlayer(targetPlayerName);
                 if (target == null) {
-                    player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.player-not-found"));
+                    player.sendMessage(StaffModeX.getInstance().getMessage("messages.player-not-found"));
                     return;
                 }
     
                 StaffPlayer targetStaffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
                 StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
                 targetStaffPlayer.infraction(infractionType, staffPlayer, reason);
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages." + infractionType.name().toLowerCase() + ".success", "{player}", targetPlayerName, "{reason}", reason));
+                player.sendMessage(StaffModeX.getInstance().getMessage("messages." + infractionType.name().toLowerCase() + ".success", "{player}", targetPlayerName, "{reason}", reason));
     
                 long cooldown = StaffModeX.getInstance().getConfig().getLong(infractionType.name().toLowerCase() + ".cooldown", 60) * 1000;
                 cooldowns.put(player.getName(), currentTime + cooldown);

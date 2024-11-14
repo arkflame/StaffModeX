@@ -2,7 +2,6 @@ package com.arkflame.staffmodex.hotbar.components.items;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
-import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,7 +17,7 @@ public class FollowHotbarItem extends HotbarItem {
     @Override
     public void onInteract(Player player, Entity target) {
         if (!(target instanceof Player)) {
-            player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.follow.invalid")));
+            player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.follow.invalid"));
             return;
         }
 
@@ -30,7 +29,7 @@ public class FollowHotbarItem extends HotbarItem {
 
         targetPlayer.setPassenger(player);
 
-        player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.follow.success")
-                .replace("{player}", targetPlayer.getDisplayName())));
+        player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.follow.success")
+                .replace("{player}", targetPlayer.getDisplayName()));
     }
 }

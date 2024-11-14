@@ -16,7 +16,7 @@ public class StaffModeCommand extends ModernCommand {
     public void onCommand(CommandSender sender, ModernArguments args) {
         // Check for permission
         if (!sender.hasPermission("staffmodex.staffmode")) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.no-permission"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.no-permission"));
             return;
         }
 
@@ -25,7 +25,7 @@ public class StaffModeCommand extends ModernCommand {
 
             StaffModeX.getInstance().getStaffModeManager().toggleStaff(player);
         } else {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.only-players"));
         }
     }
 }

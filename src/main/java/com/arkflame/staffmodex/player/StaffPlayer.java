@@ -124,10 +124,10 @@ public class StaffPlayer extends UUIDPlayer {
         if (type == InfractionType.WARNING) {
             warnings.addInfraction(infraction);
 
-            sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning.receive-self", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
+            sendMessage(StaffModeX.getInstance().getMessage("messages.warning.receive-self", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
             for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
                 if (staffPlayer.hasPermission("staffmodex.warning.receive")) {
-                    staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning.receive", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
+                    staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.warning.receive", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
                 }
             }
         } else if (type == InfractionType.REPORT) {
@@ -135,7 +135,7 @@ public class StaffPlayer extends UUIDPlayer {
             
             for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
                 if (staffPlayer.hasPermission("staffmodex.report.receive")) {
-                    staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.report.receive", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
+                    staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.report.receive", "{staff}", reporter.getName(), "{player}", getName(), "{reason}", reason));
                 }
             }
         }

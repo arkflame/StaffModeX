@@ -145,7 +145,7 @@ public class FreezablePlayer extends UUIDPlayer {
     }
     
     private void sendFrozenChatMessage(Player player, String msg) {
-        String message = StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_msg", "{player}", player.getName(), "{message}", msg);
+        String message = StaffModeX.getInstance().getMessage("messages.freeze.frozen_msg", "{player}", player.getName(), "{message}", msg);
         FreezablePlayer whoFroze = getWhoFroze();
         whoFroze.sendMessage(message);
         player.sendMessage(message);
@@ -153,7 +153,7 @@ public class FreezablePlayer extends UUIDPlayer {
     }
     
     private void sendStaffChatMessage(Player player, String msg) {
-        String message = StaffModeX.getInstance().getMsg().getText("messages.freeze.staff_msg", "{player}", player.getName(), "{message}", msg);
+        String message = StaffModeX.getInstance().getMessage("messages.freeze.staff_msg", "{player}", player.getName(), "{message}", msg);
         for (FreezeStatus frozenByMe : getFrozenPlayersByMe()) {
             frozenByMe.getTarget().sendMessage(message);
         }

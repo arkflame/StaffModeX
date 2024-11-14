@@ -36,7 +36,7 @@ public class InventoryListeners implements Listener {
             }
     
             if (staffPlayer.isFrozen()) {
-                staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-click-inventory"));
+                staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-click-inventory"));
                 event.setCancelled(true);
             }
         }
@@ -69,7 +69,7 @@ public class InventoryListeners implements Listener {
         }
 
         if (staffPlayer.isFrozen()) {
-            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-drag-inventory"));
+            staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-drag-inventory"));
             event.setCancelled(true);
         }
         }

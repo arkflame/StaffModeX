@@ -20,22 +20,22 @@ public class CpsHotbarItem extends HotbarItem {
     @Override
     public void onInteract(Player player, Entity target) {
         if (!(target instanceof Player)) {
-            player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.cps.invalid")));
+            player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.cps.invalid"));
             return;
         }
 
         Player testedPlayer = (Player) target;
 
         if (CpsTestingManager.isTesting(testedPlayer)) {
-            player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.cps.already_testing")
-                    .replace("{player}", testedPlayer.getName())));
+            player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.cps.already_testing")
+                    .replace("{player}", testedPlayer.getName()));
             return;
         }
 
         // Put the tested player in testing mode for 10 seconds
         CpsTestingManager.startCpsTesting(testedPlayer);
-        player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.cps.start_testing")
-                .replace("{player}", testedPlayer.getName())));
+        player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.cps.start_testing")
+                .replace("{player}", testedPlayer.getName()));
 
         // Wait for 10 seconds
         Bukkit.getScheduler().runTaskLater(StaffModeX.getInstance(), () -> {
@@ -47,12 +47,12 @@ public class CpsHotbarItem extends HotbarItem {
             // Send message with average CPS and a text saying if it's dangerous or not
             if (averageCps > 10) {
                 player.sendMessage(ChatColors
-                        .color(StaffModeX.getInstance().getMsg().getText("hotbar.cps.dangerous")
+                        .color(StaffModeX.getInstance().getMessage("hotbar.cps.dangerous")
                                 .replace("{player}", testedPlayer.getName())
                                 .replace("{cps}", averageCpsString)));
             } else {
                 player.sendMessage(ChatColors
-                        .color(StaffModeX.getInstance().getMsg().getText("hotbar.cps.safe")
+                        .color(StaffModeX.getInstance().getMessage("hotbar.cps.safe")
                                 .replace("{player}", testedPlayer.getName())
                                 .replace("{cps}", averageCpsString)));
             }

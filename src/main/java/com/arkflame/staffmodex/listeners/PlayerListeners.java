@@ -76,7 +76,7 @@ public class PlayerListeners implements Listener {
             List<String> blockedCommands = StaffModeX.getInstance().getCfg()
                     .getStringList("staffmode.blocked_commands");
             if (blockedCommands.contains(command)) {
-                player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.staffmode.cannot-use-command"));
+                player.sendMessage(StaffModeX.getInstance().getMessage("messages.staffmode.cannot-use-command"));
                 event.setCancelled(true);
                 return;
             }
@@ -90,7 +90,7 @@ public class PlayerListeners implements Listener {
         }
 
         if (staffPlayer.isFrozen()) {
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-use-commands"));
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-use-commands"));
             event.setCancelled(true);
         }
     }
@@ -115,7 +115,7 @@ public class PlayerListeners implements Listener {
             }.runTask(StaffModeX.getInstance());
             StaffNote note = staffPlayer.writeNote(text);
             event.setCancelled(true);
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.note-writing-success")
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.note-writing-success")
                     .replace("{player}", note.getName()));
         } // Warning
         else if (staffPlayer.getWarningProcess().isInProgress()) {
@@ -130,7 +130,7 @@ public class PlayerListeners implements Listener {
             }.runTask(StaffModeX.getInstance());
             staffPlayer.getWarningProcess().clear();
             event.setCancelled(true);
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.warning.success").replace("{player}",
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.warning.success").replace("{player}",
                     warnedName));
         } // Freeze Chat
         else if (staffPlayer.sendFreezeChat(event.getMessage())) {
@@ -201,7 +201,7 @@ public class PlayerListeners implements Listener {
 
             if (staffPlayer.isFrozen()) {
                 FreezablePlayer whoFroze = staffPlayer.getWhoFroze();
-                whoFroze.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.quit_msg",
+                whoFroze.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.quit_msg",
                         "{player}", player.getName()));
                 staffPlayer.unfreeze();
                 List<String> disconnectCmds = StaffModeX.getInstance().getCfg().getTextList(
@@ -243,7 +243,7 @@ public class PlayerListeners implements Listener {
         }
 
         if (staffPlayer.isFrozen()) {
-            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-drop-items"));
+            staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-drop-items"));
             event.setCancelled(true);
         }
     }
@@ -329,7 +329,7 @@ public class PlayerListeners implements Listener {
 
             if (staffPlayer.isFrozen()) {
                 staffPlayer
-                        .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
+                        .sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-interact"));
                 event.setCancelled(true);
             }
         }

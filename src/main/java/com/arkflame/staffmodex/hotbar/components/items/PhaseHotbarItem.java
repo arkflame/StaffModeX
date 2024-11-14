@@ -132,6 +132,6 @@ public class PhaseHotbarItem extends HotbarItem {
         }
 
         // Send message from config if no safe location is found within the limit
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("hotbar.phase.no_safe_location"));
+        player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.phase.no_safe_location"));
     }
 }

@@ -18,7 +18,7 @@ public class IPCommand extends ModernCommand {
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
         if (!sender.hasPermission("staffmodex.ip")) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.ip.no-permission"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.ip.no-permission"));
             return;
         }
 
@@ -35,10 +35,10 @@ public class IPCommand extends ModernCommand {
                     staffPlayer.getStaffPlayerLoader().loadIP();
                     String ip = staffPlayer.getIP();
                     if (ip != null) {
-                        sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.ip.message", "{player}",
+                        sender.sendMessage(StaffModeX.getInstance().getMessage("messages.ip.message", "{player}",
                                 targetName, "{ip}", ip));
                     } else {
-                        sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.ip.no-ip", "{player}",
+                        sender.sendMessage(StaffModeX.getInstance().getMessage("messages.ip.no-ip", "{player}",
                                 targetName));
                     }
                 });
@@ -47,13 +47,13 @@ public class IPCommand extends ModernCommand {
         }
 
         if (target == null) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.ip.usage"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.ip.usage"));
             return;
         }
 
         if (target instanceof Player) {
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(target);
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.ip.message", "{player}", targetName,
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.ip.message", "{player}", targetName,
                     "{ip}", staffPlayer.getIP()));
         }
     }

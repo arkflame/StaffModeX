@@ -2,7 +2,6 @@ package com.arkflame.staffmodex.hotbar.components.items;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
-import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import com.arkflame.staffmodex.modernlib.utils.Sounds;
 
@@ -28,15 +27,15 @@ public class RandomTeleportHotbarItem extends HotbarItem {
                 .filter(p -> !p.equals(player) && p.isOnline())
                 .collect(Collectors.toList());
         if (otherPlayers.isEmpty()) {
-            player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.random_teleport.no_players")));
+            player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.random_teleport.no_players"));
             return;
         }
 
         Player targetPlayer = otherPlayers.get(new Random().nextInt(otherPlayers.size()));
         player.teleport(targetPlayer.getLocation());
         player.sendMessage(
-                ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.random_teleport.success")
-                        .replace("{player}", targetPlayer.getDisplayName())));
+                StaffModeX.getInstance().getMessage("hotbar.random_teleport.success")
+                        .replace("{player}", targetPlayer.getDisplayName()));
 
         Sounds.play(player, 1.0f, 1.0f, "ENTITY_ENDERMAN_TELEPORT", "ENDERMAN_TELEPORT");
     }

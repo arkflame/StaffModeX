@@ -26,10 +26,10 @@ public class VanishPlayer extends UUIDPlayer {
             player.sendMessage(msg.getText("messages.vanish.not-staff"));
         } else if (isVanished()) {
             makeVisible();
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.vanish.unvanished"));
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.vanish.unvanished"));
         } else {
             makeInvisible();
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.vanish.vanished"));
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.vanish.vanished"));
         }
     }
 

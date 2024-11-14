@@ -47,7 +47,7 @@ public class ExaminePlayerMenu extends Menu {
     @Override
     public void openInventory(Player player) {
         if (!player.hasPermission("staffmodex.examine")) {
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.examine.no-permission"));
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.examine.no-permission"));
             return;
         }
         

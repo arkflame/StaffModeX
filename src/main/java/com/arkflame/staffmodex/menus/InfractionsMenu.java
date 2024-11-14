@@ -24,7 +24,7 @@ public class InfractionsMenu extends Menu {
                     @Override
                     public void onClick() {
                         player.sendMessage(
-                                StaffModeX.getInstance().getMsg().getText("menus.infractions.warnings.opening"));
+                                StaffModeX.getInstance().getMessage("menus.infractions.warnings.opening"));
                         new InfractionsViewerMenu(InfractionType.WARNING, player, staffPlayer, menu)
                                 .openInventory(player);
                     }
@@ -37,7 +37,7 @@ public class InfractionsMenu extends Menu {
                     @Override
                     public void onClick() {
                         player.sendMessage(
-                                StaffModeX.getInstance().getMsg().getText("menus.infractions.reports.opening"));
+                                StaffModeX.getInstance().getMessage("menus.infractions.reports.opening"));
                         new InfractionsViewerMenu(InfractionType.REPORT, player, staffPlayer, menu)
                                 .openInventory(player);
                     }
@@ -62,7 +62,7 @@ public class InfractionsMenu extends Menu {
     @Override
     public void openInventory(Player player) {
         if (!player.hasPermission("staffmodex.infractions")) {
-            player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.infractions.no-permission"));
+            player.sendMessage(StaffModeX.getInstance().getMessage("messages.infractions.no-permission"));
             return;
         }
 

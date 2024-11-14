@@ -40,7 +40,7 @@ public class BlockListeners implements Listener {
 
         if (staffPlayer.isFrozen()) {
             staffPlayer
-                    .sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
+                    .sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-interact"));
             event.setCancelled(true);
         }
 
@@ -58,7 +58,7 @@ public class BlockListeners implements Listener {
                     UUID uuid = player.getUniqueId();
                     String size = String.valueOf(vein.size());
                     StaffModeX.getInstance().sendMessageToStaffPlayers(
-                            StaffModeX.getInstance().getMsg().getText("messages.diamond-finder.found", "{player}",
+                            StaffModeX.getInstance().getMessage("messages.diamond-finder.found", "{player}",
                                     player.getName(), "{streak}", String.valueOf(streak), "{size}", size),
                             uuid);
                 }
@@ -85,7 +85,7 @@ public class BlockListeners implements Listener {
         }
 
         if (staffPlayer.isFrozen()) {
-            staffPlayer.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.freeze.cannot-interact"));
+            staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-interact"));
             event.setCancelled(true);
         }
     }

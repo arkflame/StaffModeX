@@ -42,7 +42,7 @@ public class PlayerNotesItem extends MenuItem {
                 .getOrCreateStaffPlayer(player.getUniqueId());
         staffPlayer.startWritingNote(this, target.getUniqueId(), target.getName());
         player.closeInventory();
-        player.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.note-started").replace("{player}", target.getName()));
+        player.sendMessage(StaffModeX.getInstance().getMessage("messages.note-started").replace("{player}", target.getName()));
     }
 
     public void updateLore(String notes) {

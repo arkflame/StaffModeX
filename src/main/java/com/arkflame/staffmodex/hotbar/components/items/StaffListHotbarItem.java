@@ -2,7 +2,6 @@ package com.arkflame.staffmodex.hotbar.components.items;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
-import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
@@ -25,7 +24,7 @@ public class StaffListHotbarItem extends HotbarItem {
 
     @Override
     public void onInteract(Player player) {
-        Menu menu = new Menu(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.menu_title")),
+        Menu menu = new Menu(StaffModeX.getInstance().getMsg().getText("hotbar.stafflist.menu_title"),
                 3);
 
         // Item to return to the menu

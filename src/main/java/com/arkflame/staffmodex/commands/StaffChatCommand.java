@@ -26,10 +26,10 @@ public class StaffChatCommand extends ModernCommand {
                     staffPlayer.toggleStaffChat();
                 }
             } else {
-                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.staffchat.no-permission"));
+                sender.sendMessage(StaffModeX.getInstance().getMessage("messages.staffchat.no-permission"));
             }
         } else {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.only-players"));
         }
     }
 }

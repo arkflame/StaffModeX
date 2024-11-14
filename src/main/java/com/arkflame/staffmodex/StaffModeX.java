@@ -246,4 +246,11 @@ public class StaffModeX extends JavaPlugin {
             visiblePlayers.remove(player.getUniqueId());
         }
     }
+
+    /*
+     * Returns the message with the prefix
+     */
+    public String getMessage(String path, String ...placeholders) {
+        return getMsg().getText("messages.prefix") + getMsg().getText(path, placeholders);
+    }
 }

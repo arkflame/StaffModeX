@@ -20,7 +20,7 @@ public class VanishCommand extends ModernCommand {
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player);
             staffPlayer.toggleVanish();
         } else {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.only-players"));
         }
     }
 }

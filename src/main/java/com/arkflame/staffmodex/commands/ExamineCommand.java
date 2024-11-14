@@ -17,7 +17,7 @@ public class ExamineCommand extends ModernCommand {
     @Override
     public void onCommand(CommandSender sender, ModernArguments args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.only-players"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.only-players"));
             return;
         }
 
@@ -28,13 +28,13 @@ public class ExamineCommand extends ModernCommand {
         if (targetName != null && !targetName.isEmpty()) {
             target = StaffModeX.getInstance().getServer().getPlayer(targetName);
             if (target == null) {
-                sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.examine.player-not-online", "{player}", targetName));
+                sender.sendMessage(StaffModeX.getInstance().getMessage("messages.examine.player-not-online", "{player}", targetName));
                 return;
             }
         }
 
         if (target == null) {
-            sender.sendMessage(StaffModeX.getInstance().getMsg().getText("messages.examine.usage"));
+            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.examine.usage"));
             return;
         }
 

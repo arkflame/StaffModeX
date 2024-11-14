@@ -2,7 +2,6 @@ package com.arkflame.staffmodex.hotbar.components.items;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
-import com.arkflame.staffmodex.modernlib.utils.ChatColors;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
 
 import org.bukkit.entity.Entity;
@@ -19,7 +18,7 @@ public class FreezeHotbarItem extends HotbarItem {
     @Override
     public void onInteract(Player player, Entity target) {
         if (!(target instanceof Player)) {
-            player.sendMessage(ChatColors.color(StaffModeX.getInstance().getMsg().getText("hotbar.freeze.invalid")));
+            player.sendMessage(StaffModeX.getInstance().getMessage("hotbar.freeze.invalid"));
             return;
         }
 
