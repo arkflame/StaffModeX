@@ -46,6 +46,6 @@ public class VanishHotbarItem extends HotbarItem {
             getItem().setType(getDisabledMaterial());
             getItem().setDurability(getDisabledDamage());
         }
-        player.getInventory().setItem(2, getItem());
+        player.getInventory().setItem(StaffModeX.getInstance().getCfg().getInt("items.hotbar.vanish.slot"), getItem());
     }
 }
