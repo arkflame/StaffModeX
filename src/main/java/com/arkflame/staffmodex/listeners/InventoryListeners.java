@@ -23,19 +23,16 @@ public class InventoryListeners implements Listener {
             if (event.getClickedInventory() != player.getInventory()) {
                 return;
             }
-            if (StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getSlot())
-                    || StaffModeX.getInstance().getHotbarManager().isHotbarItem(player, event.getHotbarButton())) {
+
+            if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
                 event.setCancelled(true);
+                return;
             }
 
             StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                     .getOrCreateStaffPlayer(player);
     
-            if (staffPlayer == null) {
-                return;
-            }
-    
-            if (staffPlayer.isFrozen()) {
+            if (staffPlayer != null && staffPlayer.isFrozen()) {
                 staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-click-inventory"));
                 event.setCancelled(true);
             }
