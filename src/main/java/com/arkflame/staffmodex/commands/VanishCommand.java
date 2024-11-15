@@ -10,7 +10,7 @@ import com.arkflame.staffmodex.player.StaffPlayer;
 
 public class VanishCommand extends ModernCommand {
     public VanishCommand() {
-        super("vanish");
+        super("vanish", "v");
     }
 
     @Override
