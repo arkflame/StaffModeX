@@ -46,6 +46,7 @@ public class InventoryListeners implements Listener {
             Player player = (Player) human;
             if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
                 event.setCancelled(true);
+                return;
             }
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
             if (hotbar != null) {
