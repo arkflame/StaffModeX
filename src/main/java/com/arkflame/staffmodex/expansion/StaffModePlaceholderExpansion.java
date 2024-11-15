@@ -4,6 +4,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.player.FreezablePlayer;
 import com.arkflame.staffmodex.player.FreezeStatus;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -17,7 +18,7 @@ public class StaffModePlaceholderExpansion extends PlaceholderExpansion {
     
     @Override
     public String getIdentifier() {
-        return "staffmode";
+        return "staffmodex";
     }
 
     @Override
@@ -48,6 +49,18 @@ public class StaffModePlaceholderExpansion extends PlaceholderExpansion {
                     return freezeStatus.getTimeFormatted();
                 }
                 return "0m 0s";
+            }
+            case "frozen_player": {
+                if (player instanceof Player) {
+                    FreezeStatus freezeStatus = StaffModeX.getInstance().getStaffPlayerManager().getOrCreateStaffPlayer(player).getFreezeStatus();
+                    if (freezeStatus != null) {
+                        FreezablePlayer freezablePlayer = freezeStatus.getTarget();
+                        if (freezablePlayer != null) {
+                            return freezablePlayer.getName();
+                        }
+                    }
+                }
+                return "";
             }
             case "playercount": {
                 return String.valueOf(StaffModeX.getInstance().getVisiblePlayerCount());
