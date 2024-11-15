@@ -24,7 +24,7 @@ public class StaffActionBarTask extends ModernTask {
                     for (FreezeStatus freezeStatus : staffPlayer.getFrozenPlayersByMe()) {
                         Player otherPlayer = freezeStatus.getTarget().getPlayer();
                         String msg = StaffModeX.getInstance().getMsg().getText("messages.freeze.action_bar",
-                                "{countdown}", freezeStatus.getCountdownFormatted());
+                                "{countdown}", freezeStatus.getCountdownFormatted(), "{timeElapsed}", freezeStatus.getTimeFormatted());
 
                         Titles.sendActionBar(player, msg);
                         if (otherPlayer != null) {

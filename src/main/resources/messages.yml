@@ -83,6 +83,7 @@ messages:
     no-permission: "&cYou do not have permission to freeze players."
     usage: "&c/freeze <target>\n&cFreeze the target player to review him."
     player-not-online: "&cThe player '&b{player}&c' is not online."
+    # You can use {timeLeft} to show time left instead of {countdown}
     action_bar: "&cUnder Review &7(&e{countdown}&7)"
     frozen_action: "&bYou have been frozen!"
     frozen_title: "&bFrozen"
