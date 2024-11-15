@@ -233,16 +233,18 @@ public class PlayerListeners implements Listener {
         Player player = event.getPlayer();
         if (StaffModeX.getInstance().getHotbarManager().getHotbar(player) != null) {
             event.setCancelled(true);
+            return;
+        }
+
+        if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+            event.setCancelled(true);
+            return;
         }
 
         StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
                 .getOrCreateStaffPlayer(player);
 
-        if (staffPlayer == null) {
-            return;
-        }
-
-        if (staffPlayer.isFrozen()) {
+        if (staffPlayer != null && staffPlayer.isFrozen()) {
             staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-drop-items"));
             event.setCancelled(true);
         }
