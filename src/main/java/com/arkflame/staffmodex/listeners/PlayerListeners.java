@@ -40,6 +40,8 @@ import com.arkflame.staffmodex.player.StaffNote;
 import com.arkflame.staffmodex.player.StaffPlayer;
 import com.arkflame.staffmodex.utils.Inventories;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+
 public class PlayerListeners implements Listener {
     // Map to store the UUID and the timestamp of the last execution
     private Map<UUID, Long> cooldowns = new HashMap<>();
@@ -166,8 +168,19 @@ public class PlayerListeners implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(StaffModeX.getInstance(), () -> {
             // Update player's IP
             staffPlayer.setIP(player.getAddress().getAddress().getHostAddress());
-
             staffPlayer.load();
+
+            if (player.hasPermission("staffmodex.join")) {
+                for (StaffPlayer staffPlayer2 : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+                    if (staffPlayer2.isViewJoins()) {
+                        staffPlayer2.sendMessage(PlaceholderAPI.setPlaceholders(player, StaffModeX.getInstance().getMessage("messages.join.message", "{player}", player.getName())));
+                    }
+                }
+            }
+
+            if (player.hasPermission("staffmodex.view_joins")) {
+                staffPlayer.setViewJoins(true);
+            }
 
             if (player.hasPermission("staffmodex.staffmode")
                     && !StaffModeX.getInstance().getRedisManager().isClosed()) {

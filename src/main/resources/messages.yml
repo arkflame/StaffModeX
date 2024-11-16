@@ -3,6 +3,9 @@
 messages:
   prefix: "&7[&b&lStaffModeX&7] &r"
 
+  join:
+    message: "&aThe staff &b{player}&a joined the game!"
+
   reloaded: "&aAll plugin data was reloaded from config."
 
   only-players: "&cThis command cannot be used from the console."

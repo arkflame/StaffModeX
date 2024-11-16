@@ -43,6 +43,8 @@ public class StaffPlayer extends UUIDPlayer {
 
     private String ip = null;
 
+    private boolean viewJoins = false;
+
     public StaffPlayerLoader getStaffPlayerLoader() {
         return staffPlayerLoader;
     }
@@ -267,5 +269,13 @@ public class StaffPlayer extends UUIDPlayer {
 
     public String getIP() {
         return ip;
+    }
+
+    public void setViewJoins(boolean viewJoins) {
+        this.viewJoins = viewJoins;
+    }
+
+    public boolean isViewJoins() {
+        return viewJoins;
     }
 }
