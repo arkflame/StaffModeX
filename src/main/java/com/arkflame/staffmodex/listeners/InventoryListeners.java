@@ -20,9 +20,6 @@ public class InventoryListeners implements Listener {
         HumanEntity human = event.getWhoClicked();
         if (human instanceof Player) {
             Player player = (Player) human;
-            if (event.getClickedInventory() != player.getInventory()) {
-                return;
-            }
 
             if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
                 event.setCancelled(true);
@@ -35,6 +32,7 @@ public class InventoryListeners implements Listener {
             if (staffPlayer != null && staffPlayer.isFrozen()) {
                 staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-click-inventory"));
                 event.setCancelled(true);
+                return;
             }
         }
     }
@@ -48,6 +46,14 @@ public class InventoryListeners implements Listener {
                 event.setCancelled(true);
                 return;
             }
+            StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
+                    .getOrCreateStaffPlayer(player);
+    
+            if (staffPlayer != null && staffPlayer.isFrozen()) {
+                staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-drag-inventory"));
+                event.setCancelled(true);
+                return;
+            }
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
             if (hotbar != null) {
                 Set<Integer> slots = event.getInventorySlots();
@@ -55,21 +61,10 @@ public class InventoryListeners implements Listener {
                     HotbarItem hotbarItem = hotbar.getItem(slot);
                     if (hotbarItem != null) {
                         event.setCancelled(true);
+                        return;
                     }
                 }
             }
-
-        StaffPlayer staffPlayer = StaffModeX.getInstance().getStaffPlayerManager()
-                .getOrCreateStaffPlayer(player);
-
-        if (staffPlayer == null) {
-            return;
-        }
-
-        if (staffPlayer.isFrozen()) {
-            staffPlayer.sendMessage(StaffModeX.getInstance().getMessage("messages.freeze.cannot-drag-inventory"));
-            event.setCancelled(true);
-        }
         }
     }
 }

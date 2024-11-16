@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -171,9 +173,11 @@ public class PlayerListeners implements Listener {
             staffPlayer.load();
 
             if (player.hasPermission("staffmodex.join")) {
-                for (StaffPlayer staffPlayer2 : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+                for (StaffPlayer staffPlayer2 : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers()
+                        .values()) {
                     if (staffPlayer2.isViewJoins()) {
-                        staffPlayer2.sendMessage(PlaceholderAPI.setPlaceholders(player, StaffModeX.getInstance().getMessage("messages.join.message", "{player}", player.getName())));
+                        staffPlayer2.sendMessage(PlaceholderAPI.setPlaceholders(player, StaffModeX.getInstance()
+                                .getMessage("messages.join.message", "{player}", player.getName())));
                     }
                 }
             }
@@ -293,8 +297,35 @@ public class PlayerListeners implements Listener {
             CpsTestingManager.click(event.getPlayer());
         }
 
+        Player player = event.getPlayer();
+
+        if (rightClick) {
+            if (StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+                Block clickedBlock = event.getClickedBlock();
+
+                if (clickedBlock != null) {
+                    BlockState blockState = clickedBlock.getState();
+
+                    if (blockState instanceof Chest) {
+                        if (player.hasPermission("staffmodex.chestpreview")) {
+                            event.setCancelled(true);
+
+                            Chest chest = (Chest) blockState;
+                            Inventory inventory = chest.getBlockInventory();
+                            Inventory fakeInventory = Bukkit.createInventory(null, inventory.getSize(),
+                                    "Chest Contents");
+                            fakeInventory.setContents(inventory.getContents());
+
+                            // Open the fake inventory for the player
+                            player.openInventory(fakeInventory);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
         if (leftClick || rightClick) {
-            Player player = event.getPlayer();
             Hotbar hotbar = StaffModeX.getInstance().getHotbarManager().getHotbar(player);
             if (hotbar != null) {
                 PlayerInventory inventory = player.getInventory();
