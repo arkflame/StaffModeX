@@ -11,7 +11,7 @@ import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 
 public class MenuListener implements Listener {
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Inventory inventory = event.getInventory();
         InventoryHolder holder = inventory.getHolder();
