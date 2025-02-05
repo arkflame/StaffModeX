@@ -14,133 +14,188 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class DatabaseManager {
-    private HikariDataSource dataSource = null;
-    private boolean isInitializedSuccessfully = false;
+    private HikariDataSource dataSource;
+    private boolean initializedSuccessfully;
+
+    // SQL Queries
+    private static final String CREATE_INFRACTIONS_TABLE = 
+        "CREATE TABLE IF NOT EXISTS staffmodex_infractions (" +
+        "id VARCHAR(36) PRIMARY KEY," +
+        "accused_uuid VARCHAR(36) NOT NULL," +
+        "type VARCHAR(10) NOT NULL," +
+        "timestamp VARCHAR(20) NOT NULL," +
+        "reporter_uuid VARCHAR(36) NOT NULL," +
+        "reporter_name VARCHAR(16) NOT NULL," +
+        "reason VARCHAR(255) NOT NULL)";
+
+    private static final String CREATE_IPS_TABLE = 
+        "CREATE TABLE IF NOT EXISTS staffmodex_ips (" +
+        "id VARCHAR(36) PRIMARY KEY," +
+        "ip VARCHAR(45) NOT NULL)";
+
+    private static final String INSERT_INFRACTION = 
+        "INSERT INTO staffmodex_infractions (id, accused_uuid, type, timestamp, reporter_uuid, reporter_name, reason) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String SELECT_INFRACTIONS_BY_UUID = 
+        "SELECT id, type, timestamp, reporter_uuid, reporter_name, reason " +
+        "FROM staffmodex_infractions WHERE accused_uuid = ?";
+
+    private static final String INSERT_IP = 
+        "INSERT INTO staffmodex_ips (id, ip) VALUES (?, ?) " +
+        "ON DUPLICATE KEY UPDATE ip = VALUES(ip)";
+
+    private static final String SELECT_IP_BY_ID = 
+        "SELECT ip FROM staffmodex_ips WHERE id = ?";
 
     public DatabaseManager(boolean enabled, String url, String username, String password) {
         if (!enabled || url == null || username == null || password == null) {
             StaffModeX.getInstance().getLogger().info("No database information provided. Using local configuration.");
+            this.initializedSuccessfully = false;
             return;
-        } else {
-            StaffModeX.getInstance().getLogger().info("Using external database for warnings and reports.");
         }
 
+        StaffModeX.getInstance().getLogger().info("Using external database for warnings and reports.");
+        initializeDataSource(url, username, password);
+    }
+
+    private void initializeDataSource(String url, String username, String password) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(5);
+        config.setConnectionTestQuery("SELECT 1");
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
         try {
             this.dataSource = new HikariDataSource(config);
-            // Attempt to get a connection to check if the database is accessible
-            Connection conn = dataSource.getConnection();
-            createTables(conn); // Generate tables if they don't exist
-            conn.close(); // Close the connection immediately after verifying it works
-            isInitializedSuccessfully = true;
-        } catch (Exception e) {
-            StaffModeX.getInstance().getLogger().info("Failed to initialize database connection: " + e.getMessage());
-            isInitializedSuccessfully = false;
-            this.dataSource = null; // Ensure dataSource is null to avoid any further usage attempts
+            try (Connection conn = dataSource.getConnection()) {
+                createTables(conn);
+            }
+            this.initializedSuccessfully = true;
+        } catch (SQLException e) {
+            StaffModeX.getInstance().getLogger().severe("Failed to initialize database connection: " + e.getMessage());
+            StaffModeX.getInstance().getLogger().severe("Retrying after 5 seconds...");
+            this.initializedSuccessfully = false;
+            try {
+                Thread.sleep(5000);
+                initializeDataSource(url, username, password);
+            } catch (InterruptedException e1) { /* Interrupted. Finish operation. */ }
         }
     }
 
     private void createTables(Connection conn) throws SQLException {
-        // Create the 'infractions' table if it doesn't exist
-        String createInfractionsTableQuery = "CREATE TABLE IF NOT EXISTS staffmodex_infractions (" +
-                "id VARCHAR(36) PRIMARY KEY," +
-                "accused_uuid VARCHAR(36) NOT NULL," +
-                "type VARCHAR(10) NOT NULL," +
-                "timestamp VARCHAR(20) NOT NULL," +
-                "reporter_uuid VARCHAR(36) NOT NULL," +
-                "reporter_name VARCHAR(16) NOT NULL," +
-                "reason VARCHAR(255) NOT NULL)";
+        try (PreparedStatement infractionsStmt = conn.prepareStatement(CREATE_INFRACTIONS_TABLE);
+             PreparedStatement ipsStmt = conn.prepareStatement(CREATE_IPS_TABLE)) {
 
-        // Create the 'ips' table if it doesn't exist
-        String createIpsQuery = "CREATE TABLE IF NOT EXISTS staffmodex_ips (" +
-                "id VARCHAR(36) PRIMARY KEY," +
-                "ip VARCHAR(45))";
-
-        try (PreparedStatement stmt = conn.prepareStatement(createInfractionsTableQuery)) {
-            stmt.executeUpdate();
-        }
-
-        try (PreparedStatement stmt = conn.prepareStatement(createIpsQuery)) {
-            stmt.executeUpdate();
+            infractionsStmt.executeUpdate();
+            ipsStmt.executeUpdate();
         }
     }
 
     public boolean isInitializedSuccessfully() {
-        return isInitializedSuccessfully && dataSource != null;
+        return initializedSuccessfully && dataSource != null;
     }
 
     public void saveInfraction(Infraction infraction) {
-        String query = "INSERT INTO staffmodex_infractions (accused_uuid, type, timestamp, reporter_uuid, reporter_name, reason, id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = dataSource.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
-            // Debug: Check if the database connection is successful
+        if (!isInitializedSuccessfully()) {
+            return;
+        }
 
-            stmt.setString(1, infraction.getAccusedUUID().toString());
-            stmt.setString(2, infraction.getType().toString());
-            stmt.setString(3, infraction.getTimestamp());
-            stmt.setString(4, infraction.getReporterUUID().toString());
-            stmt.setString(5, infraction.getReporterName());
-            stmt.setString(6, infraction.getReason());
-            stmt.setString(7, infraction.getId().toString());
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(INSERT_INFRACTION)) {
+
+            stmt.setString(1, infraction.getId().toString());
+            stmt.setString(2, infraction.getAccusedUUID().toString());
+            stmt.setString(3, infraction.getType().toString());
+            stmt.setString(4, infraction.getTimestamp());
+            stmt.setString(5, infraction.getReporterUUID().toString());
+            stmt.setString(6, infraction.getReporterName());
+            stmt.setString(7, infraction.getReason());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
-            close();
-            // Debug: Print the SQL exception
-            e.printStackTrace();
+            StaffModeX.getInstance().getLogger().severe("Error saving infraction: " + e.getMessage());
         }
     }
 
     public void loadInfractions(StaffPlayer staffPlayer) {
-        String query = "SELECT id, type, timestamp, reporter_uuid, reporter_name, reason FROM staffmodex_infractions WHERE accused_uuid = ?";
+        if (!isInitializedSuccessfully()) {
+            return;
+        }
+
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(SELECT_INFRACTIONS_BY_UUID)) {
+
             stmt.setString(1, staffPlayer.getUUID().toString());
+
             try (ResultSet resultSet = stmt.executeQuery()) {
                 while (resultSet.next()) {
                     try {
-                        String typeStr = resultSet.getString("type");
-                        String timestampStr = resultSet.getString("timestamp");
-                        String reason = resultSet.getString("reason");
-
-                        InfractionType type = InfractionType.valueOf(typeStr);
+                        UUID id = UUID.fromString(resultSet.getString("id"));
+                        InfractionType type = InfractionType.valueOf(resultSet.getString("type"));
+                        String timestamp = resultSet.getString("timestamp");
                         UUID reporterUUID = UUID.fromString(resultSet.getString("reporter_uuid"));
                         String reporterName = resultSet.getString("reporter_name");
-                        UUID id = UUID.fromString(resultSet.getString("id"));
+                        String reason = resultSet.getString("reason");
 
-                        switch (type) {
-                            case REPORT: {
-                                staffPlayer.getReports().addInfraction(new Infraction(id, timestampStr, reporterName,
-                                        reason, staffPlayer.getUUID(), reporterUUID, type));
-                                break;
-                            }
-                            case WARNING: {
-                                staffPlayer.getWarnings().addInfraction(new Infraction(id, timestampStr, reporterName,
-                                        reason, staffPlayer.getUUID(), reporterUUID, type));
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
+                        Infraction infraction = new Infraction(id, timestamp, reporterName, reason, 
+                                                               staffPlayer.getUUID(), reporterUUID, type);
+
+                        if (type == InfractionType.REPORT) {
+                            staffPlayer.getReports().addInfraction(infraction);
+                        } else if (type == InfractionType.WARNING) {
+                            staffPlayer.getWarnings().addInfraction(infraction);
                         }
-                    } catch (Exception ex) {
-                        StaffModeX.getInstance().getLogger().severe("Error while loading infraction from config");
-                        ex.printStackTrace();
+                    } catch (IllegalArgumentException ex) {
+                        StaffModeX.getInstance().getLogger().severe("Invalid infraction type in database: " + ex.getMessage());
                     }
                 }
             }
         } catch (SQLException e) {
-            close();
-            // Debug: Print the SQL exception
-            e.printStackTrace();
+            StaffModeX.getInstance().getLogger().severe("Error loading infractions: " + e.getMessage());
+        }
+    }
+
+    public void saveIP(UUID uuid, String ip) {
+        if (!isInitializedSuccessfully()) {
+            return;
+        }
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(INSERT_IP)) {
+
+            stmt.setString(1, uuid.toString());
+            stmt.setString(2, ip);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            StaffModeX.getInstance().getLogger().severe("Error saving IP address: " + e.getMessage());
+        }
+    }
+
+    public void loadIP(StaffPlayer staffPlayer) {
+        if (!isInitializedSuccessfully()) {
+            return;
+        }
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(SELECT_IP_BY_ID)) {
+
+            stmt.setString(1, staffPlayer.getUUID().toString());
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    String ip = resultSet.getString("ip");
+                    staffPlayer.setIP(ip);
+                }
+            }
+        } catch (SQLException e) {
+            StaffModeX.getInstance().getLogger().severe("Error loading IP address: " + e.getMessage());
         }
     }
 
@@ -148,45 +203,7 @@ public class DatabaseManager {
         if (dataSource != null) {
             dataSource.close();
             dataSource = null;
-        }
-    }
-
-    public void saveIP(UUID uuid, String ip) {
-        String query = "INSERT INTO staffmodex_ips (id, ip) VALUES (?, ?) ON DUPLICATE KEY UPDATE ip = VALUES(ip)";
-        try (Connection conn = dataSource.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
-            // Debug: Check if the database connection is successful
-
-            stmt.setString(1, uuid.toString());
-            stmt.setString(2, ip);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            close();
-            // Debug: Print the SQL exception
-            e.printStackTrace();
-        }
-    }
-
-    public void loadIP(StaffPlayer staffPlayer) {
-        String query = "SELECT id, ip FROM staffmodex_ips WHERE id = ?";
-        try (Connection conn = dataSource.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, staffPlayer.getUUID().toString());
-            try (ResultSet resultSet = stmt.executeQuery()) {
-                while (resultSet.next()) {
-                    try {
-                        String ip = resultSet.getString("ip");
-                        staffPlayer.setIP(ip);
-                    } catch (Exception ex) {
-                        StaffModeX.getInstance().getLogger().severe("Error while loading infraction from config");
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            close();
-            // Debug: Print the SQL exception
-            e.printStackTrace();
+            initializedSuccessfully = false;
         }
     }
 }
