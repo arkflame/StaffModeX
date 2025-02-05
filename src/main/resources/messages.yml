@@ -183,6 +183,8 @@ hotbar:
       - "&bGamemode: &7{gameMode}"
       - "&bIP: &7{ip}"
       - "&bUUID: &7{uuid}"
+      - "&aLeft click to TP."
+      - "&cRight click to examine."
 
 menus:
   warnPlayer:

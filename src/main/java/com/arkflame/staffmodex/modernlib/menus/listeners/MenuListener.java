@@ -25,6 +25,12 @@ public class MenuListener implements Listener {
             if (menuItem != null) {
                 menuItem.onClick();
                 menuItem.onClick(slot);
+
+                if (event.isLeftClick()) {
+                    menuItem.onLeftClick();
+                } else if (event.isRightClick()) {
+                    menuItem.onRightClick();
+                }
             }
         }
     }

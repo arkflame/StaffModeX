@@ -2,6 +2,7 @@ package com.arkflame.staffmodex.hotbar.components.items;
 
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.hotbar.HotbarItem;
+import com.arkflame.staffmodex.menus.ExaminePlayerMenu;
 import com.arkflame.staffmodex.modernlib.menus.Menu;
 import com.arkflame.staffmodex.modernlib.menus.items.MenuItem;
 import com.arkflame.staffmodex.modernlib.utils.Materials;
@@ -32,11 +33,17 @@ public class PlayersHotbarItem extends HotbarItem {
             if (player != otherPlayer) {
                 menu.setItem(i++, new PlayerItem(player, otherPlayer) {
                     @Override
-                    public void onClick() {
+                    public void onLeftClick() {
                         player.closeInventory();
                         player.teleport(otherPlayer.getLocation());
                         player.sendMessage(StaffModeX.getInstance().getMsg()
                                 .getText("hotbar.players.teleport").replace("{player}", otherPlayer.getName()));
+                    }
+
+                    @Override
+                    public void onRightClick() {
+                        player.closeInventory();
+                        new ExaminePlayerMenu(player, otherPlayer).openInventory(player);
                     }
                 });
             }

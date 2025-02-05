@@ -62,6 +62,14 @@ public class MenuItem extends ItemStack {
         // Override to implement logic
     }
 
+    public void onRightClick() {
+        // Override to implement logic
+    }
+
+    public void onLeftClick() {
+        // Override to implement logic
+    }
+
     public void setMenu(Menu menu, int slot) {
         this.menu = menu;
         this.slot = slot;
