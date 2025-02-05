@@ -92,7 +92,7 @@ public class StaffModeX extends JavaPlugin {
     public void onEnable() {
         // Set static instance
         setInstance(this);
-        
+
         // Reload config
         reloadConfig();
 
@@ -104,7 +104,7 @@ public class StaffModeX extends JavaPlugin {
         armorManager = new ArmorManager(config);
 
         // Initialize Redis
-        redisManager = new RedisManager(this);
+        redisManager = new RedisManager();
 
         // Initialize MySQL
         mySQLManager = new DatabaseManager(
@@ -125,40 +125,40 @@ public class StaffModeX extends JavaPlugin {
         pluginManager.registerEvents(new MenuListener(), this);
 
         // Register Commands
-        if (StaffModeX.getInstance().getCfg().getBoolean("examine.enabled")) {
+        if (config.getBoolean("examine.enabled")) {
             registerCommand(new ExamineCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("freeze.enabled")) {
+        if (config.getBoolean("freeze.enabled")) {
             registerCommand(new FreezeCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("helpop.enabled")) {
+        if (config.getBoolean("helpop.enabled")) {
             registerCommand(new HelpopCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("report.enabled") ||
-                StaffModeX.getInstance().getCfg().getBoolean("warning.enabled")) {
+        if (config.getBoolean("report.enabled") ||
+                config.getBoolean("warning.enabled")) {
             registerCommand(new InfractionsCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("ip.enabled")) {
+        if (config.getBoolean("ip.enabled")) {
             registerCommand(new IPCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("report.enabled")) {
+        if (config.getBoolean("report.enabled")) {
             registerCommand(new ReportCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("staffchat.enabled")) {
+        if (config.getBoolean("staffchat.enabled")) {
             registerCommand(new StaffChatCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("staffmode.enabled")) {
+        if (config.getBoolean("staffmode.enabled")) {
             registerCommand(new StaffModeCommand());
         }
         registerCommand(new StaffModeXCommand());
-        if (StaffModeX.getInstance().getCfg().getBoolean("warning.enabled")) {
+        if (config.getBoolean("warning.enabled")) {
             registerCommand(new WarnCommand());
         }
-        if (StaffModeX.getInstance().getCfg().getBoolean("vanish.enabled")) {
+        if (config.getBoolean("vanish.enabled")) {
             registerCommand(new VanishCommand());
         }
 
-        if (StaffModeX.getInstance().getCfg().getBoolean("action_bar.enabled")) {
+        if (config.getBoolean("action_bar.enabled")) {
             // Register tasks
             new StaffActionBarTask().register();
         }
@@ -179,6 +179,14 @@ public class StaffModeX extends JavaPlugin {
     @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
+
+        if (redisManager != null) {
+            redisManager.closeConnection();
+        }
+
+        if (mySQLManager != null) {
+            mySQLManager.close();
+        }
 
         for (Player player : this.getServer().getOnlinePlayers()) {
             StaffPlayer staffPlayer = getStaffPlayerManager().getStaffPlayer(player);
@@ -230,7 +238,7 @@ public class StaffModeX extends JavaPlugin {
     }
 
     public String getServerName() {
-        return StaffModeX.getInstance().getCfg().getString("server_name");
+        return config.getString("server_name");
     }
 
     // Count of visible players
@@ -248,11 +256,12 @@ public class StaffModeX extends JavaPlugin {
     }
 
     public String applyPrefix(String message) {
-        if (message == null) return null;
+        if (message == null)
+            return null;
         return message.replace("{prefix}", getMsg().getText("messages.prefix"));
     }
 
-    public String getMessage(String path, String ...placeholders) {
+    public String getMessage(String path, String... placeholders) {
         return applyPrefix(getMsg().getText(path, placeholders));
     }
 }

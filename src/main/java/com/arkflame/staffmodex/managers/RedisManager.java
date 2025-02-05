@@ -5,7 +5,6 @@ import java.util.Collections;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
@@ -16,13 +15,11 @@ import redis.clients.jedis.JedisPubSub;
 
 public class RedisManager {
 
-    private JavaPlugin plugin;
     private JedisPool jedisPool;
 
-    private boolean closed = true;
+    private boolean closed = false;
 
-    public RedisManager(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public RedisManager() {
         initializeJedisPool();
     }
 
@@ -129,9 +126,10 @@ public class RedisManager {
     }
 
     public void closeConnection() {
+        closed = true;
         if (jedisPool != null) {
             jedisPool.close();
-            closed = true;
+            jedisPool = null;
         }
     }
 
