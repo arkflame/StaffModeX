@@ -16,7 +16,7 @@ public class StaffModeXCommand extends ModernCommand {
     public void onCommand(CommandSender sender, ModernArguments args) {
         // Check for permission
         if (!sender.hasPermission("staffmodex.admin")) {
-            sender.sendMessage(StaffModeX.getInstance().getMessage("messages.no-permission"));
+            sendAuthor(sender);
             return;
         }
 
@@ -28,21 +28,26 @@ public class StaffModeXCommand extends ModernCommand {
             StaffModeX.getInstance().onEnable();
             sender.sendMessage(StaffModeX.getInstance().getMessage("messages.reloaded"));
         } else {
-            String pluginName = StaffModeX.getInstance().getDescription().getName();
-            String version = StaffModeX.getInstance().getDescription().getVersion();
-            String author = "LinsaFTW";
-            String developmentTeam = "ArkFlame Development";
-
-            String line = ChatColor.translateAlternateColorCodes('&', "&8&m&l----------------------------------------");
-            String header = ChatColor.translateAlternateColorCodes('&', "&b&l\u272A " + pluginName + " &fv" + version + " &b&l\u272A");
-            String authorLine = ChatColor.translateAlternateColorCodes('&', "&fAuthor: &b" + author);
-            String teamLine = ChatColor.translateAlternateColorCodes('&', "&fDevelopment Team: &b" + developmentTeam);
-
-            sender.sendMessage(line);
-            sender.sendMessage(header);
-            sender.sendMessage(authorLine);
-            sender.sendMessage(teamLine);
-            sender.sendMessage(line);
+            sendAuthor(sender);
         }
+    }
+
+    public void sendAuthor(CommandSender sender) {
+        
+        String pluginName = StaffModeX.getInstance().getDescription().getName();
+        String version = StaffModeX.getInstance().getDescription().getVersion();
+        String author = "LinsaFTW";
+        String developmentTeam = "ArkFlame Development";
+
+        String line = ChatColor.translateAlternateColorCodes('&', "&8&m&l----------------------------------------");
+        String header = ChatColor.translateAlternateColorCodes('&', "&b&l\u272A " + pluginName + " &fv" + version + " &b&l\u272A");
+        String authorLine = ChatColor.translateAlternateColorCodes('&', "&fAuthor: &b" + author);
+        String teamLine = ChatColor.translateAlternateColorCodes('&', "&fDevelopment Team: &b" + developmentTeam);
+
+        sender.sendMessage(line);
+        sender.sendMessage(header);
+        sender.sendMessage(authorLine);
+        sender.sendMessage(teamLine);
+        sender.sendMessage(line);
     }
 }
