@@ -167,10 +167,18 @@ hotbar:
     invalid: "{prefix}&cInvalid target for following."
     success: "{prefix}&aYou are now following {player}."
   staff_player_item:
-    title: "&b{playerName}"
     here: "&a"
+  staff_player_item_offline:
+    title: "&b{playerName}"
     description:
       - "&bServer: &7{here}{serverName}"
+  staff_player_item_online:
+    title: "&b{playerName}"
+    description:
+      - "&bServer: &7{here}{serverName}"
+      - "&bLocation: &7{blockX}, {blockY}, {blockZ}"
+      - "&aLeft click to TP."
+      - "&cRight click to examine."
   # Supports PlaceholderAPI
   playerItem:
     title: "&b{playerName}"

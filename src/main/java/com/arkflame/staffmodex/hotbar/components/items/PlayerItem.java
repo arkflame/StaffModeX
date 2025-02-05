@@ -11,6 +11,7 @@ import com.arkflame.staffmodex.modernlib.utils.Players;
 import me.clip.placeholderapi.PlaceholderAPI;
 
 import com.arkflame.staffmodex.StaffModeX;
+import com.arkflame.staffmodex.menus.ExaminePlayerMenu;
 
 public class PlayerItem extends MenuItem {
     public static String[] getPlaceholders(Player player, Player miner) {
@@ -46,8 +47,27 @@ public class PlayerItem extends MenuItem {
         return title;
     }
 
-    public PlayerItem(Player player, Player miner) {
-        super(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3, getTitle(player, miner),
-                getDescription(player, miner));
+    private final Player player;
+    private final Player otherPlayer;
+
+    public PlayerItem(Player player, Player otherPlayer) {
+        super(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3, getTitle(player, otherPlayer),
+                getDescription(player, otherPlayer));
+        this.player = player;
+        this.otherPlayer = otherPlayer;
+    }
+
+    @Override
+    public void onLeftClick() {
+        player.closeInventory();
+        player.teleport(otherPlayer.getLocation());
+        player.sendMessage(StaffModeX.getInstance().getMsg()
+                .getText("hotbar.players.teleport").replace("{player}", otherPlayer.getName()));
+    }
+
+    @Override
+    public void onRightClick() {
+        player.closeInventory();
+        new ExaminePlayerMenu(player, otherPlayer).openInventory(player);
     }
 }

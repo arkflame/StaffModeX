@@ -31,21 +31,7 @@ public class PlayersHotbarItem extends HotbarItem {
                 break;
             }
             if (player != otherPlayer) {
-                menu.setItem(i++, new PlayerItem(player, otherPlayer) {
-                    @Override
-                    public void onLeftClick() {
-                        player.closeInventory();
-                        player.teleport(otherPlayer.getLocation());
-                        player.sendMessage(StaffModeX.getInstance().getMsg()
-                                .getText("hotbar.players.teleport").replace("{player}", otherPlayer.getName()));
-                    }
-
-                    @Override
-                    public void onRightClick() {
-                        player.closeInventory();
-                        new ExaminePlayerMenu(player, otherPlayer).openInventory(player);
-                    }
-                });
+                menu.setItem(i++, new PlayerItem(player, otherPlayer));
             }
         }
         menu.setItem(menu.getSize() - 9,

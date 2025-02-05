@@ -64,9 +64,14 @@ public class StaffListHotbarItem extends HotbarItem {
                     Bukkit.getScheduler().runTask(StaffModeX.getInstance(), () -> {
                         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
                         String server = (serverName == null || serverName.isEmpty() ? "N/A" : serverName);
-                        String here = Bukkit.getPlayer(playerName) != null ? msg.getText("hotbar.staff_player_item.here") : "";
-                        menu.setItem(currentIndex, new MenuItem(Materials.get("SKULL_ITEM", "PLAYER_HEAD"), 1, (short) 3,
-                        msg.getText("hotbar.staff_player_item.title", "{playerName}", playerName), msg.getTextList("hotbar.staff_player_item.description", "{playerName}", playerName, "{serverName}", server, "{here}", here)));
+                        Player otherPlayer = Bukkit.getPlayer(playerName);
+                        boolean isOnline = otherPlayer != null;
+                        String here = isOnline ? msg.getText("hotbar.staff_player_item.here") : "";
+                        if (isOnline) {
+                            menu.setItem(currentIndex, new OnlineStaffItem(playerName, msg, server, here, player, otherPlayer));
+                        } else {
+                            menu.setItem(currentIndex, new OfflineStaffItem(playerName, msg, server, here));
+                        }
                     });
                 }
             }

@@ -83,13 +83,26 @@ public class MenuItem extends ItemStack {
         return slot;
     }
 
-    public void setLore(String... lore) {
+    public void setLore(List<String> lore) {
         ItemMeta meta = this.getItemMeta();
         if (meta != null) {
-            meta.setLore(ChatColors.color(Arrays.asList(lore)));
+            meta.setLore(ChatColors.color(lore));
             setItemMeta(meta);
+            update();
         }
-        update();
+    }
+
+    public void setLore(String ...lore) {
+        setLore(Arrays.asList(lore));
+    }
+
+    public void setDisplayName(String displayName) {
+        ItemMeta meta = this.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(ChatColors.color(displayName));
+            setItemMeta(meta);
+            update();
+        }
     }
 
     public void update() {
