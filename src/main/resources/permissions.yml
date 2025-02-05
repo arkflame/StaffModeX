@@ -8,7 +8,23 @@
 ################################################################################
 
 permissions:
-  staffmodex.command.report: Grants permission to use the report command.
-  staffmodex.command.warning: Grants permission to issue warnings to players.
-  staffmodex.bypass.cooldown: Allows bypassing cooldown restrictions for commands.
-  staffmodex.command.staffmode: Grants permission to access Staff Mode features.
+  staffmodex.vanish: Allows the player to use the vanish feature.
+  staffmodex.vanish.force: Grants forced vanish permissions.
+  staffmodex.vanish.bypass: Allows bypassing vanish restrictions.
+  staffmodex.staffchat: Grants access to the staff chat feature.
+  staffmodex.report.receive: Allows receiving player reports.
+  staffmodex.warning.receive: Allows receiving warnings from other staff members.
+  staffmodex.freeze.bypass: Allows bypassing freeze restrictions.
+  staffmodex.freeze: Grants permission to freeze players.
+  staffmodex.ip: Grants permission to view player IP addresses.
+  staffmodex.warning: Grants permission to issue warnings.
+  staffmodex.teleport: Grants teleportation permissions.
+  staffmodex.heal: Grants permission to heal players.
+  staffmodex.infractions: Grants access to view player infractions.
+  staffmodex.examine: Grants permission to examine player details.
+  staffmodex.chestpreview: Allows previewing chests.
+  staffmodex.staffmode: Grants access to Staff Mode features.
+  staffmodex.view_joins: Grants permission to view player join events.
+  staffmodex.join: Grants permission to join the server with StaffModeX enabled.
+  staffmodex.build: Allows building while in Staff Mode.
+  staffmodex.admin: Grants administrative privileges over the plugin.

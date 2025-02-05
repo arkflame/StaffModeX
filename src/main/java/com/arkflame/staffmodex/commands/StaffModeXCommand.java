@@ -28,7 +28,21 @@ public class StaffModeXCommand extends ModernCommand {
             StaffModeX.getInstance().onEnable();
             sender.sendMessage(StaffModeX.getInstance().getMessage("messages.reloaded"));
         } else {
-            sender.sendMessage(ChatColor.BLUE + "StaffModeX by LinsaFTW");
+            String pluginName = StaffModeX.getInstance().getDescription().getName();
+            String version = StaffModeX.getInstance().getDescription().getVersion();
+            String author = "LinsaFTW";
+            String developmentTeam = "ArkFlame Development";
+
+            String line = ChatColor.translateAlternateColorCodes('&', "&8&m&l----------------------------------------");
+            String header = ChatColor.translateAlternateColorCodes('&', "&b&l\u272A " + pluginName + " &fv" + version + " &b&l\u272A");
+            String authorLine = ChatColor.translateAlternateColorCodes('&', "&fAuthor: &b" + author);
+            String teamLine = ChatColor.translateAlternateColorCodes('&', "&fDevelopment Team: &b" + developmentTeam);
+
+            sender.sendMessage(line);
+            sender.sendMessage(header);
+            sender.sendMessage(authorLine);
+            sender.sendMessage(teamLine);
+            sender.sendMessage(line);
         }
     }
 }

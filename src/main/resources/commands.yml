@@ -1,12 +1,12 @@
-name: ${name}
-description: ${description}
-author: ${author}
-main: ${mainClass}
-version: ${version}
-url: ${url}
-api-version: 1.13
-
-softdepend: [PlaceholderAPI]
+################################################################################
+#                            StaffModeX Commands                               #
+#                                                                              #
+#        Below is the list of commands used by the StaffModeX plugin.          #
+#  Ensure that appropriate commands are registered and functional within the   #
+#  plugin configuration.                                                        #
+#                                                                              #
+#        Note: This is a comment section. Do not modify the section.           #
+################################################################################
 
 commands:
   examine:
