@@ -247,10 +247,12 @@ public class StaffModeX extends JavaPlugin {
         }
     }
 
-    /*
-     * Returns the message with the prefix
-     */
+    public String applyPrefix(String message) {
+        if (message == null) return null;
+        return message.replace("%prefix%", getMsg().getText("messages.prefix"));
+    }
+
     public String getMessage(String path, String ...placeholders) {
-        return getMsg().getText("messages.prefix") + getMsg().getText(path, placeholders);
+        return applyPrefix(getMsg().getText(path, placeholders));
     }
 }
