@@ -12,24 +12,26 @@ import de.myzelyam.api.vanish.VanishAPI;
 
 public class VanishPlayer extends UUIDPlayer {
     private boolean vanished = false;
+    private StaffModeX staffModeX;
 
     public VanishPlayer(UUID uuid) {
         super(uuid);
+        this.staffModeX = StaffModeX.getInstance();
     }
 
     public void toggleVanish() {
-        ConfigWrapper msg = StaffModeX.getInstance().getMsg();
+        ConfigWrapper msg = staffModeX.getMsg();
         Player player = getPlayer();
         if (!player.hasPermission("staffmodex.vanish")) {
             player.sendMessage(msg.getText("messages.vanish.no-permission"));
-        } else if (!StaffModeX.getInstance().getStaffModeManager().isStaff(player)) {
+        } else if (!staffModeX.getStaffModeManager().isStaff(player) && staffModeX.getCfg().getBoolean("vanish.requires_staff")) {
             player.sendMessage(msg.getText("messages.vanish.not-staff"));
         } else if (isVanished()) {
             makeVisible();
-            player.sendMessage(StaffModeX.getInstance().getMessage("messages.vanish.unvanished"));
+            player.sendMessage(staffModeX.getMessage("messages.vanish.unvanished"));
         } else {
             makeInvisible();
-            player.sendMessage(StaffModeX.getInstance().getMessage("messages.vanish.vanished"));
+            player.sendMessage(staffModeX.getMessage("messages.vanish.vanished"));
         }
     }
 
@@ -38,8 +40,8 @@ public class VanishPlayer extends UUIDPlayer {
     }
 
     public boolean isPremiumVanishHook() {
-        return StaffModeX.getInstance().getCfg().getBoolean("vanish.hooks.premiumvanish")
-                && StaffModeX.getInstance().getServer().getPluginManager().isPluginEnabled("PremiumVanish");
+        return staffModeX.getCfg().getBoolean("vanish.hooks.premiumvanish")
+                && staffModeX.getServer().getPluginManager().isPluginEnabled("PremiumVanish");
     }
 
     public void hidePlayer(boolean force, Player toBeHidden) {
@@ -67,11 +69,11 @@ public class VanishPlayer extends UUIDPlayer {
         Player player = getPlayer();
         boolean force = isForceVanish();
 
-        for (StaffPlayer staffPlayer : StaffModeX.getInstance().getStaffPlayerManager().getStaffPlayers().values()) {
+        for (StaffPlayer staffPlayer : staffModeX.getStaffPlayerManager().getStaffPlayers().values()) {
             staffPlayer.hidePlayer(force, player);
         }
         vanished = true;
-        StaffModeX.getInstance().setVisible(player, false);
+        staffModeX.setVisible(player, false);
     }
 
     public void makeVisible() {
@@ -85,7 +87,7 @@ public class VanishPlayer extends UUIDPlayer {
             }
         }
         vanished = false;
-        StaffModeX.getInstance().setVisible(player, true);
+        staffModeX.setVisible(player, true);
     }
 
     public boolean isVanished() {

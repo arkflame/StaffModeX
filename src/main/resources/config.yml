@@ -38,6 +38,7 @@ action_bar:
 vanish:
   enabled: true
   on_staff_mode: true
+  requires_staff: false
   hooks:
     premiumvanish: true
 
