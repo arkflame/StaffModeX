@@ -29,9 +29,9 @@ public class FoodItem extends MenuItem {
                         player.setFoodLevel(20);
                         new ExaminePlayerMenu(opener, player).openInventory(opener);
                     }
-                    player.sendMessage(StaffModeX.getInstance().getMessage("menus.food.healed"));
+                    opener.sendMessage(StaffModeX.getInstance().getMessage("menus.food.healed"));
                 } else {
-                    player.sendMessage(StaffModeX.getInstance().getMessage("menus.food.no-permission-heal"));
+                    opener.sendMessage(StaffModeX.getInstance().getMessage("menus.food.no-permission-heal"));
                 }
             }
         }
