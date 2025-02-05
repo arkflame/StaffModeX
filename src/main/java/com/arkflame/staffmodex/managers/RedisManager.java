@@ -2,22 +2,25 @@ package com.arkflame.staffmodex.managers;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
 import com.arkflame.staffmodex.StaffModeX;
 import com.arkflame.staffmodex.modernlib.config.ConfigWrapper;
 
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisPubSub;
+import redis.clients.jedis.*;
 
-public class RedisManager {
+public class RedisManager implements AutoCloseable {
 
-    private JedisPool jedisPool;
+    private volatile JedisPool jedisPool;
+    private volatile boolean closed;
 
-    private boolean closed = false;
+    private JedisPubSub pubSub;
+    private ExecutorService subscriberExecutor;
 
     public RedisManager() {
         initializeJedisPool();
@@ -32,15 +35,15 @@ public class RedisManager {
         String ip = config.getString("redis.ip");
         int port = config.getInt("redis.port");
 
-        if (!redisEnabled || scheme == null || username == null || password == null || ip == null || port == 0) {
-            StaffModeX.getInstance().getLogger().info("No redis information provided. Using local configuration.");
+        if (!redisEnabled || ip == null || port == 0) {
+            StaffModeX.getInstance().getLogger().info("No Redis information provided. Using local configuration.");
+            closed = true;
             return;
-        } else {
-            StaffModeX.getInstance().getLogger().info("Using redis for staff chat and staff lists.");
         }
 
+        StaffModeX.getInstance().getLogger().info("Using Redis for staff chat and staff lists.");
+
         JedisPoolConfig poolConfig = new JedisPoolConfig();
-        // Example of setting pool config options
         poolConfig.setMaxTotal(10);
         poolConfig.setMaxIdle(5);
         poolConfig.setMinIdle(1);
@@ -48,178 +51,194 @@ public class RedisManager {
         poolConfig.setTestOnReturn(true);
         poolConfig.setTestWhileIdle(true);
 
-        String url = scheme + "://" + (username.isEmpty() ? "" : (username + ":" + password + "@")) + ip + ":" + port;
-        this.jedisPool = new JedisPool(poolConfig, url);
-        closed = false;
+        // Initialize JedisPool with host, port, and optional password
+        if (password != null && !password.isEmpty()) {
+            jedisPool = new JedisPool(poolConfig, ip, port, 2000, password);
+        } else {
+            jedisPool = new JedisPool(poolConfig, ip, port);
+        }
 
-        listenForStaffMessages();
+        closed = false;
+        startSubscriber();
     }
 
     public boolean isClosed() {
         return closed;
     }
 
-    private boolean isJedisValid(Jedis jedis) {
-        return jedis != null && jedis.isConnected();
-    }
-
-    public void incrementOnlineStatus(String playerName, String serverName) {
-        if (closed) return;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                long count = jedis.incr("ONLINE_STATUS_" + playerName);
-                if (count >= 1) {
-                    jedis.sadd("ONLINE_STAFF", playerName);
-
-                    if (count > 1) {
-                        jedis.set("ONLINE_STATUS_" + playerName, "1");
-                    }
-                    if (serverName != null) {
-                        jedis.set("CONNECTED_SERVER_" + playerName, serverName);
+    private void startSubscriber() {
+        pubSub = new JedisPubSub() {
+            @Override
+            public void onMessage(String channel, String message) {
+                if ("staff_chat".equals(channel)) {
+                    String[] parts = message.split("\n", 2);
+                    if (parts.length == 2) {
+                        String sender = parts[0];
+                        String chatMessage = parts[1];
+                        handleStaffChat(sender, chatMessage);
                     }
                 }
             }
-        }
-    }
+        };
 
-    public void decrementOnlineStatus(String playerName) {
-        if (closed) return;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                long count = jedis.decr("ONLINE_STATUS_" + playerName);
-                if (count <= 0) {
-                    jedis.srem("ONLINE_STAFF", playerName);
+        subscriberExecutor = Executors.newSingleThreadExecutor(r -> {
+            Thread t = new Thread(r, "RedisSubscriberThread");
+            t.setDaemon(true);
+            return t;
+        });
 
-                    if (count <= 0) {
-                        jedis.del("ONLINE_STATUS_" + playerName);
-                    }
-                    jedis.del("CONNECTED_SERVER_" + playerName);
+        subscriberExecutor.execute(() -> {
+            try (Jedis jedis = jedisPool.getResource()) {
+                jedis.subscribe(pubSub, "staff_chat");
+            } catch (Exception e) {
+                if (!closed) {
+                    StaffModeX.getInstance().getLogger().severe("Error in Redis subscriber: " + e.getMessage());
                 }
             }
-        }
+        });
     }
 
-    public String getConnectedServer(String playerName) {
-        if (closed) return null;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                return jedis.get("CONNECTED_SERVER_" + playerName);
-            }
-        }
-
-        return null;
-    }
-
-    public int getOnlineStatus(String playerName) {
-        if (closed) return 0;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                String countStr = jedis.get("ONLINE_STATUS_" + playerName);
-                try {
-                    return Integer.parseInt(countStr);
-                } catch (NumberFormatException e) {
-                    return 0;
-                }
-            }
-        }
-        return 0;
+    @Override
+    public void close() {
+        closeConnection();
     }
 
     public void closeConnection() {
         closed = true;
+
+        if (pubSub != null) {
+            pubSub.unsubscribe();
+            pubSub = null;
+        }
+
+        if (subscriberExecutor != null) {
+            subscriberExecutor.shutdownNow();
+            subscriberExecutor = null;
+        }
+
         if (jedisPool != null) {
             jedisPool.close();
             jedisPool = null;
         }
     }
 
-    public boolean isOnline(String playerName) {
-        if (closed) return false;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                Boolean isMember = jedis.sismember("ONLINE_STAFF", playerName);
-                return isMember != null && isMember;
+    private Jedis getJedisResource() {
+        if (closed || jedisPool == null) {
+            return null;
+        }
+        try {
+            return jedisPool.getResource();
+        } catch (Exception e) {
+            StaffModeX.getInstance().getLogger().severe("Failed to get Jedis resource: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public void incrementOnlineStatus(String playerName, String serverName) {
+        if (closed) return;
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return;
+            long count = jedis.incr("ONLINE_STATUS_" + playerName);
+            jedis.sadd("ONLINE_STAFF", playerName);
+            if (count > 1) {
+                jedis.set("ONLINE_STATUS_" + playerName, "1");
+            }
+            if (serverName != null) {
+                jedis.set("CONNECTED_SERVER_" + playerName, serverName);
             }
         }
-        return false;
+    }
+
+    public void decrementOnlineStatus(String playerName) {
+        if (closed) return;
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return;
+            long count = jedis.decr("ONLINE_STATUS_" + playerName);
+            if (count <= 0) {
+                jedis.srem("ONLINE_STAFF", playerName);
+                jedis.del("ONLINE_STATUS_" + playerName);
+                jedis.del("CONNECTED_SERVER_" + playerName);
+            }
+        }
+    }
+
+    public String getConnectedServer(String playerName) {
+        if (closed) return null;
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return null;
+            return jedis.get("CONNECTED_SERVER_" + playerName);
+        }
+    }
+
+    public int getOnlineStatus(String playerName) {
+        if (closed) return 0;
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return 0;
+            String countStr = jedis.get("ONLINE_STATUS_" + playerName);
+            return countStr != null ? Integer.parseInt(countStr) : 0;
+        } catch (NumberFormatException e) {
+            StaffModeX.getInstance().getLogger().severe("Invalid online status for player " + playerName);
+            try (Jedis jedis = getJedisResource()) {
+                if (jedis != null) {
+                    jedis.del("ONLINE_STATUS_" + playerName);
+                }
+            }
+            return 0;
+        }
+    }
+
+    public boolean isOnline(String playerName) {
+        if (closed) return false;
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return false;
+            return jedis.sismember("ONLINE_STAFF", playerName);
+        }
     }
 
     public Collection<String> getOnline() {
-        if (closed) return null;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                return jedis.smembers("ONLINE_STAFF");
-            }
+        if (closed) return Collections.emptySet();
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return Collections.emptySet();
+            Set<String> onlineStaff = jedis.smembers("ONLINE_STAFF");
+            return onlineStaff != null ? onlineStaff : Collections.emptySet();
         }
-        return Collections.EMPTY_SET;
     }
 
     public void addPlayerToStaffMode(String playerName) {
         if (closed) return;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                jedis.sadd("STAFFMODE", playerName);
-            }
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return;
+            jedis.sadd("STAFFMODE", playerName);
         }
     }
 
     public void removePlayerFromStaffMode(String playerName) {
         if (closed) return;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                jedis.srem("STAFFMODE", playerName);
-            }
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return;
+            jedis.srem("STAFFMODE", playerName);
         }
     }
 
     public boolean isStaffMode(String playerName) {
         if (closed) return false;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                Boolean isMember = jedis.sismember("STAFFMODE", playerName);
-                return isMember != null && isMember;
-            }
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return false;
+            return jedis.sismember("STAFFMODE", playerName);
         }
-        return false;
     }
 
     public void sendStaffChatMessage(String sender, String message) {
         if (closed) return;
-        try (Jedis jedis = jedisPool.getResource()) {
-            if (isJedisValid(jedis)) {
-                jedis.publish("staff_chat", sender + "\n" + message);
-            }
+        try (Jedis jedis = getJedisResource()) {
+            if (jedis == null) return;
+            jedis.publish("staff_chat", sender + "\n" + message);
         }
-    }
-
-    public void listenForStaffMessages() {
-        new Thread(() -> {
-            try (Jedis jedis = jedisPool.getResource()) {
-                if (isJedisValid(jedis)) {
-                    jedis.subscribe(new JedisPubSub() {
-                        @Override
-                        public void onMessage(String channel, String message) {
-                            if (closed) {
-                                unsubscribe();
-                                return;
-                            }
-                            String[] parts = message.split("\n");
-                            if (parts.length == 2 && channel.equals("staff_chat")) {
-                                String sender = parts[0];
-                                String chatMessage = parts[1];
-                                handleStaffChat(sender, chatMessage);
-                            }
-                        }
-                    }, "staff_chat");
-                }
-            }
-        }).start();
     }
 
     private void handleStaffChat(String sender, String message) {
         if (closed) return;
         Player player = Bukkit.getPlayer(sender);
-
         if (player == null) {
             StaffModeX.getInstance().getStaffPlayerManager().sendStaffChat(message);
         }
