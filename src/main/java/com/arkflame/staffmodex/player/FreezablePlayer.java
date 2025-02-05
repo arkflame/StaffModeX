@@ -80,9 +80,11 @@ public class FreezablePlayer extends UUIDPlayer {
         Player originPlayer = origin.getPlayer();
         ConfigWrapper msg = StaffModeX.getInstance().getMsg();
         if (player != null) {
-            player.sendMessage(msg.getText("messages.freeze.frozen", "{player}", originPlayer == null ? "" : originPlayer.getName(), "{time}", String.valueOf(StaffModeX.getInstance().getCfg().getInt("freeze.time"))));
-            Titles.sendActionBar(player, msg.getText("messages.freeze.frozen_action"));
-            Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_title"), msg.getText("messages.freeze.frozen_subtitle"), 20, 60, 20);
+            String staffName = originPlayer == null ? "" : originPlayer.getName();
+            String freezeTime = String.valueOf(StaffModeX.getInstance().getCfg().getInt("freeze.time"));
+            player.sendMessage(msg.getText("messages.freeze.frozen", "{staff}", staffName, "{time}", freezeTime));
+            Titles.sendActionBar(player, msg.getText("messages.freeze.frozen_action", "{staff}", staffName, "{time}", freezeTime));
+            Titles.sendTitle(player, StaffModeX.getInstance().getMsg().getText("messages.freeze.frozen_title", "{staff}", staffName, "{time}", freezeTime), msg.getText("messages.freeze.frozen_subtitle", "{staff}", staffName, "{time}", freezeTime), 20, 60, 20);
             
             // Set the player's helmet to the ice cube
             freezeStatus.setHelmet(player.getEquipment().getHelmet());

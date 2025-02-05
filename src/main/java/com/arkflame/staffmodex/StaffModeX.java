@@ -249,7 +249,7 @@ public class StaffModeX extends JavaPlugin {
 
     public String applyPrefix(String message) {
         if (message == null) return null;
-        return message.replace("%prefix%", getMsg().getText("messages.prefix"));
+        return message.replace("{prefix}", getMsg().getText("messages.prefix"));
     }
 
     public String getMessage(String path, String ...placeholders) {

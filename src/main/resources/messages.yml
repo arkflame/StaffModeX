@@ -4,114 +4,114 @@ messages:
   prefix: "&b&lSTAFFMODEX&8 »&r "
 
   join:
-    message: "%prefix%&aThe staff &b{player}&a joined the game!"
+    message: "{prefix}&aThe staff &b{player}&a joined the game!"
 
-  reloaded: "%prefix%&aAll plugin data was reloaded from config."
+  reloaded: "{prefix}&aAll plugin data was reloaded from config."
 
-  only-players: "%prefix%&cThis command cannot be used from the console."
+  only-players: "{prefix}&cThis command cannot be used from the console."
 
-  player-not-found: "%prefix%&cPlayer not found. Please check the name and try again."
-  note-writing-success: "%prefix%&aYou have successfully added a note to {player}."
-  note-started: "%prefix%&aYou have started writing a note to {player}."
-  no-permission: "%prefix%&cYou do not have permission to use this command."
+  player-not-found: "{prefix}&cPlayer not found. Please check the name and try again."
+  note-writing-success: "{prefix}&aYou have successfully added a note to {player}."
+  note-started: "{prefix}&aYou have started writing a note to {player}."
+  no-permission: "{prefix}&cYou do not have permission to use this command."
   
   # Infractions Viewer Menu
   infractions-menu-title: "&cInfractions"
-  reason-label: "%prefix%&bReason: &7{reason}"
-  reporter-label: "%prefix%&bReporter: &7{reporter}"
-  time-label: "%prefix%&bTime: &7{time}"
-  back-button: "%prefix%&7Back"
-  return-to-previous-menu: "%prefix%&eReturn to previous menu"
+  reason-label: "{prefix}&bReason: &7{reason}"
+  reporter-label: "{prefix}&bReporter: &7{reporter}"
+  time-label: "{prefix}&bTime: &7{time}"
+  back-button: "{prefix}&7Back"
+  return-to-previous-menu: "{prefix}&eReturn to previous menu"
 
   diamond-finder:
-    found: "%prefix%&b{player}&c found &b{size}&c diamonds. &7x{streak}"
+    found: "{prefix}&b{player}&c found &b{size}&c diamonds. &7x{streak}"
 
   ip:
-    message: "%prefix%&aThe IP of &b{player}&a is &e{ip}"
-    usage: "%prefix%&cUsage: /ip <player>"
-    no-ip: "%prefix%&cThe player {player} has no IP associated."
-    no-permission: "%prefix%&cNo permission to use this command."
+    message: "{prefix}&aThe IP of &b{player}&a is &e{ip}"
+    usage: "{prefix}&cUsage: /ip <player>"
+    no-ip: "{prefix}&cThe player {player} has no IP associated."
+    no-permission: "{prefix}&cNo permission to use this command."
 
   warning:
-    receive-self: "%prefix%&cYou were warned by &b{staff}&c because of &f{reason}&c."
-    receive: "%prefix%&b{staff} &cwarned &e{player}&c for &f{reason}&c."
-    success: "%prefix%&aYou have successfully warned {player}. Thank you for maintaining server standards."
-    usage: "%prefix%&cIncorrect usage! Please use: /warn <player> <reason>"
-    started: "%prefix%&aYou have started writing a warning to {player}."
+    receive-self: "{prefix}&cYou were warned by &b{staff}&c because of &f{reason}&c."
+    receive: "{prefix}&b{staff} &cwarned &e{player}&c for &f{reason}&c."
+    success: "{prefix}&aYou have successfully warned {player}. Thank you for maintaining server standards."
+    usage: "{prefix}&cIncorrect usage! Please use: /warn <player> <reason>"
+    started: "{prefix}&aYou have started writing a warning to {player}."
     title: "&cWarning"
 
   report:
-    receive: "%prefix%&b{staff} &creported &e{player}&c for &f{reason}&c."
-    success: "%prefix%&aYour report has been successfully filed against {player}. Thank you for your vigilance."
-    usage: "%prefix%&cIncorrect usage! Please use: /report <player> <reason>"
+    receive: "{prefix}&b{staff} &creported &e{player}&c for &f{reason}&c."
+    success: "{prefix}&aYour report has been successfully filed against {player}. Thank you for your vigilance."
+    usage: "{prefix}&cIncorrect usage! Please use: /report <player> <reason>"
     title: "&9Report"
 
   helpop:
-    no-permission: "%prefix%&cYou do not have permission to use HelpOp."
-    cooldown: "%prefix%&cYou must wait {time} seconds before using HelpOp again."
-    usage: "%prefix%&cUsage: /helpop <message>"
-    sent: "%prefix%&8[&4HelpOp&8] &e{player}&8:&7 {message}"
-    receive: "%prefix%&8[&4HelpOp&8] &e{player}&8:&7 {message}"
+    no-permission: "{prefix}&cYou do not have permission to use HelpOp."
+    cooldown: "{prefix}&cYou must wait {time} seconds before using HelpOp again."
+    usage: "{prefix}&cUsage: /helpop <message>"
+    sent: "{prefix}&8[&4HelpOp&8] &e{player}&8:&7 {message}"
+    receive: "{prefix}&8[&4HelpOp&8] &e{player}&8:&7 {message}"
 
   infractions:
-    no-permission: "%prefix%&cNo permission to see infractions for this player."
-    player-not-online: "%prefix%&cThe player '&b{player}&c' is not online."
-    usage: "%prefix%&cUsage: /infractions <player>\nCheck the infractions for this player."
+    no-permission: "{prefix}&cNo permission to see infractions for this player."
+    player-not-online: "{prefix}&cThe player '&b{player}&c' is not online."
+    usage: "{prefix}&cUsage: /infractions <player>\nCheck the infractions for this player."
 
   examine:
     no-permission: '&cYou do not have permission to use this command.'
-    player-not-online: "%prefix%&cThe player '&b{player}&c' is not online."
+    player-not-online: "{prefix}&cThe player '&b{player}&c' is not online."
     usage: '&cUsage: /examine <player>'
 
   vanish:
-    not-staff: "%prefix%&cYou have to be in staff mode to use vanish."
-    no-permission: "%prefix%&cYou do not have permission to vanish."
-    vanished: "%prefix%&aYou are now vanished."
-    unvanished: "%prefix%&aYou are no longer vanished."
+    not-staff: "{prefix}&cYou have to be in staff mode to use vanish."
+    no-permission: "{prefix}&cYou do not have permission to vanish."
+    vanished: "{prefix}&aYou are now vanished."
+    unvanished: "{prefix}&aYou are no longer vanished."
 
   staffchat:
-    no-permission: "%prefix%&cYou do not have permission to use the staff chat."
+    no-permission: "{prefix}&cYou do not have permission to use the staff chat."
     # Supports PlaceholderAPI
-    chat: "%prefix%&8[&aStaffChat&8] &8[&b{server}&8] &e{player}&8: &f{message}"
-    enabled: "%prefix%&aStaff chat enabled"
-    disabled: "%prefix%&cStaff chat disabled"
+    chat: "{prefix}&8[&aStaffChat&8] &8[&b{server}&8] &e{player}&8: &f{message}"
+    enabled: "{prefix}&aStaff chat enabled"
+    disabled: "{prefix}&cStaff chat disabled"
 
   freeze:
     cannot-drop-items: '&cYou cannot drop items.'
     cannot-interact: '&cYou cannot interact.'
     cannot-drag-inventory: '&cYou cannot drag items in the inventory.'
     cannot-click-inventory: '&cYou cannot click items in the inventory.'
-    cannot-use-commands: "%prefix%&cYou cannot use commands while frozen!"
-    not-staff: "%prefix%&cYou have to be in staff mode to freeze players."
-    no-permission: "%prefix%&cYou do not have permission to freeze players."
-    usage: "%prefix%&c/freeze <target>\n&cFreeze the target player to review him."
-    player-not-online: "%prefix%&cThe player '&b{player}&c' is not online."
+    cannot-use-commands: "{prefix}&cYou cannot use commands while frozen!"
+    not-staff: "{prefix}&cYou have to be in staff mode to freeze players."
+    no-permission: "{prefix}&cYou do not have permission to freeze players."
+    usage: "{prefix}&c/freeze <target>\n&cFreeze the target player to review him."
+    player-not-online: "{prefix}&cThe player '&b{player}&c' is not online."
     # You can use {timeLeft} to show time left instead of {countdown}
-    action_bar: "%prefix%&cUnder Review &7(&e{countdown}&7)"
-    frozen_action: "%prefix%&bYou have been frozen!"
+    action_bar: "{prefix}&cUnder Review &7(&e{countdown}&7)"
+    frozen_action: "{prefix}&bYou have been frozen by {staff}!"
     frozen_title: "&bFrozen"
-    frozen_subtitle: "&7You are frozen!"
-    unfrozen_action: "%prefix%&aYou are no longer frozen!"
+    frozen_subtitle: "&7You are frozen by {staff}!"
+    unfrozen_action: "{prefix}&aYou are no longer frozen!"
     unfrozen_title: "&aUnfrozen"
     unfrozen_subtitle: "&7You are no longer frozen!"
-    staff_msg: "%prefix%&8[&6Freeze&8] [&cStaff&8] &c{player}&8: &r{message}"
-    frozen_msg: "%prefix%&8[&6Freeze&8] &b{player}&8: &7{message}"
+    staff_msg: "{prefix}&8[&6Freeze&8] [&cStaff&8] &c{player}&8: &r{message}"
+    frozen_msg: "{prefix}&8[&6Freeze&8] &b{player}&8: &7{message}"
     quit_msg: "&8&m---------------------------&r\n&b{player}&c left while frozen.\n&8&m---------------------------&r"
-    has_bypass: "%prefix%&cThis player has bypassed freezing."
-    unfreeze: "%prefix%&7The player has been &aunfrozen&r&7."
-    freeze: "%prefix%&7The player has been &cfrozen&r&7. Please review the player for &csuspicious activity&r&7."
-    frozen: "&8&m---------------------------&r\n&7You have been frozen for &csuspicious activity&7.\n&7Please connect to the &9TS Server&r&7 for a review.\n&7You have &b{time} minutes&7 to not be &cBANNED&7.\n&8&m---------------------------&r"
+    has_bypass: "{prefix}&cThis player has bypassed freezing."
+    unfreeze: "{prefix}&7The player has been &aunfrozen&r&7."
+    freeze: "{prefix}&7The player has been &cfrozen&r&7. Please review the player for &csuspicious activity&r&7."
+    frozen: "&8&m---------------------------&r\n&7You are frozen for &csuspicious activity&7 by {staff}.\n&7Please connect to the &9Discord Server&r&7 for a review.\n&7You have &b{time} minutes&7 to not be &cBANNED&7.\n&8&m---------------------------&r"
     unfrozen: "&8&m---------------------------&r\n&7You have been reviewed and &aunfrozen&7.\n&7You can now play again. Stay safe.\n&8&m---------------------------&r"
 
 staffmode:
-  cannot-use-command: "%prefix%&cYou cannot use that command."
-  action_bar: "%prefix%&bVanished&7 ({vanished}&7) &bStaffChat&7 ({staffchat}&7) &bTPS: {tps}"
-  enter: "%prefix%&aYou have entered staff mode!"
-  leave: "%prefix%&aYou have left staff mode!"
+  cannot-use-command: "{prefix}&cYou cannot use that command."
+  action_bar: "{prefix}&bVanished&7 ({vanished}&7) &bStaffChat&7 ({staffchat}&7) &bTPS: {tps}"
+  enter: "{prefix}&aYou have entered staff mode!"
+  leave: "{prefix}&aYou have left staff mode!"
 
 hotbar:
   phase:
-    no_safe_location: "%prefix%&cNo safe location found."
+    no_safe_location: "{prefix}&cNo safe location found."
     name: "&6Phase"
     lore:
     - "&7Phase through walls to enter houses and bases."
@@ -119,8 +119,8 @@ hotbar:
     name: "&aRandom Teleport"
     lore:
     - "&7Teleport to a random player location; useful for random integrity checks or monitoring player activity."
-    no_players: "%prefix%&cThere are no other players to teleport to."
-    success: "%prefix%&aYou have been randomly teleported to {player}."
+    no_players: "{prefix}&cThere are no other players to teleport to."
+    success: "{prefix}&aYou have been randomly teleported to {player}."
   vanish:
     name: "&bVanish"
     lore:
@@ -131,7 +131,7 @@ hotbar:
     - "&7Open the GUI to see players that are currently mining."
     menu_title: "&3Players"
     close: "&bClose"
-    teleport: "%prefix%&aYou have been teleported to {player}."
+    teleport: "{prefix}&aYou have been teleported to {player}."
   stafflist:
     name: "&5Staff List"
     lore:
@@ -142,7 +142,7 @@ hotbar:
     name: "&cFreeze"
     lore:
     - "&7Immobilize a player; halt player movement for investigation or to address violations."
-    invalid: "%prefix%&cNo valid target found."
+    invalid: "{prefix}&cNo valid target found."
   knockback:
     name: "&6Knockback"
     lore:
@@ -151,11 +151,11 @@ hotbar:
     name: "&eCPS"
     lore:
     - "&7Monitor clicks per second; identify potential use of auto-clickers or macros."
-    invalid: "%prefix%&cInvalid target for CPS testing."
-    already_testing: "%prefix%&c{player} is already being tested."
-    start_testing: "%prefix%&aYou have started CPS testing for {player}. Please wait for 10 seconds to get the average CPS. You will be notified when the average CPS is ready."
-    dangerous: "%prefix%&cThe average CPS of {player} is {cps}. (This is dangerous!)"
-    safe: "%prefix%&aThe average CPS of {player} is {cps}. (This is safe!)"
+    invalid: "{prefix}&cInvalid target for CPS testing."
+    already_testing: "{prefix}&c{player} is already being tested."
+    start_testing: "{prefix}&aYou have started CPS testing for {player}. Please wait for 10 seconds to get the average CPS. You will be notified when the average CPS is ready."
+    dangerous: "{prefix}&cThe average CPS of {player} is {cps}. (This is dangerous!)"
+    safe: "{prefix}&aThe average CPS of {player} is {cps}. (This is safe!)"
   examine:
     name: "&dExamine"
     lore:
@@ -164,8 +164,8 @@ hotbar:
     name: "&9Follow"
     lore:
     - "&7Mount the player to observe their behavior."
-    invalid: "%prefix%&cInvalid target for following."
-    success: "%prefix%&aYou are now following {player}."
+    invalid: "{prefix}&cInvalid target for following."
+    success: "{prefix}&aYou are now following {player}."
   staff_player_item:
     title: "&b{playerName}"
     here: "&a"
@@ -207,8 +207,8 @@ menus:
       - "&bY: &7{y}"
       - "&bZ: &7{z}"
       - "&aClick to teleport"
-    teleported: "%prefix%&aTeleported to player."
-    no-permission-teleport: "%prefix%&cYou do not have permission to teleport."
+    teleported: "{prefix}&aTeleported to player."
+    no-permission-teleport: "{prefix}&cYou do not have permission to teleport."
   infraction:
     title: "&bInfractions"
     loading: "&7Loading..."
@@ -237,11 +237,11 @@ menus:
     warnings:
       title: "&cWarnings"
       description: "&7View warnings"
-      opening: "%prefix%&7Opening warnings..."
+      opening: "{prefix}&7Opening warnings..."
     reports:
       title: "&9Reports"
       description: "&7View reports"
-      opening: "%prefix%&7Opening reports..."
+      opening: "{prefix}&7Opening reports..."
     back:
       title: "&7Back"
-      description: "%prefix%&eReturn to previous menu"
+      description: "{prefix}&eReturn to previous menu"
